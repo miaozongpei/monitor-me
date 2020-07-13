@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.m.monitor.me</groupId>
+    <artifactId>monitor-me</artifactId>
+    <version>1.0-SNAPSHOT</version>
+<modules>
+    <module>monitor-me-common</module>
+    <module>monitor-me-client</module>
+    <module>monitor-me-service</module>
+    <module>monitor-me-admin</module>
+</modules>
+    <properties>
+        <opay.transaction.provider.version>1.4.4fat-SNAPSHOT</opay.transaction.provider.version>
+    </properties>
+</project>
