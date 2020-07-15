@@ -24,10 +24,10 @@ public class MonitorPoint extends HashMap<Integer,Long> {
 
     }
     private void initChains(){
-        this.chains=MethodChainContext.chainMap.get(this.fullMethodName);
+        this.chains=MethodChainCollector.chainMap.get(this.fullMethodName);
         if (this.chains==null){
             this.chains=new ArrayList<String>();
-            MethodChainContext.chainMap.put(this.fullMethodName,this.chains);
+            MethodChainCollector.chainMap.put(this.fullMethodName,this.chains);
         }
     }
 
