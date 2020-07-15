@@ -1,4 +1,4 @@
-package com.m.monitor.me.client.buildlog;
+package com.m.monitor.me.client.handler;
 
 import lombok.Getter;
 
