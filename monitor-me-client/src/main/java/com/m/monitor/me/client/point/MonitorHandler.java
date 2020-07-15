@@ -1,8 +1,8 @@
 package com.m.monitor.me.client.point;
 
-import com.m.monitor.me.client.point.collector.MethodChainContext;
+import com.m.monitor.me.client.point.collector.MethodChainCollector;
 import com.m.monitor.me.client.point.collector.MonitorPoint;
-import com.m.monitor.me.client.point.collector.MonitorPointContext;
+import com.m.monitor.me.client.point.collector.MonitorPointCollector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -25,11 +25,11 @@ public class MonitorHandler extends AbstractAspectHandler{
             //创建访问顺序
             seq.set(new AtomicInteger(-1));
             //创建监控点（point）
-            MonitorPointContext.create(traceId.get(), fullMethodName);
+            MonitorPointCollector.create(traceId.get(), fullMethodName);
         }else {
             String rootMethodName = traceId.get().split(":")[0];
             String chainName=seq.get().incrementAndGet()+":"+fullMethodName;
-            MethodChainContext.checkAndPut(rootMethodName,chainName);
+            MethodChainCollector.checkAndPut(rootMethodName,chainName);
             context.setChainName(chainName);
         }
     }
@@ -43,15 +43,15 @@ public class MonitorHandler extends AbstractAspectHandler{
         String fullMethodName=this.getFullMethodName(context.getPoint());
         if (rootMethodName.contains(fullMethodName)) {
             //终止方法调用链
-            MethodChainContext.checkAndPut(rootMethodName,MethodChainContext.STOP);
+            MethodChainCollector.checkAndPut(rootMethodName,MethodChainCollector.STOP);
             //监控点结束
-            MonitorPointContext.pointMap.get(traceId.get()).finished();
+            MonitorPointCollector.pointMap.get(traceId.get()).finished();
             //清除traceId
             traceId.remove();
 
         }else{
             //获取监控点
-            MonitorPoint monitorPoint=MonitorPointContext.pointMap.get(traceId.get());
+            MonitorPoint monitorPoint=MonitorPointCollector.pointMap.get(traceId.get());
             //添加执行时间
             Integer integer=Integer.parseInt(context.getChainName().split(":")[0]);
             monitorPoint.put(integer,System.currentTimeMillis()-context.getChainStartTime());

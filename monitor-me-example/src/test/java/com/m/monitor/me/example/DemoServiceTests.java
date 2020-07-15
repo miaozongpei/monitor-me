@@ -1,6 +1,6 @@
 package com.m.monitor.me.example;
 
-import com.m.monitor.me.client.point.collector.MonitorPointContext;
+import com.m.monitor.me.client.point.collector.MonitorPointCollector;
 import com.m.monitor.me.example.service.DemoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +26,7 @@ public class DemoServiceTests {
 		demoService.findUser("123456");
 		//demoService.findUserByName("miao");
 		//demoService.updateUser();
-		MonitorPointContext.printAll();
+		MonitorPointCollector.printAll();
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class DemoServiceTests {
 			future.get();
         }
 
-		MonitorPointContext.printAll();
+		MonitorPointCollector.printAll();
 	}
 
 
