@@ -5,11 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Slf4j
-public class MonitorPoint extends  ArrayList<Long>{
+public class MonitorPoint extends HashMap<Integer,Long> {
     private String fullMethodName;
     private Long startTime;
     private Long endTime;
@@ -31,12 +32,6 @@ public class MonitorPoint extends  ArrayList<Long>{
         }
     }
 
-    @Override
-    public boolean add(Long currentTime) {
-        Long time=currentTime-this.startTime;
-        return size()==0?super.add(time):super.add(time-get(size()-1));
-    }
-
     public void finished(){
         this.endTime=System.currentTimeMillis();
     }
@@ -51,12 +46,12 @@ public class MonitorPoint extends  ArrayList<Long>{
     public String toString() {
         long totalTime=endTime-startTime;
         StringBuffer str=new StringBuffer();
-        str.append(chains.get(0)).append(':').append(totalTime).append("\n");
-        for (int i=1;i<chains.size();i++){
-            Long time=get(size()-i-1);
+        str.append(fullMethodName).append(':').append(totalTime).append("ms").append("\n");
+        for(int i=0;i<chains.size()-1;i++){
+            Long time=get(i);
             str.append(new DecimalFormat("0.00%").format(time.doubleValue()/totalTime));
             str.append('-').append(chains.get(i)).append(':');
-            str.append(time);
+            str.append(time).append("ms");
             str.append("\n");
         }
         return str.toString();

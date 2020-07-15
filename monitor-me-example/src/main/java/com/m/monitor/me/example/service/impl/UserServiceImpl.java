@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
     public String find(String userId) {
         demoService.findAddr();
         try {
-            Thread.sleep(100);//find db
+            Thread.sleep((int)(Math.random()*10+1));//find db
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

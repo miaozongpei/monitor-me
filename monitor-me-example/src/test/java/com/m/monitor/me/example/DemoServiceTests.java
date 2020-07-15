@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MonitorMeExampleApplication.class)
@@ -18,10 +22,28 @@ public class DemoServiceTests {
 	private DemoService demoService;
 	@Test
 	public void findUserTest() {
+
 		demoService.findUser("123456");
-		demoService.findUserByName("miao");
-		demoService.updateUser();
+		//demoService.findUserByName("miao");
+		//demoService.updateUser();
 		MonitorPointContext.printAll();
 	}
+
+	@Test
+	public void findUserThreadTest() throws ExecutionException, InterruptedException {
+	ExecutorService fixedThreadPool = Executors.newFixedThreadPool(20);
+        for (int i = 0; i < 100; i++) {
+            final int ii = i;
+			Future future= fixedThreadPool.submit(() -> {
+				demoService.findUser("123456");
+				demoService.findUserByName("miao");
+				demoService.updateUser();
+            });
+			future.get();
+        }
+
+		MonitorPointContext.printAll();
+	}
+
 
 }

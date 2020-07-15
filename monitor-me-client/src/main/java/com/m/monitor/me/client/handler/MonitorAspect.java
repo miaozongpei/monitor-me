@@ -30,9 +30,10 @@ public class MonitorAspect {
 
     @Around("brokerAspect()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        monitorHandler.doBefore(joinPoint);
+        MonitorContext context=new MonitorContext(joinPoint);
+        monitorHandler.doBefore(context);
         Object result=joinPoint.proceed();
-        monitorHandler.doAfter(joinPoint);
+        monitorHandler.doAfter(context);
         return result;
     }
  

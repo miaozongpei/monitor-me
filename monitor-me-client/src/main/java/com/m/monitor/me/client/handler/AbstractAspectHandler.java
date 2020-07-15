@@ -16,7 +16,7 @@ public abstract class AbstractAspectHandler {
         return joinPoint.getTarget().getClass().getName()+"."+joinPoint.getSignature().getName();
     }
 
-    public abstract void doBefore(JoinPoint point);
-    public abstract void doAfter(JoinPoint point);
+    public abstract void doBefore(MonitorContext context);
+    public abstract void doAfter(MonitorContext context);
 
 }

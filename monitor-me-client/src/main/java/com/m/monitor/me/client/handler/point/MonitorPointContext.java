@@ -13,8 +13,6 @@ public class MonitorPointContext {
         pointMap.put(tranceId, new MonitorPoint(fullMethodName, System.currentTimeMillis()));
     }
 
-
-
     public static void printAll(){
         for (MonitorPoint point:pointMap.values()){
             point.print();
