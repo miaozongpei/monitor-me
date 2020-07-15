@@ -1,4 +1,4 @@
-package com.m.monitor.me.client.handler;
+package com.m.monitor.me.client.point;
 
 import org.aspectj.lang.JoinPoint;
 

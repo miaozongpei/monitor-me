@@ -1,15 +1,13 @@
-package com.m.monitor.me.client.handler.point;
+package com.m.monitor.me.client.point.collector;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 方法链
  */
-public class MethodChainContext {
+public class MethodChainCollector {
         public static final String STOP="0";
         public static Map<String, ArrayList<String>> chainMap=new ConcurrentHashMap<>();
         public static  void checkAndPut(String rootMethodName,String chainName){

@@ -1,4 +1,4 @@
-package com.m.monitor.me.client.handler.point;
+package com.m.monitor.me.client.point.collector;
 
 import lombok.Getter;
 
@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
-public class MonitorPointContext {
+public class MonitorPointCollector {
     public static Map<String, MonitorPoint> pointMap = new ConcurrentHashMap<>();
 
     public static void create(String tranceId, String fullMethodName) {

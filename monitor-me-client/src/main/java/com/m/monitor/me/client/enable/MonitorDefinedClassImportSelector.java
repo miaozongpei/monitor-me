@@ -1,7 +1,7 @@
 package com.m.monitor.me.client.enable;
 
-import com.m.monitor.me.client.handler.MonitorAspect;
-import com.m.monitor.me.client.handler.MonitorHandler;
+import com.m.monitor.me.client.point.MonitorAspect;
+import com.m.monitor.me.client.point.MonitorHandler;
 import com.m.monitro.me.common.utils.ClassUtil;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;

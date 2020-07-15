@@ -1,6 +1,6 @@
 package com.m.monitor.me.example;
 
-import com.m.monitor.me.client.handler.point.MonitorPointContext;
+import com.m.monitor.me.client.point.collector.MonitorPointContext;
 import com.m.monitor.me.example.service.DemoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
