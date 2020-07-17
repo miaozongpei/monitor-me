@@ -11,10 +11,9 @@ import java.util.HashMap;
 @Slf4j
 public class MonitorPoint extends HashMap<Integer,Long> {
     private String fullMethodName;
-    private Long startTime;
-    private Long endTime;
+    private Long startTime=0L;
+    private Long endTime=0L;
     private ArrayList<String> chains;
-
 
     public MonitorPoint(String fullMethodName, Long startTime) {
         super();
@@ -54,5 +53,9 @@ public class MonitorPoint extends HashMap<Integer,Long> {
             str.append("\n");
         }
         return str.toString();
+    }
+
+    public long getNorm(){
+        return endTime-startTime;
     }
 }

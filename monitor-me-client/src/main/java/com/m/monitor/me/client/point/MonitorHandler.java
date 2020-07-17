@@ -45,9 +45,10 @@ public class MonitorHandler extends AbstractAspectHandler{
             //终止方法调用链
             MethodChainCollector.checkAndPut(rootMethodName,MethodChainCollector.STOP);
             //监控点结束
-            MonitorPointCollector.pointMap.get(traceId.get()).finished();
+            MonitorPointCollector.finished(traceId.get());
             //清除traceId
             traceId.remove();
+
 
         }else{
             //获取监控点
@@ -55,8 +56,6 @@ public class MonitorHandler extends AbstractAspectHandler{
             //添加执行时间
             Integer integer=Integer.parseInt(context.getChainName().split(":")[0]);
             monitorPoint.put(integer,System.currentTimeMillis()-context.getChainStartTime());
-
-
         }
     }
 
