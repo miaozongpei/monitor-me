@@ -20,6 +20,30 @@
     <module>monitor-me-example</module>
 </modules>
     <properties>
+        <monitor.me.service.version>1.0-SNAPSHOT</monitor.me.service.version>
         <monitor.me.common.version>1.0-SNAPSHOT</monitor.me.common.version>
+        <com.alibaba.fastjson.version>1.2.72</com.alibaba.fastjson.version>
+        <io.netty.netty-all.version>4.1.50.Final</io.netty.netty-all.version>
     </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.m.monitor.me</groupId>
+                <artifactId>monitor-me-common</artifactId>
+                <version>${monitor.me.common.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${com.alibaba.fastjson.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${io.netty.netty-all.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

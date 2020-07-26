@@ -35,13 +35,14 @@ public class MonitorPointCollector {
     public static PointIntegrator createOrGetIntegrator(){
         PointIntegrator integrator=pointIntegrators.get(pointIntegrators.size()-1);
         int len=integrator.getTotal().intValue();
-        if (len>=10){
-            MonitorExpressWayClient.getInstance().send(JSON.toJSONString(integrator));
+        if (len>=100){
             integrator=new PointIntegrator();
             pointIntegrators.add(integrator);
         }
         return integrator;
     }
+
+
 
 
     public static void printPointIntegrator(){

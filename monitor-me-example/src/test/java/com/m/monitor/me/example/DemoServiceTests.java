@@ -26,7 +26,12 @@ public class DemoServiceTests {
 		demoService.findUser("123456");
 		//demoService.findUserByName("miao");
 		//demoService.updateUser();
-		MonitorPointCollector.printPointIntegrator();
+		//MonitorPointCollector.printPointIntegrator();
+		try {
+			Thread.sleep(30000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -35,15 +40,32 @@ public class DemoServiceTests {
         for (int i = 0; i < 220; i++) {
             final int ii = i;
 			Future future= fixedThreadPool.submit(() -> {
-				demoService.findUser("123456");
-				demoService.findUserByName("miao");
+				//demoService.findUser("123456");
+				//demoService.findUserByName("miao");
 				demoService.updateUser();
             });
 			future.get();
         }
 
-		MonitorPointCollector.printPointIntegrator();
+		try {
+			Thread.sleep(30000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < 100; i++) {
+			final int ii = i;
+			Future future= fixedThreadPool.submit(() -> {
+				//demoService.findUser("123456");
+				//demoService.findUserByName("miao");
+				demoService.updateUser();
+			});
+			future.get();
+		}
+		try {
+			Thread.sleep(30000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
-
 
 }

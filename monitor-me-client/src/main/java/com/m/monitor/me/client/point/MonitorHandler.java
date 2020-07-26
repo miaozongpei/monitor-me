@@ -49,7 +49,6 @@ public class MonitorHandler extends AbstractAspectHandler{
             //清除traceId
             traceId.remove();
 
-
         }else{
             //获取监控点
             MonitorPoint monitorPoint=MonitorPointCollector.pointMap.get(traceId.get());

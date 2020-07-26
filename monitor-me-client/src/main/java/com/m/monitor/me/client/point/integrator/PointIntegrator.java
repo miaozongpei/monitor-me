@@ -7,6 +7,7 @@ import com.m.monitro.me.common.utils.DateUtil;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class PointIntegrator {
@@ -22,7 +23,7 @@ public class PointIntegrator {
     public Map<String,PerformanceNorm>  get(Long second){
         Map<String,PerformanceNorm> performanceNormMap=integratorMap.get(second);
         if(performanceNormMap==null){
-            performanceNormMap=new HashMap<>();
+            performanceNormMap=new LinkedHashMap<>();
             integratorMap.put(second,performanceNormMap);
         }
         return performanceNormMap;
@@ -44,6 +45,19 @@ public class PointIntegrator {
 
     public AtomicLong getTotal() {
         return total;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PointIntegrator that = (PointIntegrator) o;
+        return this.hashCode()==that.hashCode();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(integratorMap, total);
     }
 
     @Override

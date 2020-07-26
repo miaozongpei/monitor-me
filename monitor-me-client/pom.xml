@@ -26,19 +26,16 @@
         <dependency>
             <groupId>com.m.monitor.me</groupId>
             <artifactId>monitor-me-common</artifactId>
-            <version>${monitor.me.common.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.72</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.50.Final</version>
         </dependency>
 
     </dependencies>
