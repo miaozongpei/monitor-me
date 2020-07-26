@@ -16,11 +16,15 @@ public class PointIntegrator {
 
     public void put(MonitorPoint point){
         Long second= Long.parseLong(DateUtil.parseSecond(point.getEndTime()));
-        get(second,point.getFullMethodName()).add(point);
+        getAndNew(second,point.getFullMethodName()).add(point);
         total.incrementAndGet();
 
     }
     public Map<String,PerformanceNorm>  get(Long second){
+        Map<String,PerformanceNorm> performanceNormMap=integratorMap.get(second);
+        return performanceNormMap;
+    }
+    public Map<String,PerformanceNorm>  getAndNew(Long second){
         Map<String,PerformanceNorm> performanceNormMap=integratorMap.get(second);
         if(performanceNormMap==null){
             performanceNormMap=new LinkedHashMap<>();
@@ -28,9 +32,8 @@ public class PointIntegrator {
         }
         return performanceNormMap;
     }
-
-    public PerformanceNorm get(Long second,String name){
-        Map<String,PerformanceNorm> performanceNormMap=get(second);
+    public PerformanceNorm getAndNew(Long second,String name){
+        Map<String,PerformanceNorm> performanceNormMap=getAndNew(second);
         PerformanceNorm performanceNorm=performanceNormMap.get(name);
         if(performanceNorm==null){
             performanceNorm=new PerformanceNorm();

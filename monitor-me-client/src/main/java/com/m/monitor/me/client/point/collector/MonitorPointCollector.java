@@ -1,8 +1,10 @@
 package com.m.monitor.me.client.point.collector;
 
 import com.alibaba.fastjson.JSON;
+import com.m.monitor.me.client.point.integrator.PerformanceNorm;
 import com.m.monitor.me.client.point.integrator.PointIntegrator;
 import com.m.monitor.me.client.transfer.client.MonitorExpressWayClient;
+import com.m.monitro.me.common.utils.DateUtil;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -27,15 +29,18 @@ public class MonitorPointCollector {
         //监控点结束
         point.finished();
         //放入聚合器
-        createOrGetIntegrator().put(point);
+        createOrGetIntegrator(point).put(point);
         //移除收集器
         pointMap.remove(tranceId);
     }
 
-    public static PointIntegrator createOrGetIntegrator(){
+    public static PointIntegrator createOrGetIntegrator(MonitorPoint point){
         PointIntegrator integrator=pointIntegrators.get(pointIntegrators.size()-1);
         int len=integrator.getTotal().intValue();
-        if (len>=100){
+        Long second= Long.parseLong(DateUtil.parseSecond(point.getEndTime()));
+        //if (len>=2000&&integrator.get(second)==null){
+        //5秒新建一个聚合器
+        if(integrator.getIntegratorMap().size()==5&&integrator.get(second)==null){
             integrator=new PointIntegrator();
             pointIntegrators.add(integrator);
         }

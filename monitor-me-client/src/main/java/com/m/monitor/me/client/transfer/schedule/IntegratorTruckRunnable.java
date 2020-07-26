@@ -23,7 +23,7 @@ public class IntegratorTruckRunnable implements Runnable {
         MonitorWriterManager.getInstance().flush();
     }
     public boolean transfer(PointIntegrator pointIntegrator){
-        String jsonPointIntegrator=JSON.toJSONString(pointIntegrator);
+        String jsonPointIntegrator=JSON.toJSONString(pointIntegrator.getIntegratorMap());
         Boolean isSend=MonitorExpressWayClient.getInstance().send(jsonPointIntegrator);
         //如果发送失败写入本地文件
         return isSend?true:MonitorWriterManager.getInstance().writer(jsonPointIntegrator);
