@@ -34,8 +34,28 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
     public AbstractExpressWayClient(){
 
     }
+    public AbstractExpressWayClient(String host, int port) {
+        asyConnect(host,port);//异步建立链接
+        waitingConnect();//等待建立链接
+    }
 
-    public void connect(String host,int port) throws Exception{
+    protected void asyConnect(String host, int port) {
+        Thread connectThread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    connect(host,port);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    close();
+                }
+            }
+        });
+        connectThread.setDaemon(true);//设置成守护线程
+        connectThread.start();
+    }
+
+    private void connect(String host,int port) throws Exception{
         try{
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class)

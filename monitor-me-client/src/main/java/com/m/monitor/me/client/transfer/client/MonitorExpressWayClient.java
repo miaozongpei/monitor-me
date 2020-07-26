@@ -8,7 +8,7 @@ public class MonitorExpressWayClient extends AbstractExpressWayClient {
     private static MonitorExpressWayClient monitorExpressWayClient=new MonitorExpressWayClient();
     private MonitorExpressWayClient() {
         try {
-            this.connect(host,port);
+            this.asyConnect(host,port);
             this.waitingConnect();
         }catch (Exception e){
             e.printStackTrace();
