@@ -8,12 +8,8 @@ import io.netty.channel.ChannelHandlerContext;
 import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class MonitorExpressWayServer extends AbstractExpressWayServer {
-    private int port=8899;
     private static MonitorExpressWayServer monitorExpressWayServer=new MonitorExpressWayServer();
     @Resource
     private BaseMongoService baseMongoService;
@@ -21,13 +17,6 @@ public class MonitorExpressWayServer extends AbstractExpressWayServer {
     }
     public static MonitorExpressWayServer getInstance(){
         return monitorExpressWayServer;
-    }
-    public void bind(){
-        try {
-            bind(port);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
     @Override
     public boolean receive(ChannelHandlerContext ctx, String msg) {
@@ -37,7 +26,8 @@ public class MonitorExpressWayServer extends AbstractExpressWayServer {
         InetSocketAddress insocket = (InetSocketAddress) ctx.channel().remoteAddress();
         String ip = insocket.getAddress().getHostAddress();
         integratorContext.setHost(ip);
-        baseMongoService.insert(DateUtil.parseDate(new Date(),DateUtil.FORMAT_YYYYMM),integratorContext);
+        IntegratorRecord integratorRecord=new IntegratorRecord().build(integratorContext);
+        baseMongoService.insert(DateUtil.parseDate(new Date(),DateUtil.FORMAT_YYYYMM),integratorRecord);
         return true;
     }
 }
