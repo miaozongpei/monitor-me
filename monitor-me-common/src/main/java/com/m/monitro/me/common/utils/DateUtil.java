@@ -11,6 +11,9 @@ public class DateUtil {
      */
     public static final String FORMAT_YYYYMMDDHHMISS = "yyyyMMddHHmmss";
 
+    public static final String FORMAT_YYYYMM = "yyyyMMdd";
+
+
     public static String parseDate(Date time, String format){
         DateFormat dateFormat=new SimpleDateFormat(format);
         return dateFormat.format(time);
