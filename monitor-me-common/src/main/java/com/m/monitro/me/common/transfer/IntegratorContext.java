@@ -3,27 +3,40 @@ package com.m.monitro.me.common.transfer;
 import java.util.LinkedHashMap;
 
 public class IntegratorContext {
-    private String monitorName;
+    private String name;
     private LinkedHashMap Integrators;
 
-    public IntegratorContext(String monitorName, LinkedHashMap integrators) {
-        this.monitorName = monitorName;
+    private String host;
+
+    public IntegratorContext() {
+    }
+
+    public IntegratorContext(String name, LinkedHashMap integrators) {
+        this.name = name;
         Integrators = integrators;
     }
 
-    public String getMonitorName() {
-        return monitorName;
-    }
-
-    public void setMonitorName(String monitorName) {
-        this.monitorName = monitorName;
+    public String getName() {
+        return name;
     }
 
     public LinkedHashMap getIntegrators() {
         return Integrators;
     }
 
+    public String getHost() {
+        return host;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setIntegrators(LinkedHashMap integrators) {
         Integrators = integrators;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 }
