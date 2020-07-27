@@ -4,25 +4,22 @@ import java.util.LinkedHashMap;
 
 public class IntegratorContext {
     private String name;
-    private LinkedHashMap Integrators;
+    private LinkedHashMap its;
 
     private String host;
 
     public IntegratorContext() {
     }
 
-    public IntegratorContext(String name, LinkedHashMap integrators) {
+    public IntegratorContext(String name, LinkedHashMap its) {
         this.name = name;
-        Integrators = integrators;
+        this.its = its;
     }
 
     public String getName() {
         return name;
     }
 
-    public LinkedHashMap getIntegrators() {
-        return Integrators;
-    }
 
     public String getHost() {
         return host;
@@ -32,11 +29,16 @@ public class IntegratorContext {
         this.name = name;
     }
 
-    public void setIntegrators(LinkedHashMap integrators) {
-        Integrators = integrators;
-    }
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public LinkedHashMap getIts() {
+        return its;
+    }
+
+    public void setIts(LinkedHashMap its) {
+        this.its = its;
     }
 }

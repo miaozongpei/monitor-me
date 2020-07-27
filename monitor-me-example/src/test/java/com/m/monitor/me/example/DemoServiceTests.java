@@ -40,8 +40,8 @@ public class DemoServiceTests {
         for (int i = 0; i < 10020; i++) {
             final int ii = i;
 			Future future= fixedThreadPool.submit(() -> {
-				//demoService.findUser("123456");
-				//demoService.findUserByName("miao");
+				demoService.findUser("123456");
+				demoService.findUserByName("miao");
 				demoService.updateUser();
             });
 			future.get();
@@ -50,14 +50,14 @@ public class DemoServiceTests {
 		for (int i = 0; i < 10000; i++) {
 			final int ii = i;
 			Future future= fixedThreadPool.submit(() -> {
-				//demoService.findUser("123456");
-				//demoService.findUserByName("miao");
+				demoService.findUser("123456");
+				demoService.findUserByName("miao");
 				demoService.updateUser();
 			});
 			future.get();
 		}
 		try {
-			Thread.sleep(30000);
+			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
