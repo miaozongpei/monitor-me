@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import({MonitorDefinedClassImportSelector.class})
-public @interface EnableMonitorMeConfiguration {
+public @interface EnableMonitorMe {
 }

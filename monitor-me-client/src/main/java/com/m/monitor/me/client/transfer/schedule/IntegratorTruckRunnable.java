@@ -5,10 +5,14 @@ import com.m.monitor.me.client.point.collector.MonitorPointCollector;
 import com.m.monitor.me.client.point.integrator.PointIntegrator;
 import com.m.monitor.me.client.transfer.client.MonitorExpressWayClient;
 import com.m.monitor.me.client.transfer.file.MonitorWriterManager;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
-
+@Component
 public class IntegratorTruckRunnable implements Runnable {
+    @Resource
+    private MonitorExpressWayClient monitorExpressWayClient;
     @Override
     public void run() {
         List<PointIntegrator>  integrators= MonitorPointCollector.pointIntegrators;
@@ -24,7 +28,7 @@ public class IntegratorTruckRunnable implements Runnable {
     }
     public boolean transfer(PointIntegrator pointIntegrator){
         String jsonPointIntegrator=JSON.toJSONString(pointIntegrator.getIntegratorMap());
-        Boolean isSend=MonitorExpressWayClient.getInstance().send(jsonPointIntegrator);
+        Boolean isSend=monitorExpressWayClient.send(jsonPointIntegrator);
         //如果发送失败写入本地文件
         return isSend?true:MonitorWriterManager.getInstance().writer(jsonPointIntegrator);
     }

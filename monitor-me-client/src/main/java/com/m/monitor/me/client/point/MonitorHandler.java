@@ -18,7 +18,7 @@ public class MonitorHandler extends AbstractAspectHandler{
 
     @Override
     public void doBefore(MonitorContext context) {
-        String fullMethodName=this.getFullMethodName(context.getPoint());
+        String fullMethodName=getFullMethodName(context);
         if(StringUtils.isEmpty(traceId.get())) {
             //创建traceId
             traceId.set(fullMethodName + ":" + UUID.randomUUID().toString());
@@ -40,7 +40,7 @@ public class MonitorHandler extends AbstractAspectHandler{
             return;
         }
         String rootMethodName=traceId.get().split(":")[0];
-        String fullMethodName=this.getFullMethodName(context.getPoint());
+        String fullMethodName=getFullMethodName(context);
         if (rootMethodName.contains(fullMethodName)) {
             //终止方法调用链
             MethodChainCollector.checkAndPut(rootMethodName,MethodChainCollector.STOP);

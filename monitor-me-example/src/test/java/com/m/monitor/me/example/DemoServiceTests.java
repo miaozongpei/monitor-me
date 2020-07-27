@@ -27,11 +27,11 @@ public class DemoServiceTests {
 		//demoService.findUserByName("miao");
 		//demoService.updateUser();
 		//MonitorPointCollector.printPointIntegrator();
-		try {
+		/*try {
 			Thread.sleep(30000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	@Test

@@ -1,9 +1,5 @@
 package com.m.monitor.me.client.transfer.file;
 
-import com.alibaba.fastjson.JSON;
-import com.m.monitor.me.client.point.integrator.PointIntegrator;
-import com.m.monitor.me.client.transfer.client.MonitorExpressWayClient;
-
 import java.io.*;
 
 public class MonitorWriterManager {
