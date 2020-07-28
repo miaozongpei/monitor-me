@@ -13,11 +13,6 @@ public class MonitorClientConfig {
     @Value("${monitor.me.interceptor.package.name:com}")
     private String interceptorPackage="com";
 
-    @Value("${monitor.me.admin.host:localhost}")
-    private String host="localhost";
-
-    @Value("${monitor.me.admin.port:8899}")
-    private int port=8899;
     @Bean
     public DefaultPointcutAdvisor defaultPointcutAdvisor() {
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
@@ -35,7 +30,7 @@ public class MonitorClientConfig {
     @Bean
     public MonitorExpressWayClient monitorExpressWayClient() {
 
-        return MonitorExpressWayClient.getInstance().connect(host,port);
+        return MonitorExpressWayClient.getInstance();
     }
 
 }

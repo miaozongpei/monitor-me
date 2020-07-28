@@ -67,6 +67,14 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
             close();
         }
     }
+    public boolean checkAndConnect(String host,int port){
+        if(clientChannel!=null){
+            return true;
+        }else{
+            asyConnect(host,port);
+            return false;
+        }
+    }
     public void close(){
         //关闭客户端套接字
         if(clientChannel!=null){

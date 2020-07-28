@@ -18,6 +18,12 @@ import java.util.Map;
 public class IntegratorTruckRunnable implements Runnable {
     @Value("${monitor.me.application.name:monitor-me}")
     private String monitorApplicationName="monitor-me";
+
+    @Value("${monitor.me.admin.host:localhost}")
+    private String host="localhost";
+
+    @Value("${monitor.me.admin.port:8899}")
+    private int port=8899;
     @Resource
     private MonitorExpressWayClient monitorExpressWayClient;
     @Override
@@ -31,12 +37,15 @@ public class IntegratorTruckRunnable implements Runnable {
                 }
             }
         }
-        MonitorWriterManager.getInstance().flush();
+        //MonitorWriterManager.getInstance().flush();
     }
     public boolean transfer(PointIntegrator pointIntegrator){
         String jsonPointIntegrator=JSON.toJSONString(new IntegratorContext(monitorApplicationName,pointIntegrator.getIntegratorMap()));
-        Boolean isSend=monitorExpressWayClient.send(jsonPointIntegrator);
+        if (monitorExpressWayClient.checkAndConnect(host,port)) {
+            Boolean isSend = monitorExpressWayClient.send(jsonPointIntegrator);
+        }
         //如果发送失败写入本地文件
-        return isSend?true:MonitorWriterManager.getInstance().writer(jsonPointIntegrator);
+        //return isSend?true:MonitorWriterManager.getInstance().writer(jsonPointIntegrator);
+        return true;
     }
 }
