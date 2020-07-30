@@ -3,6 +3,7 @@ package com.m.monitor.me.client.point;
 import com.m.monitor.me.client.point.collector.MethodChainCollector;
 import com.m.monitor.me.client.point.collector.MonitorPoint;
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
+import com.m.monitro.me.common.utils.MethodTraceIdUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -21,13 +22,13 @@ public class MonitorHandler extends AbstractAspectHandler{
         String fullMethodName=getFullMethodName(context);
         if(StringUtils.isEmpty(traceId.get())) {
             //创建traceId
-            traceId.set(fullMethodName + ":" + UUID.randomUUID().toString());
+            traceId.set(MethodTraceIdUtil.create(fullMethodName));
             //创建访问顺序
             seq.set(new AtomicInteger(-1));
             //创建监控点（point）
             MonitorPointCollector.create(traceId.get(), fullMethodName);
         }else {
-            String rootMethodName = traceId.get().split(":")[0];
+            String rootMethodName = MethodTraceIdUtil.splitMethodName(traceId.get());
             String chainName=seq.get().incrementAndGet()+":"+fullMethodName;
             MethodChainCollector.checkAndPut(rootMethodName,chainName);
             context.setChainName(chainName);
@@ -39,7 +40,7 @@ public class MonitorHandler extends AbstractAspectHandler{
         if (StringUtils.isEmpty(traceId.get())) {
             return;
         }
-        String rootMethodName=traceId.get().split(":")[0];
+        String rootMethodName=MethodTraceIdUtil.splitMethodName(traceId.get());
         String fullMethodName=getFullMethodName(context);
         if (rootMethodName.contains(fullMethodName)) {
             //终止方法调用链

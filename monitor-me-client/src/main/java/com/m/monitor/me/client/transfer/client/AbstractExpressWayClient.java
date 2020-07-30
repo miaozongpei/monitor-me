@@ -16,7 +16,7 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
     /**
      * 时间池
      */
-    protected EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
+    protected EventLoopGroup eventLoopGroup;
      /**
      * 客户端通道
      */
@@ -57,19 +57,32 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
 
     private void connect(String host,int port) throws Exception{
         try{
-            Bootstrap bootstrap = new Bootstrap();
-            bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class)
-                    .handler(this);
-            ChannelFuture channelFuture = bootstrap.connect(host,port).sync();
-            clientChannel=channelFuture.channel();
-            clientChannel.closeFuture().sync();
+            synchronized (this) {
+                if (!isConnected()) {
+                    eventLoopGroup= new NioEventLoopGroup();
+                    Bootstrap bootstrap = new Bootstrap();
+                    bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class)
+                            .handler(this);
+                    ChannelFuture channelFuture = bootstrap.connect(host, port).sync();
+                    clientChannel = channelFuture.channel();
+                    clientChannel.closeFuture().sync();
+                }
+            }
         }finally {
             close();
         }
     }
+    public boolean isConnected(){
+        return clientChannel!=null;
+    }
     public boolean checkAndConnect(String host,int port){
         if(clientChannel!=null){
-            return true;
+            if (clientChannel.isActive()){
+                return true;
+            }else{
+                close();
+                return false;
+            }
         }else{
             asyConnect(host,port);
             return false;
@@ -79,6 +92,7 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
         //关闭客户端套接字
         if(clientChannel!=null){
             clientChannel.close();
+            clientChannel=null;
         }
         //关闭客户端线程组
         if (eventLoopGroup!=null) {
