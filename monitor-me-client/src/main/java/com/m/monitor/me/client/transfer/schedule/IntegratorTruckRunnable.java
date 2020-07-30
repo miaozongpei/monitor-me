@@ -54,7 +54,7 @@ public class IntegratorTruckRunnable implements Runnable {
         return true;
     }
 
-    private long clearExpire=30*60*1000;
+    private long clearExpire=30*60*1000;//30分钟
     public void clearPointMap(){
         for(Map.Entry<String, MonitorPoint> point:MonitorPointCollector.pointMap.entrySet()){
             String traceId=point.getKey();
