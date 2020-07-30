@@ -24,6 +24,7 @@ public class IntegratorRecord {
             TimeNorm timeNorm=new TimeNorm();
             timeNorm.setT((Long)key);
             buildMethodNorm(timeNorm,(Map) context.getIts().get(key));
+            timeNorm.cal();
             this.ts.add(timeNorm);
         }
         return this;
