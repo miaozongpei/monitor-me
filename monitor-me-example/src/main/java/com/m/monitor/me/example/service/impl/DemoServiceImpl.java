@@ -19,15 +19,11 @@ public class DemoServiceImpl implements DemoService {
         userService.find(name);
     }
     public void findAddr() {
-        try {
-            Thread.sleep((int)(Math.random()*10+1));//find db
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
     public void updateUser() {
         try {
-            Thread.sleep((int)(Math.random()*10+1));//find db
+            Thread.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
