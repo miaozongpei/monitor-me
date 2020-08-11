@@ -20,6 +20,12 @@
             <version>${monitor.me.service.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.mzp</groupId>
+            <artifactId>beyond-view</artifactId>
+            <version>${monitor.me.service.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>

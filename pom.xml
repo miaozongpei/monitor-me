@@ -18,7 +18,8 @@
     <module>monitor-me-service</module>
     <module>monitor-me-admin</module>
     <module>monitor-me-example</module>
-</modules>
+        <module>beyond-view</module>
+    </modules>
     <properties>
         <monitor.me.service.version>1.0-SNAPSHOT</monitor.me.service.version>
         <monitor.me.common.version>1.0-SNAPSHOT</monitor.me.common.version>

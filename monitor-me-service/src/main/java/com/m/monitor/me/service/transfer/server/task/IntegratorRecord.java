@@ -1,4 +1,4 @@
-package com.m.monitor.me.service.transfer.server;
+package com.m.monitor.me.service.transfer.server.task;
 
 import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
 import com.m.monitor.me.service.transfer.server.norm.TimeNorm;

@@ -1,6 +1,7 @@
 package com.m.monitor.me.admin.config;
 
 import com.m.monitor.me.service.transfer.server.MonitorExpressWayServer;
+import com.m.monitor.me.service.transfer.server.task.IntegratorSaveTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,12 @@ public class MonitorConfig {
     @Bean
     public MonitorExpressWayServer getMonitorExpressWayServer(){
         return MonitorExpressWayServer.getInstance();
+    }
+
+
+    @Bean
+    public IntegratorSaveTask integratorSaveTask() {
+        return IntegratorSaveTask.getInstance();
     }
 
 }
