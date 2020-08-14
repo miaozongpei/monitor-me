@@ -1,0 +1,24 @@
+<div class="widget-header">
+    <a class="wave in warning" href="#"></a>
+    <span class="widget-caption">${headTitle}</span>
+    <div class="widget-buttons">
+#if($isMaximize)
+        <a href="#" data-toggle="maximize">
+            <i class="fa fa-expand"></i>
+        </a>
+#end
+#if($isCollapse)
+        <a href="#" data-toggle="collapse">
+            <i class="fa fa-minus"></i>
+        </a>
+#end
+#if($isDispose)
+        <a href="#" data-toggle="dispose">
+            <i class="fa fa-times"></i>
+        </a>
+#end
+    </div>
+</div>
+<div class="widget-body">
+    ${body}
+</div>

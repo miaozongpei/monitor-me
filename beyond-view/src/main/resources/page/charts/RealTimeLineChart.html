@@ -1,0 +1,71 @@
+<div id="realtime-${elementId}" class="chart chart-lg"></div>
+<script>
+    function getRandomData() {
+        var data = [],
+            totalPoints = 60;
+        if (data.length > 0)
+            data = data.slice(1);
+
+        // Do a random walk
+
+        while (data.length < totalPoints) {
+
+            var prev = data.length > 0 ? data[data.length - 1] : 50,
+                y = Math.random() * 3000
+
+            data.push(y);
+        }
+
+        // Zip the generated y values with the x values
+
+        var res = [];
+        for (var i = 0; i < data.length; ++i) {
+            res.push([Date.now()+i*1000, data[i]]);
+        }
+        return res;
+    }
+    // Set up the control widget
+    var updateInterval = 500;
+    var plot = $.plot("#realtime-${elementId}", [getRandomData()], {
+        yaxis: {
+            color: gridbordercolor,
+            min: 0,
+            max:3000
+        },
+        xaxis: {
+            color: gridbordercolor,
+            mode: "time",
+            tickLength: 5
+
+        },
+        colors: [themeprimary],
+        series: {
+            lines: {
+                lineWidth: 0,
+                fill: true,
+                fillColor: {
+                    colors: [{
+                        opacity: 1
+                    }, {
+                        opacity: 1
+                    }]
+                },
+                steps: false
+            },
+            shadowSize: 0
+        },
+        grid: {
+            hoverable: true,
+            clickable: false,
+            borderWidth: 0,
+            aboveData: false
+        }
+    });
+
+    function update() {
+        plot.setData([getRandomData()]);
+        plot.draw();
+        setTimeout(update, updateInterval);
+    }
+    update();
+</script>

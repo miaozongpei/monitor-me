@@ -30,6 +30,33 @@ Purchase: http://wrapbootstrap.com
     <link id="skin-link" href="" rel="stylesheet" type="text/css" />
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="assets/js/skins.min.js"></script>
+
+
+
+    <!--Basic Scripts-->
+    <script src="assets/js/jquery-2.0.3.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="assets/js/beyond.min.js"></script>
+
+
+    <!--Page Related Scripts-->
+    <!--Sparkline Charts Needed Scripts-->
+    <script src="assets/js/charts/sparkline/jquery.sparkline.js"></script>
+    <script src="assets/js/charts/sparkline/sparkline-init.js"></script>
+
+    <!--Easy Pie Charts Needed Scripts-->
+    <script src="assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
+    <script src="assets/js/charts/easypiechart/easypiechart-init.js"></script>
+
+    <!--Flot Charts Needed Scripts-->
+    <script src="assets/js/charts/flot/jquery.flot.js"></script>
+    <script src="assets/js/charts/flot/jquery.flot.resize.js"></script>
+    <script src="assets/js/charts/flot/jquery.flot.pie.js"></script>
+    <script src="assets/js/charts/flot/jquery.flot.tooltip.js"></script>
+    <script src="assets/js/charts/flot/jquery.flot.orderBars.js"></script>
+    <script src="assets/js/charts/flot/jquery.flot.time.js"></script>
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -226,34 +253,15 @@ Purchase: http://wrapbootstrap.com
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                                    <div class="databox databox-xlg databox-vertical databox-inverted databox-shadowed">
-                                                        <div class="databox-top">
-                                                            <div class="databox-sparkline">
-                                                                <span data-sparkline="line" data-height="125px" data-width="100%" data-fillcolor="false" data-linecolor="themesecondary" data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55" data-highlightspotcolor="#ffce55" data-highlightlinecolor="#ffce55" data-linewidth="1.5" data-spotradius="2"><canvas width="100" height="125" style="display: inline-block; width: 100px; height: 125px; vertical-align: top;"></canvas></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="databox-bottom no-padding text-align-center">
-                                                            <span class="databox-number lightcarbon no-margin">224</span>
-                                                            <span class="databox-text lightcarbon no-margin">Sale Unit / Hour</span>
-
-                                                        </div>
+                                                    <div class="widget-header bg-themeprimary">
+                                                        <span class="widget-caption">10.20.70.101</span>
+                                                        <a class="wave in warning" href="#"></a>
                                                     </div>
-
+                                                    <div class="widget-body">
+                                                        <div id="dashboard-chart-realtime" class="chart chart-lg"></div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                                                    <div class="databox databox-xlg databox-vertical databox-inverted databox-shadowed">
-                                                        <div class="databox-top">
-                                                            <div class="databox-sparkline">
-                                                                <span data-sparkline="line" data-height="125px" data-width="100%" data-fillcolor="false" data-linecolor="themefourthcolor" data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#8cc474" data-highlightspotcolor="#8cc474" data-highlightlinecolor="#8cc474" data-linewidth="1.5" data-spotradius="2"><canvas width="100" height="125" style="display: inline-block; width: 100px; height: 125px; vertical-align: top;"></canvas></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="databox-bottom no-padding text-align-center">
-                                                            <span class="databox-number lightcarbon no-margin">7063$</span>
-                                                            <span class="databox-text lightcarbon no-margin">Income / Hour</span>
-
-                                                        </div>
-                                                    </div>
-
+                                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" th:utext="${widget}">
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                                     <div class="databox databox-xlg databox-vertical databox-inverted databox-shadowed">
@@ -288,6 +296,7 @@ Purchase: http://wrapbootstrap.com
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div><!--Widget Main Container-->
                                 </div><!--Widget Body-->
@@ -438,29 +447,7 @@ Purchase: http://wrapbootstrap.com
 
     </div>
 
-    <!--Basic Scripts-->
-    <script src="assets/js/jquery-2.0.3.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
 
-    <!--Beyond Scripts-->
-    <script src="assets/js/beyond.min.js"></script>
-
-
-    <!--Page Related Scripts-->
-    <!--Sparkline Charts Needed Scripts-->
-    <script src="assets/js/charts/sparkline/jquery.sparkline.js"></script>
-    <script src="assets/js/charts/sparkline/sparkline-init.js"></script>
-
-    <!--Easy Pie Charts Needed Scripts-->
-    <script src="assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
-    <script src="assets/js/charts/easypiechart/easypiechart-init.js"></script>
-
-    <!--Flot Charts Needed Scripts-->
-    <script src="assets/js/charts/flot/jquery.flot.js"></script>
-    <script src="assets/js/charts/flot/jquery.flot.resize.js"></script>
-    <script src="assets/js/charts/flot/jquery.flot.pie.js"></script>
-    <script src="assets/js/charts/flot/jquery.flot.tooltip.js"></script>
-    <script src="assets/js/charts/flot/jquery.flot.orderBars.js"></script>
 
     <script>
         // If you want to draw your charts with Theme colors you must run initiating charts after that current skin is loaded
@@ -472,154 +459,15 @@ Purchase: http://wrapbootstrap.com
             themethirdcolor = getThemeColorFromCss('themethirdcolor');
             themefourthcolor = getThemeColorFromCss('themefourthcolor');
             themefifthcolor = getThemeColorFromCss('themefifthcolor');
-            $("#").html('th:text="${dataBox}"');
 
             //Sets The Hidden Chart Width
-            $('#dashboard-bandwidth-chart')
-                .data('width', $('.box-tabbs')
-                    .width() - 20);
-
-            //-------------------------Visitor Sources Pie Chart----------------------------------------//
-            var data = [
-                {
-                    data: [[1, 21]],
-                    color: '#fb6e52'
-                },
-                {
-                    data: [[1, 12]],
-                    color: '#e75b8d'
-                },
-                {
-                    data: [[1, 11]],
-                    color: '#a0d468'
-                },
-                {
-                    data: [[1, 10]],
-                    color: '#ffce55'
-                },
-                {
-                    data: [[1, 46]],
-                    color: '#5db2ff'
-                }
-            ];
-            var placeholder = $("#dashboard-pie-chart-sources");
-            placeholder.unbind();
-
-            $.plot(placeholder, data, {
-                series: {
-                    pie: {
-                        innerRadius: 0.45,
-                        show: true,
-                        stroke: {
-                            width: 4
-                        }
-                    }
-                }
-            });
-
-            //------------------------------Visit Chart------------------------------------------------//
-            var data2 = [{
-                color: themesecondary,
-                label: "Direct Visits",
-                data: [[3, 2], [4, 5], [5, 4], [6, 11], [7, 12], [8, 11], [9, 8], [10, 14], [11, 12], [12, 16], [13, 9],
-                [14, 10], [15, 14], [16, 15], [17, 9]],
-
-                lines: {
-                    show: true,
-                    fill: true,
-                    lineWidth: .1,
-                    fillColor: {
-                        colors: [{
-                            opacity: 0
-                        }, {
-                            opacity: 0.4
-                        }]
-                    }
-                },
-                points: {
-                    show: false
-                },
-                shadowSize: 0
-            },
-                {
-                    color: themeprimary,
-                    label: "Referral Visits",
-                    data: [[3, 10], [4, 13], [5, 12], [6, 16], [7, 19], [8, 19], [9, 24], [10, 19], [11, 18], [12, 21], [13, 17],
-                    [14, 14], [15, 12], [16, 14], [17, 15]],
-                    bars: {
-                        order: 1,
-                        show: true,
-                        borderWidth: 0,
-                        barWidth: 0.4,
-                        lineWidth: .5,
-                        fillColor: {
-                            colors: [{
-                                opacity: 0.4
-                            }, {
-                                opacity: 1
-                            }]
-                        }
-                    }
-                },
-                {
-                    color: themethirdcolor,
-                    label: "Search Engines",
-                    data: [[3, 14], [4, 11], [5, 10], [6, 9], [7, 5], [8, 8], [9, 5], [10, 6], [11, 4], [12, 7], [13, 4],
-                    [14, 3], [15, 4], [16, 6], [17, 4]],
-                    lines: {
-                        show: true,
-                        fill: false,
-                        fillColor: {
-                            colors: [{
-                                opacity: 0.3
-                            }, {
-                                opacity: 0
-                            }]
-                        }
-                    },
-                    points: {
-                        show: true
-                    }
-                }
-            ];
-            var options = {
-                legend: {
-                    show: false
-                },
-                xaxis: {
-                    tickDecimals: 0,
-                    color: '#f3f3f3'
-                },
-                yaxis: {
-                    min: 0,
-                    color: '#f3f3f3',
-                    tickFormatter: function (val, axis) {
-                        return "";
-                    },
-                },
-                grid: {
-                    hoverable: true,
-                    clickable: false,
-                    borderWidth: 0,
-                    aboveData: false,
-                    color: '#fbfbfb'
-
-                },
-                tooltip: true,
-                tooltipOpts: {
-                    defaultTheme: false,
-                    content: " <b>%x May</b> , <b>%s</b> : <span>%y</span>",
-                }
-            };
-            var placeholder = $("#dashboard-chart-visits");
-            var plot = $.plot(placeholder, data2, options);
 
             //------------------------------Real-Time Chart-------------------------------------------//
-            var data = [],
-                totalPoints = 300;
+
 
             function getRandomData() {
-
+                var data = [],
+                    totalPoints = 60;
                 if (data.length > 0)
                     data = data.slice(1);
 
@@ -628,13 +476,7 @@ Purchase: http://wrapbootstrap.com
                 while (data.length < totalPoints) {
 
                     var prev = data.length > 0 ? data[data.length - 1] : 50,
-                        y = prev + Math.random() * 10 - 5;
-
-                    if (y < 0) {
-                        y = 0;
-                    } else if (y > 100) {
-                        y = 100;
-                    }
+                        y = Math.random() * 3000
 
                     data.push(y);
                 }
@@ -643,29 +485,24 @@ Purchase: http://wrapbootstrap.com
 
                 var res = [];
                 for (var i = 0; i < data.length; ++i) {
-                    res.push([i, data[i]]);
+                    res.push([Date.now()+i*1000, data[i]]);
                 }
 
                 return res;
             }
             // Set up the control widget
-            var updateInterval = 100;
+            var updateInterval = 500;
             var plot = $.plot("#dashboard-chart-realtime", [getRandomData()], {
                 yaxis: {
-                    color: '#f3f3f3',
+                    color: gridbordercolor,
                     min: 0,
-                    max: 100,
-                    tickFormatter: function (val, axis) {
-                        return "";
-                    }
+                    max:3000
                 },
                 xaxis: {
-                    color: '#f3f3f3',
-                    min: 0,
-                    max: 100,
-                    tickFormatter: function (val, axis) {
-                        return "";
-                    }
+                    color: gridbordercolor,
+                    mode: "time",
+                    tickLength: 5
+
                 },
                 colors: [themeprimary],
                 series: {
@@ -674,9 +511,9 @@ Purchase: http://wrapbootstrap.com
                         fill: true,
                         fillColor: {
                             colors: [{
-                                opacity: 0.5
+                                opacity: 1
                             }, {
-                                opacity: 0
+                                opacity: 1
                             }]
                         },
                         steps: false
