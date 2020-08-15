@@ -46,9 +46,17 @@ public class IndexController {
             realTimeLineChartRow.add(widget);
         }
 
+        //realTimeLineChartRow
+        MainRow realTimeLineChartRow1=new MainRow();
+        for(int i=0;i<4;i++) {
+            Widget widget = new Widget("服务器xx"+i,new RealTimeLineChart("xx"+i,"themethirdcolor"));
+            realTimeLineChartRow1.add(widget);
+        }
+
         //realTimeWidget
-        MainRow realTimeWidgetBody=new MainRow();
+        MainBody realTimeWidgetBody=new MainBody();
         realTimeWidgetBody.add(realTimeLineChartRow);
+        realTimeWidgetBody.add(realTimeLineChartRow1);
         Widget realTimeWidget = new Widget("Real-Time",realTimeWidgetBody);
         realTimeWidget.setHeadBottom(true);
         mainBody.add(new MainRow().add(realTimeWidget));
