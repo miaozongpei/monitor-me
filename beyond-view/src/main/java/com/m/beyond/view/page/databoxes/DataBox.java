@@ -8,4 +8,8 @@ import lombok.Setter;
 @Getter
 public class DataBox extends AbstractElement {
     private String text;
+
+    public DataBox(String text) {
+        this.text = text;
+    }
 }

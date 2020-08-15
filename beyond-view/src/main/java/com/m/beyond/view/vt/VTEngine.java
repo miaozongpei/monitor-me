@@ -1,23 +1,16 @@
 package com.m.beyond.view.vt;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.m.beyond.view.page.AbstractElement;
 import com.m.beyond.view.page.charts.RealTimeLineChart;
-import com.m.beyond.view.page.databoxes.DataBox;
 import com.m.beyond.view.page.widgets.Widget;
-import org.apache.commons.beanutils.BeanMap;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import java.io.StringWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -50,9 +43,9 @@ public class VTEngine {
         return null;
     }
     public static String parse(AbstractElement element) {
-        Map<String, String> model= null;
+        Map<String, Object> model= null;
         try {
-            model = BeanUtils.describe(element);
+            model = JSON.parseObject(JSON.toJSONString(element, SerializerFeature.WriteNullStringAsEmpty, SerializerFeature.WriteNullNumberAsZero, SerializerFeature.WriteMapNullValue), Map.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,15 +53,13 @@ public class VTEngine {
         template=template.replace(".","/")+templateFileExt;
         return parse(template,model);
     }
+
     public static void main(String[] args) {
       /*  DataBox dataBox=new DataBox();
         dataBox.setText("你好");
         System.out.println(dataBox.toHtml());*/
 
-       Widget widget=new Widget();
-        RealTimeLineChart chart=new RealTimeLineChart("10.20.30.101");
-        widget.setBody(chart.toHtml());
-        System.out.println(widget.toHtml());
+
 
     }
 }

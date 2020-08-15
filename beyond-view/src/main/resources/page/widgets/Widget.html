@@ -1,5 +1,10 @@
-<div class="widget-header">
+<div class="widget-header#if($isHeadBottom) bordered-bottom bordered-themeprimary#end">
+<!--
     <a class="wave in warning" href="#"></a>
+-->
+#if($widgetIcon)
+    <i class="widget-icon fa ${widgetIcon} themeprimary"></i>
+#end
     <span class="widget-caption">${headTitle}</span>
     <div class="widget-buttons">
 #if($isMaximize)
@@ -20,5 +25,5 @@
     </div>
 </div>
 <div class="widget-body">
-    ${body}
+    ${htmlBody}
 </div>
