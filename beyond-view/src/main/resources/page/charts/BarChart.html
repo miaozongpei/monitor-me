@@ -1,0 +1,28 @@
+<div id="bar-chart-${id}" class="chart chart-lg"></div>
+<script>
+    function geData() {
+        var _datas;
+        $.ajax({
+            type : "GET",
+            url : "bar_chart/data",
+            dataType: "json",
+            async : false,
+            success : function(data){
+                _datas=data;
+            }
+        });
+        return _datas;
+    }
+    setTimeout(function () {
+        var data=geData();
+        Morris.Bar({
+            element: 'bar-chart-${id}',
+            data: data.data,
+            xkey: data.xkey,
+            ykeys:data.ykeys,
+            labels: data.labels,
+            hideHover: 'auto',
+            barColors: data.barColors
+        });
+    },2000);
+</script>

@@ -15,7 +15,9 @@ public class Widget extends AbstractElement {
     private boolean isCollapse=false;//折叠
     private boolean isDispose=false;//关闭
     private AbstractElement body;
+    public Widget(){
 
+    }
     public Widget(String headTitle, AbstractElement body) {
         this.headTitle = headTitle;
         setBody(body);

@@ -1,0 +1,26 @@
+<div id="visitors-chart-${elementId}" class="chart"></div>
+<div id="visitors-chart-overview-${elementId}" class="chart chart-sm"></div>
+<script src="assets/js/charts/mychart/myflot-init.js"></script>
+<script>
+    function geRealTimeData() {
+        var _datas;
+        $.ajax({
+            type : "GET",
+            url : "real_time/data",
+            dataType: "json",
+            async : false,
+            success : function(data){
+                _datas=data;
+            }
+        });
+        return _datas;
+    }
+    themeprimary = getThemeColorFromCss('themeprimary');
+    themesecondary = getThemeColorFromCss('themesecondary');
+    themethirdcolor = getThemeColorFromCss('themethirdcolor');
+    themefourthcolor = getThemeColorFromCss('themefourthcolor');
+    themefifthcolor = getThemeColorFromCss('themefifthcolor');
+    setTimeout(function () {
+        new RealTimeVisitorsChart('${elementId}',${color}).init(geRealTimeData())
+    },1000);
+</script>
