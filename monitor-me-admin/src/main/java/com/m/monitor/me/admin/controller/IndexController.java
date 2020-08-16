@@ -41,14 +41,14 @@ public class IndexController {
 
         //realTimeLineChartRow
         MainRow realTimeLineChartRow=new MainRow();
-        for(int i=0;i<4;i++) {
+        for(int i=0;i<2;i++) {
             Widget widget = new Widget("服务器"+i,new RealTimeLineChart(i+""));
             realTimeLineChartRow.add(widget);
         }
 
         //realTimeLineChartRow
         MainRow realTimeLineChartRow1=new MainRow();
-        for(int i=0;i<4;i++) {
+        for(int i=0;i<2;i++) {
             Widget widget = new Widget("服务器xx"+i,new RealTimeLineChart("xx"+i,"themethirdcolor"));
             realTimeLineChartRow1.add(widget);
         }
