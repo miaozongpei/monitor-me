@@ -1,7 +1,10 @@
 <div class="row">
     <div class="col-lg-12 col-xs-12">
 #foreach($htmlElement in $htmlElements)
-        <div class="col-lg-${colLg}  col-xs-12">
+        #set($num = $velocityCount - 1)
+        #set($element = $elements[$num])
+        #set($lg = "#if($element.colLg==0)$colLg#{else}$element.colLg#end")
+        <div class="col-lg-$lg col-xs-12">
             ${htmlElement}
         </div>
 #end

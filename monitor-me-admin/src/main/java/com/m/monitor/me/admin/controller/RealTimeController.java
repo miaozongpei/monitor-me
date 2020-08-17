@@ -1,8 +1,5 @@
 package com.m.monitor.me.admin.controller;
 
-import com.m.beyond.view.page.charts.RealTimeLineChart;
-import com.m.beyond.view.page.databoxes.DataBox;
-import com.m.beyond.view.page.widgets.Widget;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

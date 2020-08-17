@@ -12,7 +12,7 @@ public class Widget extends AbstractElement {
     private boolean isHeadBottom=false;//
 
     private boolean isMaximize=false;//最大化
-    private boolean isCollapse=false;//折叠
+    private boolean isCollapse=true;//折叠
     private boolean isDispose=false;//关闭
     private AbstractElement body;
     public Widget(){
@@ -27,6 +27,8 @@ public class Widget extends AbstractElement {
 
     public void setBody(AbstractElement body) {
         this.body = body;
-        this.htmlBody=body.toHtml();
+        if (body!=null) {
+            this.htmlBody = body.toHtml();
+        }
     }
 }

@@ -4,6 +4,8 @@ import com.m.beyond.view.page.charts.BarChart;
 import com.m.beyond.view.page.charts.RealTimeLineChart;
 import com.m.beyond.view.page.charts.RealTimeVisitorsChart;
 import com.m.beyond.view.page.databoxes.DataBox;
+import com.m.beyond.view.page.forms.ComboSelect;
+import com.m.beyond.view.page.forms.SelectOption;
 import com.m.beyond.view.page.loadings.LoadingContainer;
 import com.m.beyond.view.page.mains.MainBody;
 import com.m.beyond.view.page.mains.MainHeader;
@@ -15,6 +17,8 @@ import com.m.monitor.me.admin.page.ServerRealTimeWidget;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.LinkedHashMap;
 
 @Controller
 public class IndexController {
@@ -44,20 +48,37 @@ public class IndexController {
 
         //realTimeLineChartRow
         MainRow realTimeLineChartRow=new MainRow();
-        for(int i=0;i<2;i++) {
+        for(int i=0;i<4;i++) {
             ServerRealTimeWidget widget = new ServerRealTimeWidget(""+i,"服务器xx"+i);
             realTimeLineChartRow.add(widget.getWidget());
         }
 
         //realTimeLineChartRow
         MainRow realTimeLineChartRow1=new MainRow();
-        for(int i=0;i<2;i++) {
+        for(int i=0;i<4;i++) {
             ServerRealTimeWidget widget = new ServerRealTimeWidget("xx"+i,"服务器xx"+i);
             realTimeLineChartRow1.add(widget.getWidget());
         }
 
+        //search
+        MainRow searchRow=new MainRow();
+        ComboSelect sysNameSelect=new ComboSelect("sysName");
+        sysNameSelect.add(new SelectOption("sys1","payment-transaction"));
+        sysNameSelect.add(new SelectOption("sys2","payment-account"));
+        sysNameSelect.add(new SelectOption("sys3","payment-channel"));
+        searchRow.add(sysNameSelect.setLg(3));
+
+        LinkedHashMap<String,String> methods=new LinkedHashMap();
+        ComboSelect methodSelect =new ComboSelect("method");
+        for (int i=0;i<100;i++) {
+            methodSelect.add(new SelectOption("method"+i, "com.m.monitor.me.admin.controller.d.com.m.monitor.me.admin.controller.d"+i));
+        }
+        searchRow.add(methodSelect);
+
+
         //realTimeWidget
         MainBody realTimeWidgetBody=new MainBody();
+        realTimeWidgetBody.add(searchRow);
         realTimeWidgetBody.add(realTimeLineChartRow);
         realTimeWidgetBody.add(realTimeLineChartRow1);
         Widget realTimeWidget = new Widget("Real-Time",realTimeWidgetBody);

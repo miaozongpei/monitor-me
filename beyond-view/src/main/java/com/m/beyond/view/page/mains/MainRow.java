@@ -13,6 +13,9 @@ public class MainRow extends AbstractElement{
     private List<AbstractElement> elements=new ArrayList<>();
     private List<String> htmlElements=new ArrayList<>();
 
+    public MainRow() {
+    }
+
     public MainRow add(AbstractElement element){
         elements.add(element);
         htmlElements.add(element.toHtml());

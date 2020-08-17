@@ -1,5 +1,6 @@
 <div id="visitors-chart-${elementId}" class="chart"></div>
 <div id="visitors-chart-overview-${elementId}" class="chart chart-sm"></div>
+<script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
     function geRealTimeData() {
@@ -22,5 +23,8 @@
     themefifthcolor = getThemeColorFromCss('themefifthcolor');
     setTimeout(function () {
         new RealTimeVisitorsChart('${elementId}',${color}).init(geRealTimeData())
-    },1000);
+    },2000);
+    setInterval(function () {
+        new RealTimeVisitorsChart('${elementId}',${color}).init(geRealTimeData())
+    },60*1000);
 </script>

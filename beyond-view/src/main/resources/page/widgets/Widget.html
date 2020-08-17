@@ -1,29 +1,31 @@
-<div class="widget-header#if($isHeadBottom) bordered-bottom bordered-themeprimary#end">
-<!--
-    <a class="wave in warning" href="#"></a>
--->
-#if($widgetIcon)
-    <i class="widget-icon fa ${widgetIcon} themeprimary"></i>
-#end
-    <span class="widget-caption">${headTitle}</span>
-    <div class="widget-buttons">
-#if($isMaximize)
-        <a href="#" data-toggle="maximize">
-            <i class="fa fa-expand"></i>
-        </a>
-#end
-#if($isCollapse)
-        <a href="#" data-toggle="collapse">
-            <i class="fa fa-minus"></i>
-        </a>
-#end
-#if($isDispose)
-        <a href="#" data-toggle="dispose">
-            <i class="fa fa-times"></i>
-        </a>
-#end
+<div class="widget">
+    <div class="widget-header#if($headBottom) bordered-bottom bordered-themeprimary#end">
+    <!--
+        <a class="wave in warning" href="#"></a>
+    -->
+    #if($widgetIcon)
+        <i class="widget-icon fa ${widgetIcon} themeprimary"></i>
+    #end
+        <span class="widget-caption">${headTitle}</span>
+        <div class="widget-buttons">
+    #if($maximize)
+            <a href="#" data-toggle="maximize">
+                <i class="fa fa-expand"></i>
+            </a>
+    #end
+    #if($collapse)
+            <a href="#" data-toggle="collapse">
+                <i class="fa fa-minus"></i>
+            </a>
+    #end
+    #if($dispose)
+            <a href="#" data-toggle="dispose">
+                <i class="fa fa-times"></i>
+            </a>
+    #end
+        </div>
     </div>
-</div>
-<div class="widget-body">
-    ${htmlBody}
+    <div class="widget-body">
+        ${htmlBody}
+    </div>
 </div>
