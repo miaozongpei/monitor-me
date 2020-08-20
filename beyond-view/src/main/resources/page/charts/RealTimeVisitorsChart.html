@@ -22,9 +22,9 @@
     themefourthcolor = getThemeColorFromCss('themefourthcolor');
     themefifthcolor = getThemeColorFromCss('themefifthcolor');
     setTimeout(function () {
-        new RealTimeVisitorsChart('${elementId}',${color}).init(geRealTimeData())
+        new RealTimeVisitorsChart('${elementId}','${color}').init(geRealTimeData())
     },2000);
     setInterval(function () {
-        new RealTimeVisitorsChart('${elementId}',${color}).init(geRealTimeData())
+        new RealTimeVisitorsChart('${elementId}','${color}').init(geRealTimeData())
     },60*1000);
 </script>

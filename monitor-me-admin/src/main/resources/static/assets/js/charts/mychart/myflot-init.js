@@ -55,9 +55,6 @@ function RealTimeVisitorsChart(elementId,color) {
                 selection: {
                     mode: "x"
                 },
-                yaxis: {
-                    color: color
-                },
                 grid: {
                     borderWidth: 0,
                     aboveData: false

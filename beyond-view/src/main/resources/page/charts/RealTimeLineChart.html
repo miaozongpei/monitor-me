@@ -15,12 +15,7 @@
         });
         return _datas;
     }
-    themeprimary = getThemeColorFromCss('themeprimary');
-    themesecondary = getThemeColorFromCss('themesecondary');
-    themethirdcolor = getThemeColorFromCss('themethirdcolor');
-    themefourthcolor = getThemeColorFromCss('themefourthcolor');
-    themefifthcolor = getThemeColorFromCss('themefifthcolor');
     setInterval(function () {
-        new RealTimeLineChart('${elementId}',${color}).init(geRealTimeData())
+        new RealTimeLineChart('${elementId}','${color}').init(geRealTimeData())
         },1000);
 </script>

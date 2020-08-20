@@ -1,5 +1,6 @@
 package com.m.monitor.me.admin.controller;
 
+import com.m.beyond.view.Beyond;
 import com.m.beyond.view.page.charts.BarChart;
 import com.m.beyond.view.page.charts.RealTimeLineChart;
 import com.m.beyond.view.page.charts.RealTimeVisitorsChart;
@@ -48,15 +49,15 @@ public class IndexController {
 
         //realTimeLineChartRow
         MainRow realTimeLineChartRow=new MainRow();
-        for(int i=0;i<4;i++) {
-            ServerRealTimeWidget widget = new ServerRealTimeWidget(""+i,"服务器xx"+i);
+        for(int i=0;i<2;i++) {
+            ServerRealTimeWidget widget = new ServerRealTimeWidget(""+i,"服务器xx"+i, Beyond.colors.get(1));
             realTimeLineChartRow.add(widget.getWidget());
         }
 
         //realTimeLineChartRow
         MainRow realTimeLineChartRow1=new MainRow();
-        for(int i=0;i<4;i++) {
-            ServerRealTimeWidget widget = new ServerRealTimeWidget("xx"+i,"服务器xx"+i);
+        for(int i=0;i<2;i++) {
+            ServerRealTimeWidget widget = new ServerRealTimeWidget("xx"+i,"服务器xx"+i,Beyond.colors.get(2));
             realTimeLineChartRow1.add(widget.getWidget());
         }
 
@@ -68,7 +69,6 @@ public class IndexController {
         sysNameSelect.add(new SelectOption("sys3","payment-channel"));
         searchRow.add(sysNameSelect.setLg(3));
 
-        LinkedHashMap<String,String> methods=new LinkedHashMap();
         ComboSelect methodSelect =new ComboSelect("method");
         for (int i=0;i<100;i++) {
             methodSelect.add(new SelectOption("method"+i, "com.m.monitor.me.admin.controller.d.com.m.monitor.me.admin.controller.d"+i));
