@@ -3,11 +3,11 @@
 <script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
-    function geRealTimeData() {
+    function geRealTimeDataByMinute() {
         var _datas;
         $.ajax({
             type : "GET",
-            url : "real_time/data",
+            url : "real_time/dataByMinute",
             dataType: "json",
             async : false,
             success : function(data){
@@ -16,15 +16,10 @@
         });
         return _datas;
     }
-    themeprimary = getThemeColorFromCss('themeprimary');
-    themesecondary = getThemeColorFromCss('themesecondary');
-    themethirdcolor = getThemeColorFromCss('themethirdcolor');
-    themefourthcolor = getThemeColorFromCss('themefourthcolor');
-    themefifthcolor = getThemeColorFromCss('themefifthcolor');
     setTimeout(function () {
-        new RealTimeVisitorsChart('${elementId}','${color}').init(geRealTimeData())
+        new RealTimeVisitorsChart('${elementId}','${color}').init(geRealTimeDataByMinute())
     },2000);
     setInterval(function () {
-        new RealTimeVisitorsChart('${elementId}','${color}').init(geRealTimeData())
+        new RealTimeVisitorsChart('${elementId}','${color}').init(geRealTimeDataByMinute())
     },60*1000);
 </script>

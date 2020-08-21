@@ -7,6 +7,7 @@ import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -71,14 +72,13 @@ public class BaseMongoService<T>{
         return findPage(collectName ,null,null, null,clazz);
     }
 
-    public List<T> findPage(String collectName, Map<String, String> conditions, Integer currentPage, Integer size,Class<T> clazz) {
-        Query query = new Query();
-        if (!CollectionUtils.isEmpty(conditions)) {
-            conditions.forEach((key, value) -> query.addCriteria(Criteria.where(key).is(value)));
-        }
+    public List<T> findPage(String collectName,Query query, Integer currentPage, Integer size,Class<T> clazz) {
         if (!ObjectUtils.isEmpty(currentPage) && ObjectUtils.isEmpty(size)) {
             query.limit(size).skip(size * (currentPage - 1));
         }
+        return mongoTemplate.find(query, clazz, collectName);
+    }
+    public List<T> find(String collectName,Query query, Class<T> clazz) {
         return mongoTemplate.find(query, clazz, collectName);
     }
     private Query createQuery(String id){

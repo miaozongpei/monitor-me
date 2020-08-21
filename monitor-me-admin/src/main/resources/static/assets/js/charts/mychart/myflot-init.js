@@ -6,8 +6,7 @@ function RealTimeLineChart(elementId,color) {
         init:function (data) {
             $.plot("#realtime-"+elementId, [data], {
                 yaxis: {
-                    min: 0,
-                    max:3000
+                    min: 0
                 },
                 xaxis: {
                     mode: "time",

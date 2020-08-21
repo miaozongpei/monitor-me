@@ -1,6 +1,7 @@
 package com.m.monitro.me.common.utils;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,12 +15,20 @@ public class DateUtil {
     public static final String FORMAT_YYYYMM = "yyyyMMdd";
 
 
-    public static String parseDate(Date time, String format){
+    public static String format(Date time, String format){
         DateFormat dateFormat=new SimpleDateFormat(format);
         return dateFormat.format(time);
     }
 
-    public static String parseSecond(long time){
-        return parseDate(new Date(time),FORMAT_YYYYMMDDHHMISS);
+    public static String formatSecond(long time){
+        return format(new Date(time),FORMAT_YYYYMMDDHHMISS);
+    }
+    public static Date parse(String time,String format){
+        DateFormat dateFormat=new SimpleDateFormat(format);
+        try {
+            return dateFormat.parse(time);
+        } catch (ParseException e) {
+           return null;
+        }
     }
 }

@@ -30,7 +30,7 @@ public class IntegratorSaveTask {
             @Override
             public void run() {
                 IntegratorRecord integratorRecord=new IntegratorRecord().build(integratorContext);
-                baseMongoService.insert(DateUtil.parseDate(new Date(),DateUtil.FORMAT_YYYYMM),integratorRecord);
+                baseMongoService.insert(DateUtil.format(new Date(),DateUtil.FORMAT_YYYYMM),integratorRecord);
             }
         });
     }

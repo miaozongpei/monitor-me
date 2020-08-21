@@ -15,7 +15,7 @@ public class PointIntegrator {
     private AtomicLong total= new AtomicLong(0);
 
     public void put(MonitorPoint point){
-        Long second= Long.parseLong(DateUtil.parseSecond(point.getEndTime()));
+        Long second= Long.parseLong(DateUtil.formatSecond(point.getEndTime()));
         getAndNew(second,point.getFullMethodName()).add(point);
         total.incrementAndGet();
 

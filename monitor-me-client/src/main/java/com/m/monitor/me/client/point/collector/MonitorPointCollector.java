@@ -35,7 +35,7 @@ public class MonitorPointCollector {
     public static PointIntegrator createOrGetIntegrator(MonitorPoint point){
         PointIntegrator integrator=pointIntegrators.get(pointIntegrators.size()-1);
         int len=integrator.getTotal().intValue();
-        Long second= Long.parseLong(DateUtil.parseSecond(point.getEndTime()));
+        Long second= Long.parseLong(DateUtil.formatSecond(point.getEndTime()));
         //if (len>=2000&&integrator.get(second)==null){
         //5秒新建一个聚合器
         if(integrator.getIntegratorMap().size()==5&&integrator.get(second)==null){

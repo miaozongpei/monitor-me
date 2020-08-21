@@ -25,7 +25,14 @@ public class TimeNorm{
     public List<MethodNorm> getMs() {
         return ms;
     }
-
+    public MethodNorm getMethodNorm(String methodName){
+        for (MethodNorm m:ms){
+            if (m.getM().equals(methodName)){
+                return m;
+            }
+        }
+        return null;
+    }
     public void setMs(List<MethodNorm> ms) {
         this.ms = ms;
     }
