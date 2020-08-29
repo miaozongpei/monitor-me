@@ -3,37 +3,32 @@ package com.m.monitor.me.service.mogodb.norm;
 import com.m.monitor.me.service.mogodb.base.BaseMongoService;
 import com.m.monitor.me.service.transfer.server.record.IntegratorNormRecord;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
-import com.m.monitro.me.common.utils.DateUtil;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.Date;
 import java.util.List;
-@Component
-public class MethodPointService extends BaseMongoService<IntegratorNormRecord> {
 
+@Component
+public class NormSecondService extends BaseMongoService<IntegratorNormRecord>{
+    private String collectionName="norm_second";
+    public void save(IntegratorNormRecord integratorNormRecord){
+        super.insert(collectionName,integratorNormRecord);
+    }
     public List<double[]> queryRealTimeNorm(String host,
                                             String methodName,
                                             long currentTime,
-                                            MonitorTimeUnitEnum timeUnit,
                                             int size){
-        MonitorNormBuilder builder=new MonitorNormBuilder(currentTime,timeUnit,size);
+        MonitorNormBuilder builder=new MonitorNormBuilder(currentTime,MonitorTimeUnitEnum.SECOND,size);
         Query query = new Query();
         query.addCriteria(Criteria.where("host").is(host));
         if (!StringUtils.isEmpty(methodName)) {
             query.addCriteria(Criteria.where("ts.ms.m").is(methodName));
         }
         query.addCriteria(Criteria.where("ts.t").gte(builder.getBeforeTime()).lt(currentTime));
-        List<IntegratorNormRecord> list=this.find(getCollectName(),query,IntegratorNormRecord.class);
+        List<IntegratorNormRecord> list=this.find(collectionName,query,IntegratorNormRecord.class);
         return builder.build(list,methodName);
     }
-
-    public String getCollectName(){
-        return DateUtil.format(new Date(),DateUtil.FORMAT_YYYYMM);
-    }
-
-
 
 }

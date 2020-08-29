@@ -1,6 +1,9 @@
 package com.m.monitor.me.service.transfer.server.task;
 
 import com.m.monitor.me.service.mogodb.base.BaseMongoService;
+import com.m.monitor.me.service.mogodb.norm.NormMinuteService;
+import com.m.monitor.me.service.mogodb.norm.NormSecondService;
+import com.m.monitor.me.service.transfer.server.builder.IntegratorNormBuilder;
 import com.m.monitro.me.common.transfer.IntegratorContext;
 import com.m.monitro.me.common.utils.DateUtil;
 
@@ -13,7 +16,10 @@ import java.util.concurrent.TimeUnit;
 
 public class IntegratorSaveTask {
     @Resource
-    private BaseMongoService baseMongoService;
+    private NormMinuteService normMinuteService;
+    @Resource
+    private NormSecondService normSecondService;
+
     private ExecutorService tasks;
     private static IntegratorSaveTask integratorSaveTask=new IntegratorSaveTask();
     private IntegratorSaveTask(){
@@ -29,8 +35,9 @@ public class IntegratorSaveTask {
         tasks.execute(new Runnable() {
             @Override
             public void run() {
-                IntegratorRecord integratorRecord=new IntegratorRecord().build(integratorContext);
-                baseMongoService.insert(DateUtil.format(new Date(),DateUtil.FORMAT_YYYYMM),integratorRecord);
+                IntegratorNormBuilder integratorNormBuilder=new IntegratorNormBuilder().build(integratorContext);
+                normSecondService.save(integratorNormBuilder.getSecondRecord());
+                normMinuteService.saveOrModify(integratorNormBuilder.getMinuteRecord());
             }
         });
     }

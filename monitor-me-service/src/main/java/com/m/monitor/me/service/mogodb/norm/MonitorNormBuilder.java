@@ -3,7 +3,7 @@ package com.m.monitor.me.service.mogodb.norm;
 
 import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
 import com.m.monitor.me.service.transfer.server.norm.TimeNorm;
-import com.m.monitor.me.service.transfer.server.task.IntegratorRecord;
+import com.m.monitor.me.service.transfer.server.record.IntegratorNormRecord;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import com.m.monitro.me.common.utils.DateUtil;
 import com.m.monitro.me.common.utils.DoubleUtil;
@@ -38,9 +38,9 @@ public class MonitorNormBuilder {
         return normMap;
     }
 
-    public List<double[]> build(List<IntegratorRecord> records,String targetMethod) {
+    public List<double[]> build(List<IntegratorNormRecord> records, String targetMethod) {
         Map<Long,Double> normMap=buildNormMap();
-        for (IntegratorRecord record : records) {
+        for (IntegratorNormRecord record : records) {
             for (TimeNorm timeNorm : record.getTs()) {
                 long targetTime = MonitorTimeUtil.toTime(timeNorm.getT(), timeUnit);
                 Double targetNorm=normMap.get(targetTime);
@@ -61,7 +61,7 @@ public class MonitorNormBuilder {
         List<double[]> targetList=new ArrayList<>();
         for (Map.Entry<Long,Double> entry:normMap.entrySet()){
             long time=DateUtil.parse(entry.getKey()+"",DateUtil.FORMAT_YYYYMMDDHHMISS).getTime();
-            targetList.add(new double[]{Double.parseDouble(time+""), DoubleUtil.avg(entry.getValue(),timeUnit.unit)});
+            targetList.add(new double[]{Double.parseDouble(time+""), entry.getValue()});
         }
         return targetList;
     }

@@ -25,7 +25,7 @@ import java.util.Map;
 public class BaseMongoService<T>{
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    protected MongoTemplate mongoTemplate;
 
     public void createCollection(String collectionName) {
         mongoTemplate.createCollection(collectionName);

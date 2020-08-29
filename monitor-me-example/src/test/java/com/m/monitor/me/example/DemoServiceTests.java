@@ -40,8 +40,8 @@ public class DemoServiceTests {
         for (int i = 0; i < 1002000; i++) {
             final int ii = i;
 			Future future= fixedThreadPool.submit(() -> {
-				//demoService.findUser("123456");
-				//demoService.findUserByName("miao");
+				demoService.findUser("123456");
+				demoService.findUserByName("miao");
 				demoService.updateUser();
             });
 			future.get();

@@ -1,61 +1,31 @@
 package com.m.monitor.me.service.transfer.server.norm;
 
 import com.m.monitro.me.common.utils.DoubleUtil;
+import lombok.Data;
 
-public class MethodNorm{
-        private String m;
-        private long min;
-        private long max;
-        private long sum;
-        private long total;
-        private double avg;
+@Data
+public class MethodNorm {
+    private String m;
+    private long min=0;
+    private long max=0;
+    private long sum=0;
+    private long total=0;
+    private double avg=0D;
 
-        public String getM() {
-                return m;
+    public void setAvg() {
+        this.avg = DoubleUtil.avg(sum, total);
+    }
+    public void add(MethodNorm norm) {
+        if (m.equals(norm.m)) {
+            if (norm.getMin() < min) {
+                min = norm.getMin();
+            }
+            if (norm.getMax() > max) {
+                max = norm.getMax();
+            }
+            this.sum+=norm.getSum();
+            this.total+=norm.total;
+            this.setAvg();
         }
-
-        public void setM(String m) {
-                this.m = m;
-        }
-
-        public long getMin() {
-                return min;
-        }
-
-        public void setMin(long min) {
-                this.min = min;
-        }
-
-        public long getMax() {
-                return max;
-        }
-
-        public void setMax(long max) {
-                this.max = max;
-        }
-
-        public long getSum() {
-                return sum;
-        }
-
-        public void setSum(long sum) {
-                this.sum = sum;
-        }
-
-        public long getTotal() {
-                return total;
-        }
-
-        public void setTotal(long total) {
-                this.total = total;
-
-        }
-
-        public double getAvg() {
-                return avg;
-        }
-
-        public void setAvg() {
-                this.avg=DoubleUtil.avg(sum,total);
-        }
+    }
 }
