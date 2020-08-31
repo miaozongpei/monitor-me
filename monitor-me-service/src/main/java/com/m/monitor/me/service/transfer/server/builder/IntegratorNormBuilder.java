@@ -1,6 +1,7 @@
 package com.m.monitor.me.service.transfer.server.builder;
 
 import com.m.monitor.me.service.transfer.server.record.IntegratorNormRecord;
+import com.m.monitor.me.service.transfer.server.record.MonitorPointRecord;
 import com.m.monitro.me.common.transfer.IntegratorContext;
 import lombok.Getter;
 
@@ -9,9 +10,11 @@ import java.util.Map;
 public class IntegratorNormBuilder {
     private IntegratorNormRecord secondRecord;
     private IntegratorNormRecord minuteRecord;
+    private MonitorPointRecord monitorPointRecord;
     public IntegratorNormBuilder build(IntegratorContext context){
         secondRecord=new IntegratorNormRecord(context.getName(),context.getHost());
         minuteRecord=new IntegratorNormRecord(context.getName(),context.getHost());
+        monitorPointRecord=new MonitorPointRecord(context.getName(),context.getHost());
         TimeNormBuilder timeNormBuilder=new TimeNormBuilder();
         for(Object key:context.getIts().keySet()){
             Long time=(Long)key;
@@ -19,6 +22,7 @@ public class IntegratorNormBuilder {
         }
         secondRecord.setTs(timeNormBuilder.buildSecond());
         minuteRecord.setTs(timeNormBuilder.buildMinute());
+        monitorPointRecord.setMs(timeNormBuilder.buildMonitorMethod());
         return this;
     }
 }

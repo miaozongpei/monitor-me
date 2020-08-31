@@ -15,14 +15,19 @@ import com.m.beyond.view.page.menus.SidebarMenu;
 import com.m.beyond.view.page.navbars.NavBar;
 import com.m.beyond.view.page.widgets.Widget;
 import com.m.monitor.me.admin.page.ServerRealTimeWidget;
+import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 @Controller
 public class IndexController {
+    @Resource
+    private MonitorPointService monitorPointService;
     @RequestMapping("/index")
     public  String index(Model model) {
         NavBar navBar=new NavBar("Monitor Me");
@@ -64,14 +69,21 @@ public class IndexController {
         //search
         MainRow searchRow=new MainRow();
         ComboSelect sysNameSelect=new ComboSelect("sysName");
-        sysNameSelect.add(new SelectOption("sys1","payment-transaction"));
-        sysNameSelect.add(new SelectOption("sys2","payment-account"));
-        sysNameSelect.add(new SelectOption("sys3","payment-channel"));
+        List<String> names=monitorPointService.queryNames();
+        for(String name:names){
+            sysNameSelect.add(new SelectOption(name, name));
+        }
         searchRow.add(sysNameSelect.setLg(3));
 
+
         ComboSelect methodSelect =new ComboSelect("method");
-        for (int i=0;i<100;i++) {
-            methodSelect.add(new SelectOption("method"+i, "com.m.monitor.me.admin.controller.d.com.m.monitor.me.admin.controller.d"+i));
+        methodSelect.add(new SelectOption("all", "all"));
+        if (names.size()>0) {
+            String defaultName =names.get(0);
+            List<String> methods=monitorPointService.queryMethodsByName(defaultName);
+            for (String method:methods) {
+                methodSelect.add(new SelectOption(method, method));
+            }
         }
         searchRow.add(methodSelect);
 

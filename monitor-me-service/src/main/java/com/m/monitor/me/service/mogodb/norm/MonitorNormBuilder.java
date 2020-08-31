@@ -61,7 +61,7 @@ public class MonitorNormBuilder {
         List<double[]> targetList=new ArrayList<>();
         for (Map.Entry<Long,Double> entry:normMap.entrySet()){
             long time=DateUtil.parse(entry.getKey()+"",DateUtil.FORMAT_YYYYMMDDHHMISS).getTime();
-            targetList.add(new double[]{Double.parseDouble(time+""), entry.getValue()});
+            targetList.add(new double[]{Double.parseDouble(time+""), DoubleUtil.avg(entry.getValue(),timeUnit.unit)});
         }
         return targetList;
     }

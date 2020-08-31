@@ -1,6 +1,5 @@
 package com.m.monitor.me.admin.controller;
 
-import com.m.monitor.me.service.mogodb.norm.MethodPointService;
 import com.m.monitor.me.service.mogodb.norm.NormMinuteService;
 import com.m.monitor.me.service.mogodb.norm.NormSecondService;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
@@ -20,9 +19,6 @@ import java.util.List;
 @RequestMapping("/real_time")
 public class RealTimeController {
     @Resource
-    private MethodPointService methodPointService;
-
-    @Resource
     private NormMinuteService normMinuteService;
     @Resource
     private NormSecondService normSecondService;
@@ -30,7 +26,6 @@ public class RealTimeController {
     @RequestMapping("/data")
     @ResponseBody
     public List<double[]> data(Model model) {
-
         long currentTime=Long.parseLong(DateUtil.formatSecond(new Date().getTime()));
         return normSecondService.queryRealTimeNorm("127.0.0.1", null,
                 MonitorTimeUtil.subTime(currentTime,1,MonitorTimeUnitEnum.MINUTE),60);
@@ -41,7 +36,7 @@ public class RealTimeController {
     public List<double[]> dataByMinute(Model model) {
         long currentTime=Long.parseLong(DateUtil.formatSecond(new Date().getTime()));
         return normMinuteService.queryRealTimeNorm("127.0.0.1", null,
-                currentTime, 24*60);
+                currentTime, 120);
     }
     @RequestMapping("/data1")
     @ResponseBody

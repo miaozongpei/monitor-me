@@ -2,13 +2,11 @@ package com.m.monitor.me.service.transfer.server.builder;
 
 import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
 import com.m.monitor.me.service.transfer.server.norm.TimeNorm;
+import com.m.monitor.me.service.transfer.server.record.MonitorMethod;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import com.m.monitro.me.common.utils.MonitorTimeUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TimeNormBuilder {
     private Map<Long,MethodNormBuilder> secondMap=new HashMap<>();
@@ -61,6 +59,19 @@ public class TimeNormBuilder {
             timeNorms.add(timeNorm);
         }
         return timeNorms;
+    }
+    public Set<MonitorMethod> buildMonitorMethod(){
+        Map<String, MethodNorm> all = new HashMap<>();
+        for (Map.Entry<Long,MethodNormBuilder> entry:this.minuteMap.entrySet()){
+            MethodNormBuilder methodNormBuilder=entry.getValue();
+            all.putAll(methodNormBuilder.getMinuteMap());
+        }
+        Set<MonitorMethod> methods=new HashSet<>();
+        for (Map.Entry<String,MethodNorm> entry:all.entrySet()){
+            MonitorMethod method=new MonitorMethod(entry.getKey());
+            methods.add(method);
+        }
+        return methods;
     }
 
 }
