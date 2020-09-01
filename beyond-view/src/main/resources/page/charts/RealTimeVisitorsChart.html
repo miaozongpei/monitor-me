@@ -1,5 +1,5 @@
-<div id="visitors-chart-${elementId}" class="chart"></div>
-<div id="visitors-chart-overview-${elementId}" class="chart chart-sm"></div>
+<div id="visitors-chart-${id}" class="chart"></div>
+<div id="visitors-chart-overview-${id}" class="chart chart-sm"></div>
 <script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
@@ -17,9 +17,9 @@
         return _datas;
     }
     setTimeout(function () {
-        new RealTimeVisitorsChart('${elementId}','${color}').init(geRealTimeDataByMinute())
-    },2000);
-    setInterval(function () {
-        new RealTimeVisitorsChart('${elementId}','${color}').init(geRealTimeDataByMinute())
-    },60*1000);
+        new RealTimeVisitorsChart('${id}','${color}').init(geRealTimeDataByMinute())
+    },100);
+   /* setInterval(function () {
+        new RealTimeVisitorsChart('${id}','${color}').init(geRealTimeDataByMinute())
+    },60*1000);*/
 </script>

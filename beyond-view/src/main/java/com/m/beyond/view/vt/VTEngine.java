@@ -8,6 +8,8 @@ import com.m.beyond.view.page.forms.ComboSelect;
 import com.m.beyond.view.page.forms.SelectOption;
 import com.m.beyond.view.page.mains.MainBody;
 import com.m.beyond.view.page.mains.MainRow;
+import com.m.beyond.view.page.tabs.Tab;
+import com.m.beyond.view.page.tabs.TabPane;
 import com.m.beyond.view.page.widgets.Widget;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -62,8 +64,8 @@ public class VTEngine {
     public static void main(String[] args) {
 
         Widget realTimeWidget = new Widget("Real-Time",null);
-
-System.out.println(realTimeWidget.toHtml());
+        Tab tab=new Tab().add(new TabPane("skdfjds",realTimeWidget));
+System.out.println(tab.toHtml());
 
 
 

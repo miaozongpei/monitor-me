@@ -13,6 +13,8 @@ import com.m.beyond.view.page.mains.MainHeader;
 import com.m.beyond.view.page.mains.MainRow;
 import com.m.beyond.view.page.menus.SidebarMenu;
 import com.m.beyond.view.page.navbars.NavBar;
+import com.m.beyond.view.page.tabs.Tab;
+import com.m.beyond.view.page.tabs.TabPane;
 import com.m.beyond.view.page.widgets.Widget;
 import com.m.monitor.me.admin.page.ServerRealTimeWidget;
 import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
@@ -92,6 +94,7 @@ public class IndexController {
         MainBody realTimeWidgetBody=new MainBody();
         realTimeWidgetBody.add(searchRow);
         realTimeWidgetBody.add(realTimeLineChartRow);
+
         realTimeWidgetBody.add(realTimeLineChartRow1);
         Widget realTimeWidget = new Widget("Real-Time",realTimeWidgetBody);
         realTimeWidget.setHeadBottom(true);

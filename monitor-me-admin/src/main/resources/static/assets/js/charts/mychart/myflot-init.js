@@ -100,6 +100,15 @@ function RealTimeVisitorsChart(elementId,color) {
                     aboveData: false
                 }
             });
+            $("#visitors-chart-"+elementId).bind("plotselected", function (event, ranges) {
+                plot = $.plot("#visitors-chart-"+elementId, [{ data: data}], $.extend(true, {}, options, {
+                    xaxis: {
+                        min: ranges.xaxis.from,
+                        max: ranges.xaxis.to
+                    }
+                }));
+                overview.setSelection(ranges, true);
+            });
             $("#visitors-chart-overview-"+elementId).bind("plotselected", function (event, ranges) {
                 plot.setSelection(ranges);
             });

@@ -7,15 +7,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class RealTimeLineChart extends AbstractElement {
-    private String elementId;
     private String color="themeprimary";
-
-    public RealTimeLineChart(String elementId) {
-        this.elementId = elementId;
-    }
-
-    public RealTimeLineChart(String elementId, String color) {
-        this.elementId = elementId;
+    public RealTimeLineChart(String color) {
+        super();
         this.color = color;
     }
 }

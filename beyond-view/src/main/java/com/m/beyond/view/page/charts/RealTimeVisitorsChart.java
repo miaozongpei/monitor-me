@@ -7,14 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RealTimeVisitorsChart extends AbstractElement {
-    private String elementId;
     private String color="themeprimary";
-    public RealTimeVisitorsChart(String elementId) {
-        this.elementId = elementId;
-    }
-
-    public RealTimeVisitorsChart(String elementId, String color) {
-        this.elementId = elementId;
+    public RealTimeVisitorsChart(String color) {
+        super();
         this.color = color;
     }
 }

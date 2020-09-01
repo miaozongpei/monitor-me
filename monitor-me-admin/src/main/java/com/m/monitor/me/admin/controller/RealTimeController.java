@@ -27,16 +27,18 @@ public class RealTimeController {
     @ResponseBody
     public List<double[]> data(Model model) {
         long currentTime=Long.parseLong(DateUtil.formatSecond(new Date().getTime()));
+        currentTime=MonitorTimeUtil.subTime(currentTime,1,MonitorTimeUnitEnum.MINUTE);
         return normSecondService.queryRealTimeNorm("127.0.0.1", null,
-                MonitorTimeUtil.subTime(currentTime,1,MonitorTimeUnitEnum.MINUTE),60);
+                currentTime,60);
     }
 
     @RequestMapping("/dataByMinute")
     @ResponseBody
     public List<double[]> dataByMinute(Model model) {
         long currentTime=Long.parseLong(DateUtil.formatSecond(new Date().getTime()));
+        currentTime=MonitorTimeUtil.subTime(currentTime,1,MonitorTimeUnitEnum.MINUTE);
         return normMinuteService.queryRealTimeNorm("127.0.0.1", null,
-                currentTime, 120);
+                currentTime, 60);
     }
     @RequestMapping("/data1")
     @ResponseBody

@@ -1,0 +1,34 @@
+<div class="tabbable tabs-below">
+    <div class="tab-content tabs-flat">
+#foreach($tabPane in $tabPanes)
+        <div id="tab${tabPane.id}" class="tab-pane#if($tabPane.active) in active#end">
+        </div>
+#end
+    </div>
+    <ul class="nav nav-tabs" id="myTab8">
+#foreach($tabPane in $tabPanes)
+        <li #if($tabPane.active)class="active"#end>
+            <a data-toggle="tab" href="#tab${tabPane.id}" onclick="to_tab${id}('${tabPane.id}')">${tabPane.title}</a>
+        </li>
+#end
+    </ul>
+</div>
+<script>
+
+    function to_tab${id}(id) {
+        $.ajax({
+            type : "GET",
+            url : "p/html",
+            dataType: "json",
+            async : false,
+            success : function(data){
+               $("#tab"+id).html(data.html);
+            }
+        });
+    }
+#foreach($tabPane in $tabPanes)
+    #if($tabPane.active)
+    to_tab${id}('${tabPane.id}');
+    #end
+#end
+</script>

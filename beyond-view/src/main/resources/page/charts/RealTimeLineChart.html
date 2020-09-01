@@ -1,4 +1,4 @@
-<div id="realtime-${elementId}" class="chart chart-lg"></div>
+<div id="realtime-${id}" class="chart chart-lg"></div>
 <script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
@@ -16,6 +16,6 @@
         return _datas;
     }
     setInterval(function () {
-        new RealTimeLineChart('${elementId}','${color}').init(geRealTimeData())
+        new RealTimeLineChart('${id}','${color}').init(geRealTimeData())
         },1000);
 </script>
