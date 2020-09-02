@@ -23,4 +23,55 @@ public class Beyond {
             "#9440ed"
     );
 
+    public final static List<String> bgColors= Arrays.asList(
+            "bg-themesecondary",
+            "bg-themethirdcolor",
+            "bg-themefourthcolor",
+            "bg-themefifthcolor",
+            "bg-white",
+            "bg-snow",
+            "bg-whitesmoke",
+            "bg-seashell",
+            "bg-ivory",
+            "bg-platinum",
+            "bg-lightgray",
+            "bg-gray",
+            "bg-darkgray",
+            "bg-silver",
+            "bg-sonic-silver",
+            "bg-storm-cloud",
+            "bg-lightcarbon",
+            "bg-carbon",
+            "bg-slate-gray",
+            "bg-darkcarbon",
+            "bg-blue",
+            "bg-info",
+            "bg-sky",
+            "bg-primary",
+            "bg-azure",
+            "bg-blueberry",
+            "bg-palegreen",
+            "bg-success",
+            "bg-green",
+            "bg-lightyellow",
+            "bg-yellow",
+            "bg-warning",
+            "bg-gold",
+            "bg-orange",
+            "bg-lightred",
+            "bg-darkorange",
+            "bg-red",
+            "bg-danger",
+            "bg-pink",
+            "bg-darkpink",
+            "bg-magenta",
+            "bg-purple",
+            "bg-maroon"
+    );
+    public final static List<String> iconFas= Arrays.asList(
+            "fa-tasks",
+            "fa-cubes",
+            "fa-sun-o"
+    );
+
 }

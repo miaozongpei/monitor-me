@@ -1,6 +1,8 @@
 package com.m.beyond.view.page.widgets;
 
 import com.m.beyond.view.page.AbstractElement;
+import com.m.beyond.view.page.mains.MainBody;
+import com.m.beyond.view.page.mains.MainRow;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,21 +16,29 @@ public class Widget extends AbstractElement {
     private boolean isMaximize=false;//最大化
     private boolean isCollapse=false;//折叠
     private boolean isDispose=false;//关闭
-    private AbstractElement body;
+    private MainBody body=new MainBody();
     public Widget(){
-
     }
-    public Widget(String headTitle, AbstractElement body) {
+    public Widget(String headTitle, MainBody body) {
         this.headTitle = headTitle;
         setBody(body);
     }
 
+    public Widget(String headTitle, AbstractElement body) {
+        this.headTitle = headTitle;
+        setBody(new MainBody().add(new MainRow().add(body)));
+    }
+
     private String htmlBody;
 
-    public void setBody(AbstractElement body) {
+    public void setBody(MainBody body) {
         this.body = body;
         if (body!=null) {
             this.htmlBody = body.toHtml();
         }
+    }
+    public void addRow(MainRow row){
+        this.body.add(row);
+        this.htmlBody = body.toHtml();
     }
 }

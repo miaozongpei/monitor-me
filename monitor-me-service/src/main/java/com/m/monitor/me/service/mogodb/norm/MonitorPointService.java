@@ -1,7 +1,6 @@
 package com.m.monitor.me.service.mogodb.norm;
 
 import com.m.monitor.me.service.mogodb.base.BaseMongoService;
-import com.m.monitor.me.service.transfer.server.record.IntegratorNormRecord;
 import com.m.monitor.me.service.transfer.server.record.MonitorPointRecord;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -36,6 +35,15 @@ public class MonitorPointService extends BaseMongoService<MonitorPointRecord> {
     }
     public List<String> queryHosts(){
         Query query = new Query();
+        return mongoTemplate.findDistinct(query,"host",collectionName,MonitorPointRecord.class,String.class);
+    }
+    public List<String> queryMethods(){
+        Query query = new Query();
+        return mongoTemplate.findDistinct(query,"ms.m",collectionName,MonitorPointRecord.class,String.class);
+    }
+    public List<String> queryHostsByName(String name){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("name").is(name));
         return mongoTemplate.findDistinct(query,"host",collectionName,MonitorPointRecord.class,String.class);
     }
     public List<String> queryMethodsByName(String name){

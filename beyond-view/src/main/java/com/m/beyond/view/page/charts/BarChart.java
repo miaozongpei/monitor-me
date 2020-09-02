@@ -8,7 +8,4 @@ import lombok.Setter;
 @Getter
 public class BarChart extends AbstractElement {
     private String id;
-    public BarChart(String id){
-        this.id=id;
-    }
 }
