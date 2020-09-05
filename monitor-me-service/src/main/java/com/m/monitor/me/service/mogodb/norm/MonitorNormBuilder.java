@@ -48,11 +48,7 @@ public class MonitorNormBuilder {
                     if (StringUtils.isEmpty(targetMethod)) {
                         normMap.put(targetTime, targetNorm + timeNorm.getAvg());
                     } else {
-                        for (MethodNorm methodNorm : timeNorm.getMs()) {
-                            if (methodNorm.getM().equals(targetMethod)) {
-                                normMap.put(targetTime, normMap.get(targetTime) + timeNorm.getAvg());
-                            }
-                        }
+                        normMap.put(targetTime,targetNorm+timeNorm.getMethodNorm(targetMethod).getAvg());
                     }
                 }
             }
@@ -61,7 +57,7 @@ public class MonitorNormBuilder {
         List<double[]> targetList=new ArrayList<>();
         for (Map.Entry<Long,Double> entry:normMap.entrySet()){
             long time=DateUtil.parse(entry.getKey()+"",DateUtil.FORMAT_YYYYMMDDHHMISS).getTime();
-            targetList.add(new double[]{Double.parseDouble(time+""), DoubleUtil.avg(entry.getValue(),timeUnit.unit)});
+            targetList.add(new double[]{Double.parseDouble(time+""), DoubleUtil.avg(entry.getValue(),1)});
         }
         return targetList;
     }

@@ -18,8 +18,13 @@
     function to_tab${id}(id) {
         $.ajax({
             type : "GET",
-            url : "p/html",
+            url : '${ajax.url}',
             dataType: "json",
+            data: {
+                #foreach($data in ${ajax.datas.entrySet()})
+                '${data.key}':${data.value},
+                #end
+            },
             async : false,
             success : function(data){
                $("#tab"+id).html(data.html);

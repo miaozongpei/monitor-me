@@ -23,7 +23,6 @@ public class Widget extends AbstractElement {
         this.headTitle = headTitle;
         setBody(body);
     }
-
     public Widget(String headTitle, AbstractElement body) {
         this.headTitle = headTitle;
         setBody(new MainBody().add(new MainRow().add(body)));

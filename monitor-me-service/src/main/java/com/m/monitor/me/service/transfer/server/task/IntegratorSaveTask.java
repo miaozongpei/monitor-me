@@ -1,9 +1,7 @@
 package com.m.monitor.me.service.transfer.server.task;
 
 import com.m.monitor.me.service.mogodb.base.BaseMongoService;
-import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
-import com.m.monitor.me.service.mogodb.norm.NormMinuteService;
-import com.m.monitor.me.service.mogodb.norm.NormSecondService;
+import com.m.monitor.me.service.mogodb.norm.*;
 import com.m.monitor.me.service.transfer.server.builder.IntegratorNormBuilder;
 import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
 import com.m.monitor.me.service.transfer.server.record.MonitorPointRecord;
@@ -18,10 +16,18 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class IntegratorSaveTask {
+
+    @Resource
+    private NormSecondService normSecondService;
+
     @Resource
     private NormMinuteService normMinuteService;
     @Resource
-    private NormSecondService normSecondService;
+    private NormHourService normHourService;
+    @Resource
+    private NormDayService normDayService;
+
+
     @Resource
     private MonitorPointService monitorPointService;
 
@@ -41,9 +47,14 @@ public class IntegratorSaveTask {
         tasks.execute(new Runnable() {
             @Override
             public void run() {
-                IntegratorNormBuilder integratorNormBuilder=new IntegratorNormBuilder().build(integratorContext);
+                IntegratorNormBuilder integratorNormBuilder=new IntegratorNormBuilder(integratorContext);
+                integratorNormBuilder.build();
                 normSecondService.save(integratorNormBuilder.getSecondRecord());
-                normMinuteService.saveOrModify(integratorNormBuilder.getMinuteRecord());
+
+                normMinuteService.saveOrModify(integratorNormBuilder);
+                normHourService.saveOrModify(integratorNormBuilder);
+                normDayService.saveOrModify(integratorNormBuilder);
+
 
                 monitorPointService.saveOrModify(integratorNormBuilder.getMonitorPointRecord());
             }

@@ -2,10 +2,24 @@
 <ul class="nav sidebar-menu">
     <!--Dashboard-->
     <li class="active">
-        <a href="index">
+        <a href="javascript:to_main('p/points')">
             <i class="menu-icon fa fa-bar-chart-o"></i>
             <span class="menu-text">Monitor Points</span>
         </a>
     </li>
 </ul>
 <!-- /Sidebar Menu -->
+<script>
+    function to_main(pageUrl) {
+        $.ajax({
+            type : "GET",
+            url : pageUrl,
+            dataType: "json",
+            async : false,
+            success : function(data){
+                $("#page-body").html(data.html);
+            }
+        });
+    }
+
+</script>

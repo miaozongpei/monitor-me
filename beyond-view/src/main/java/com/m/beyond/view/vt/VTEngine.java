@@ -2,6 +2,8 @@ package com.m.beyond.view.vt;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.m.beyond.view.Beyond;
+import com.m.beyond.view.data.ajaxs.AjaxData;
 import com.m.beyond.view.page.AbstractElement;
 import com.m.beyond.view.page.charts.RealTimeLineChart;
 import com.m.beyond.view.page.forms.ComboSelect;
@@ -17,6 +19,7 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -62,11 +65,13 @@ public class VTEngine {
     }
 
     public static void main(String[] args) {
-
-        Widget realTimeWidget = new Widget("Real-Time",null);
-        Tab tab=new Tab().add(new TabPane("skdfjds",realTimeWidget));
-System.out.println(tab.toHtml());
-
+        Map<String,String> datas=new HashMap<>();
+        datas.put("sys.name","$('#sys.name').val()");//$('#sys.name').val()
+        datas.put("point.method","$('#point.method').val()");
+        datas.put("server.host","'1111.1.1.1'");
+        AjaxData ajaxData=new AjaxData("/real_time/data",datas);
+        RealTimeLineChart realTimeLineChart=new RealTimeLineChart(Beyond.colors.get(0),ajaxData);
+System.out.println(realTimeLineChart.toHtml());
 
 
 

@@ -7,4 +7,8 @@ import lombok.Setter;
 @Setter
 public class PageHtml {
     private String html;
+
+    public PageHtml(String html) {
+        this.html = html;
+    }
 }

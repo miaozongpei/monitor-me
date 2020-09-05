@@ -2,12 +2,17 @@
 <script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
-    function geRealTimeData() {
+    function geRealTimeData${id}() {
         var _datas;
         $.ajax({
             type : "GET",
-            url : "real_time/data",
+            url : "${ajax.url}",
             dataType: "json",
+            data: {
+            #foreach($data in ${ajax.datas.entrySet()})
+                '${data.key}':${data.value},
+            #end
+            },
             async : false,
             success : function(data){
                 _datas=data;
@@ -16,6 +21,6 @@
         return _datas;
     }
     setInterval(function () {
-        new RealTimeLineChart('${id}','${color}').init(geRealTimeData())
-        },1000);
+        new RealTimeLineChart('${id}','${color}').init(geRealTimeData${id}())
+        },2000);
 </script>

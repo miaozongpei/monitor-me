@@ -69,8 +69,8 @@ public class Beyond {
             "bg-maroon"
     );
     public final static List<String> iconFas= Arrays.asList(
-            "fa-tasks",
             "fa-cubes",
+            "fa-tasks",
             "fa-sun-o"
     );
 

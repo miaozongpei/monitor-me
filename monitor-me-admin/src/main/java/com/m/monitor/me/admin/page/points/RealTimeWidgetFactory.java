@@ -1,4 +1,4 @@
-package com.m.monitor.me.admin.page;
+package com.m.monitor.me.admin.page.points;
 
 import com.m.beyond.view.Beyond;
 import com.m.beyond.view.page.charts.BarChart;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
+
 @Component
 public class RealTimeWidgetFactory {
     @Resource
@@ -23,14 +24,14 @@ public class RealTimeWidgetFactory {
         widget.setHeadBottom(true);
         //search
         MainRow searchRow=new MainRow();
-        ComboSelect sysNameSelect=new ComboSelect("sysName");
+        ComboSelect sysNameSelect=new ComboSelect("sys_name");
         List<String> names=monitorPointService.queryNames();
         for(String name:names){
             sysNameSelect.add(new SelectOption(name, name));
         }
         searchRow.add(sysNameSelect.setLg(3));
 
-        ComboSelect methodSelect =new ComboSelect("method");
+        ComboSelect methodSelect =new ComboSelect("point_method");
         methodSelect.add(new SelectOption("all", "all"));
         if (names.size()>0) {
             String defaultName =names.get(0);
