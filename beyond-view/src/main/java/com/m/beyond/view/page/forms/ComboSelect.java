@@ -1,6 +1,7 @@
 package com.m.beyond.view.page.forms;
 
 import com.m.beyond.view.page.AbstractElement;
+import com.m.beyond.view.page.functions.AbstractFunction;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class ComboSelect extends AbstractElement {
     private String name;
     private List<SelectOption> options=new ArrayList<>();
-
+    private String bindOnchangeFunction;
     public ComboSelect(String name) {
         this.name = name;
     }

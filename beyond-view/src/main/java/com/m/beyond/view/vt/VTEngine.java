@@ -61,6 +61,7 @@ public class VTEngine {
         }
         String template=element.getClass().getName().replace(basePackage,"");
         template=template.replace(".","/")+templateFileExt;
+        //model.put("null",new NullTool()),
         return parse(template,model);
     }
 

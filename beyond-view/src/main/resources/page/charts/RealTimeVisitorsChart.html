@@ -3,21 +3,20 @@
 <script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
-    function geRealTimeDataByMinute() {
-        var _datas;
+    setTimeout(function () {
         $.ajax({
             type : "GET",
-            url : "real_time/dataByMinute",
+            url : "${ajax.url}",
             dataType: "json",
-            async : false,
+            data: {
+                #foreach($data in ${ajax.datas.entrySet()})
+                '${data.key}':${data.value},
+                #end
+            },
             success : function(data){
-                _datas=data;
+                new RealTimeVisitorsChart('${id}','${color}').init(data)
             }
         });
-        return _datas;
-    }
-    setTimeout(function () {
-        new RealTimeVisitorsChart('${id}','${color}').init(geRealTimeDataByMinute())
     },100);
    /* setInterval(function () {
         new RealTimeVisitorsChart('${id}','${color}').init(geRealTimeDataByMinute())

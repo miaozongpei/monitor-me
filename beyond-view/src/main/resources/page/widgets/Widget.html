@@ -1,10 +1,10 @@
 <div class="widget">
-    <div class="widget-header#if($headBottom) bordered-bottom bordered-themeprimary#end">
-    <!--
-        <a class="wave in warning" href="#"></a>
-    -->
-    #if($widgetIcon)
-        <i class="widget-icon fa ${widgetIcon} themeprimary"></i>
+    <div class="widget-header ${headColor} #if($headBottom) bordered-bottom bordered-themeprimary#end">
+    #if($warning)
+        <a class="wave in warning" id="warning-${headTitle}" href="#"></a>
+    #end
+    #if("$widgetIcon"!="")
+       <i class="widget-icon fa $widgetIcon"></i>
     #end
         <span class="widget-caption">${headTitle}</span>
         <div class="widget-buttons">
@@ -29,3 +29,13 @@
         ${htmlBody}
     </div>
 </div>
+<script>
+    function widget_warning(host,is_warning) {
+        //alert(is_warning);
+        if (is_warning){
+            $("[id='warning-"+host+"']").attr("class","wave in warning");;
+        }else{
+            $("[id='warning-"+host+"']").attr("class","");;
+        }
+    }
+</script>

@@ -1,5 +1,6 @@
 package com.m.beyond.view.page.charts;
 
+import com.m.beyond.view.data.ajaxs.AjaxData;
 import com.m.beyond.view.page.AbstractElement;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,9 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RealTimeVisitorsChart extends AbstractElement {
-    private String color="themeprimary";
-    public RealTimeVisitorsChart(String color) {
+    private String color;
+    private AjaxData ajax;
+
+    public RealTimeVisitorsChart(String color,AjaxData ajax) {
         super();
         this.color = color;
+        this.ajax=ajax;
     }
 }

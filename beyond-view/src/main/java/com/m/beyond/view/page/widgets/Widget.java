@@ -10,7 +10,9 @@ import lombok.Setter;
 @Getter
 public class Widget extends AbstractElement {
     private String headTitle;
+    private String headColor;
     private String widgetIcon;
+    private boolean isWarning=false;//是否告警
     private boolean isHeadBottom=false;//
 
     private boolean isMaximize=false;//最大化

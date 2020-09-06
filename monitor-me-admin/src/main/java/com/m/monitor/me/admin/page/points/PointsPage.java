@@ -1,7 +1,9 @@
 package com.m.monitor.me.admin.page.points;
 
 import com.m.beyond.view.Beyond;
+import com.m.beyond.view.data.ajaxs.AjaxData;
 import com.m.beyond.view.page.databoxes.HalvedDataBox;
+import com.m.beyond.view.page.functions.ToHtml;
 import com.m.beyond.view.page.mains.MainBody;
 import com.m.beyond.view.page.mains.MainRow;
 import com.m.monitor.me.admin.page.BasePage;
@@ -11,7 +13,10 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Component
 public class PointsPage extends BasePage {
     @Resource
@@ -20,6 +25,8 @@ public class PointsPage extends BasePage {
     private RealTimeWidgetFactory realTimeWidgetFactory;
     @Override
     public PageHtml create(HttpServletRequest request) {
+        String host=request.getParameter("sys_name");
+        String method=request.getParameter("point_method");
         MainBody mainBody=new MainBody();
         //dataBoxRow
         MainRow dataBoxRow=new MainRow();
@@ -30,7 +37,7 @@ public class PointsPage extends BasePage {
         List<String> methods=monitorPointService.queryMethods();
         dataBoxRow.add(new HalvedDataBox("Method Points",methods.size(),Beyond.bgColors.get(3),Beyond.iconFas.get(2)));
         mainBody.add(dataBoxRow);
-        mainBody.add(new MainRow().add(realTimeWidgetFactory.create("Real-Time")));
+        mainBody.add(new MainRow().add(realTimeWidgetFactory.create("Server Points",host,method)));
 
         return new PageHtml(mainBody.toHtml());
     }

@@ -2,25 +2,23 @@
 <script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
-    function geRealTimeData${id}() {
-        var _datas;
+    setInterval(function () {
+        var joinData={
+        #foreach($data in ${ajax.datas.entrySet()})
+        '${data.key}':${data.value},
+        #end
+        }
         $.ajax({
             type : "GET",
             url : "${ajax.url}",
             dataType: "json",
-            data: {
-            #foreach($data in ${ajax.datas.entrySet()})
-                '${data.key}':${data.value},
-            #end
-            },
+            data: joinData,
             async : false,
             success : function(data){
-                _datas=data;
+                new RealTimeLineChart('${id}','${color}').init(data);
+                var is_warning=(data[0][1]<=0)
+                widget_warning(joinData.server_host,is_warning);
             }
         });
-        return _datas;
-    }
-    setInterval(function () {
-        new RealTimeLineChart('${id}','${color}').init(geRealTimeData${id}())
-        },2000);
+    },2000);
 </script>

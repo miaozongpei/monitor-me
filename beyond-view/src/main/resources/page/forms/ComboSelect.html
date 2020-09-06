@@ -2,7 +2,7 @@
 <div class="dowebok">
     <select name="${name}" id="${name}">
         #foreach($option in $options)
-        <option value="${option.value}">${option.label}</option>
+        <option value="${option.value}"  #if(${option.selected})selected#end>${option.label}</option>
         #end
     </select>
 </div>
@@ -10,5 +10,7 @@
 <script>
     $(function() {
         $('select').comboSelect();
+        $('#${name}').change(${bindOnchangeFunction});
     });
+
 </script>

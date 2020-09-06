@@ -1,0 +1,16 @@
+function() {
+    $.ajax({
+        type: "GET",
+        url: "${ajax.url}",
+        dataType: "json",
+        data: {
+            #foreach($data in ${ajax.datas.entrySet()})
+            '${data.key}':${data.value},
+            #end
+        },
+        async : false,
+        success:function (data) {
+            $("#${toHtmlId}").html(data.html);
+        }
+    });
+}

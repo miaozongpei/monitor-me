@@ -9,13 +9,15 @@ import java.util.UUID;
 @Getter
 public class TabPane extends AbstractElement {
     private String title;
+    private String type;
     private boolean isActive=false;
     private AbstractElement body;
     private String htmlBody;
 
-    public TabPane(String title,AbstractElement body) {
+    public TabPane(String title,String type,AbstractElement body) {
         super();
         this.title = title;
+        this.type=type;
         this.setBody(body);
     }
 

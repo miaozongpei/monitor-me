@@ -1,5 +1,6 @@
 package com.m.monitor.me.admin.page.points;
 
+import com.m.beyond.view.Beyond;
 import com.m.beyond.view.data.ajaxs.AjaxData;
 import com.m.beyond.view.page.charts.RealTimeLineChart;
 import com.m.beyond.view.page.charts.RealTimeVisitorsChart;
@@ -7,6 +8,7 @@ import com.m.beyond.view.page.mains.MainRow;
 import com.m.beyond.view.page.tabs.Tab;
 import com.m.beyond.view.page.tabs.TabPane;
 import com.m.beyond.view.page.widgets.Widget;
+import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +25,10 @@ public class ServerRealTimeWidget {
         this.serverIp=serverIp;
         this.color=color;
         widget.setHeadTitle(serverIp);
+        widget.setWidgetIcon(Beyond.iconFas.get(1));
+        widget.setDispose(true);
+        widget.setWarning(true);
+        widget.setHeadColor(Beyond.bgColors.get(26));
         initBody(color);
     }
     private void initBody(String color){
@@ -33,9 +39,9 @@ public class ServerRealTimeWidget {
         widget.addRow(new MainRow().add(new RealTimeLineChart(color,new AjaxData("/real_time/data",datas))));
 
         Tab timeTabs=new Tab(new AjaxData("/p/time_tab",datas));
-        timeTabs.add(new TabPane("Last 1 hour",new RealTimeVisitorsChart(color)));
-        timeTabs.add(new TabPane("Last 1 day",new RealTimeVisitorsChart(color)));
-        timeTabs.add(new TabPane("Last 1 month",new RealTimeVisitorsChart(color)));
+        timeTabs.add(new TabPane("Last 1 hour", MonitorTimeUnitEnum.HOUR.name(),null));
+        timeTabs.add(new TabPane("Last 1 day",MonitorTimeUnitEnum.DAY.name(),null));
+        timeTabs.add(new TabPane("Last 1 month",MonitorTimeUnitEnum.MONTH.name(),null));
         widget.addRow(new MainRow().add(timeTabs));
     }
 }
