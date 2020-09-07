@@ -6,9 +6,11 @@ import com.m.monitor.me.service.transfer.server.builder.MethodNormBuilder;
 import com.m.monitor.me.service.transfer.server.norm.TimeNorm;
 import com.m.monitor.me.service.transfer.server.record.IntegratorNormRecord;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
+import com.m.monitro.me.common.utils.DoubleUtil;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -73,6 +75,21 @@ public abstract class BaseNormService extends BaseMongoService<IntegratorNormRec
         query.addCriteria(Criteria.where("ts.t").gte(builder.getBeforeTime()).lt(currentTime));
         List<IntegratorNormRecord> list=this.find(getCollectionName(),query,IntegratorNormRecord.class);
         return builder.build(list,methodName);
+    }
+    public double[] queryRealTimeNorm(String name,String host,
+                                            String methodName,
+                                            long currentTime){
+        MonitorNormBuilder builder=new MonitorNormBuilder(currentTime, getMonitorTimeUnitEnum(),1);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("name").is(name));
+        query.addCriteria(Criteria.where("host").is(host));
+        if (!StringUtils.isEmpty(methodName)) {
+            query.addCriteria(Criteria.where("ts.ms.m").is(methodName));
+        }
+        query.addCriteria(Criteria.where("ts.t").is(currentTime));
+        List<IntegratorNormRecord> list=this.find(getCollectionName(),query,IntegratorNormRecord.class);
+        List<double[]> result= builder.build(list,methodName);
+        return CollectionUtils.isEmpty(result)?new double[]{Double.parseDouble(currentTime+""),0D}:result.get(0);
     }
 
 }

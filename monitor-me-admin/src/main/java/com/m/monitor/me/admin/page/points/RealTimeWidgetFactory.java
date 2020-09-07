@@ -74,7 +74,7 @@ public class RealTimeWidgetFactory {
         }
 
         //访问量
-        Widget barWidget = new Widget("Servers Comparison",new BarChart());
+        Widget barWidget = new Widget("Servers Comparison",new BarChart(new AjaxData("real_time/data_servers_bar",datas)));
         widget.addRow(new MainRow().add(barWidget));
 
         return widget;

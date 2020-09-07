@@ -37,7 +37,11 @@
             <version>1.18.12</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.mzp</groupId>
+            <artifactId>beyond-view</artifactId>
+            <version>${monitor.me.service.version}</version>
+        </dependency>
 
     </dependencies>
 

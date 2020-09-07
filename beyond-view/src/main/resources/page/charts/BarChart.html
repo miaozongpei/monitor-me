@@ -4,8 +4,13 @@
         var _datas;
         $.ajax({
             type : "GET",
-            url : "bar_chart/data",
+            url : "${ajax.url}",
             dataType: "json",
+            data: {
+                #foreach($data in ${ajax.datas.entrySet()})
+                '${data.key}':${data.value},
+                #end
+            },
             async : false,
             success : function(data){
                 _datas=data;

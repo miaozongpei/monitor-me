@@ -1,26 +1,21 @@
 package com.m.monitor.me.admin.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.m.monitor.me.service.mogodb.norm.NormDayService;
-import com.m.monitor.me.service.mogodb.norm.NormHourService;
-import com.m.monitor.me.service.mogodb.norm.NormMinuteService;
-import com.m.monitor.me.service.mogodb.norm.NormSecondService;
+import com.m.beyond.view.data.charts.BarchartData;
+import com.m.monitor.me.service.mogodb.norm.*;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import com.m.monitro.me.common.utils.DateUtil;
 import com.m.monitro.me.common.utils.MonitorTimeUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/real_time")
@@ -35,6 +30,8 @@ public class RealTimeController {
 
     @Resource
     private NormDayService normDayService;
+    @Resource
+    private MonitorPointService monitorPointService;
 
     @RequestMapping("/data")
     @ResponseBody
@@ -73,13 +70,27 @@ public class RealTimeController {
             return null;
         }
     }
-    @RequestMapping("/data1")
+    @RequestMapping("/data_servers_bar")
     @ResponseBody
-    public List<Double[]> data1(Model model) {
-        List<Double[]> data=new ArrayList<>();
-        for (int i=0;i<60;i++) {
-            data.add(new Double[]{Double.parseDouble(new Date().getTime() + i*1000+""), Math.random()*3000});
+    public BarchartData dataServerBar(HttpServletRequest request) {
+        String name=request.getParameter("sys_name");
+        String method=request.getParameter("point_method");
+        method=StringUtils.isEmpty(method)||"all".equals(method)?null:method;
+        List<String> hosts=monitorPointService.queryHosts();
+        BarchartData data=new BarchartData();
+        long currentTime=Long.parseLong(DateUtil.formatSecond(new Date().getTime()));
+        currentTime=MonitorTimeUtil.toTime(currentTime,MonitorTimeUnitEnum.DAY);
+        for(int i=0;i<10;i++) {
+            Map<String, Double> yData = new HashMap<>();
+            long time=MonitorTimeUtil.subTime(currentTime,i,MonitorTimeUnitEnum.DAY);
+            for (String host : hosts) {
+                double[] norm=normDayService.queryRealTimeNorm(name,host,method,time);
+                yData.put(host, norm[1]);
+            }
+            data.putData("date",Long.toString(time).substring(0,8),yData);
         }
+
         return data;
+
     }
 }
