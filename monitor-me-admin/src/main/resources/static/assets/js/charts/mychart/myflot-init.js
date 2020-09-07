@@ -10,6 +10,7 @@ function RealTimeLineChart(elementId,color) {
                 },
                 xaxis: {
                     mode: "time",
+                    timezone:"browser",
                     tickLength: 10
                 },
                 colors: [color],
@@ -48,6 +49,7 @@ function RealTimeVisitorsChart(elementId,color) {
             var options = {
                 xaxis: {
                     mode: "time",
+                    timezone:"browser",
                     tickLength: 5,
                     color: gridbordercolor
                 },
@@ -85,6 +87,7 @@ function RealTimeVisitorsChart(elementId,color) {
                 },
                 xaxis: {
                     ticks: [],
+                    timezone:"browser",
                     mode: "time"
                 },
                 yaxis: {
