@@ -11,6 +11,13 @@
     <groupId>com.m.monitor.me</groupId>
     <artifactId>monitor-me-common</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.xerial.snappy/snappy-java -->
+        <dependency>
+            <groupId>org.xerial.snappy</groupId>
+            <artifactId>snappy-java</artifactId>
+            <version>1.1.7.6</version>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -1,5 +1,6 @@
 package com.m.monitor.me.client.transfer.client;
 
+import com.m.monitro.me.common.utils.TransferSnappyUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -107,7 +108,8 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
             return false;
         }
         try {
-            clientChannel.writeAndFlush(msg);
+            String msgStr=TransferSnappyUtil.compressToStr(msg);
+            clientChannel.writeAndFlush(msgStr);
             return true;
         }catch (Exception e){
             return false;

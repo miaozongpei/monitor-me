@@ -8,6 +8,8 @@ import com.m.monitor.me.client.transfer.client.MonitorExpressWayClient;
 import com.m.monitor.me.client.transfer.file.MonitorWriterManager;
 import com.m.monitro.me.common.transfer.IntegratorContext;
 import com.m.monitro.me.common.utils.MethodTraceIdUtil;
+import com.m.monitro.me.common.utils.TransferSnappyUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class IntegratorTruckRunnable implements Runnable {
     @Value("${monitor.me.application.name:monitor-me}")
     private String monitorApplicationName="monitor-me";
@@ -45,8 +48,9 @@ public class IntegratorTruckRunnable implements Runnable {
         clearPointMap();
     }
     public boolean transfer(PointIntegrator pointIntegrator){
-        String jsonPointIntegrator=JSON.toJSONString(new IntegratorContext(monitorApplicationName,pointIntegrator.getIntegratorMap()));
+        String jsonPointIntegrator=JSON.toJSONString(new IntegratorContext(monitorApplicationName,pointIntegrator.getIntegratorMap(),pointIntegrator.buildMethodChainsMap()));
         if (monitorExpressWayClient.checkAndConnect(host,port)) {
+
             Boolean isSend = monitorExpressWayClient.send(jsonPointIntegrator);
         }
         //如果发送失败写入本地文件

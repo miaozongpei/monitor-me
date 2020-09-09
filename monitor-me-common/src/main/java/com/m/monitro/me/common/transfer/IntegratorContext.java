@@ -1,19 +1,21 @@
 package com.m.monitro.me.common.transfer;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class IntegratorContext {
     private String name;
     private LinkedHashMap its;
-
+    private Map<String,String> mcs;
     private String host;
 
     public IntegratorContext() {
     }
 
-    public IntegratorContext(String name, LinkedHashMap its) {
+    public IntegratorContext(String name, LinkedHashMap its,Map<String,String> mcs) {
         this.name = name;
         this.its = its;
+        this.mcs=mcs;
     }
 
     public String getName() {
@@ -40,5 +42,13 @@ public class IntegratorContext {
 
     public void setIts(LinkedHashMap its) {
         this.its = its;
+    }
+
+    public Map<String, String> getMcs() {
+        return mcs;
+    }
+
+    public void setMcs(Map<String, String> mcs) {
+        this.mcs = mcs;
     }
 }

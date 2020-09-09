@@ -12,14 +12,20 @@ public class DateUtil {
      */
     public static final String FORMAT_YYYYMMDDHHMISS = "yyyyMMddHHmmss";
 
+    public static final String FORMAT_YYYYMMDDHHMISSSSS = "yyyy-MM-dd HH:mm:ss:SSS";
+
+
     public static final String FORMAT_YYYYMM = "yyyyMMdd";
 
 
-    public static String format(Date time, String format){
+    public static String format(Date date, String format){
         DateFormat dateFormat=new SimpleDateFormat(format);
-        return dateFormat.format(time);
+        return dateFormat.format(date);
     }
-
+    public static String format(long time, String format){
+        DateFormat dateFormat=new SimpleDateFormat(format);
+        return dateFormat.format(new Date(time));
+    }
     public static String formatSecond(long time){
         return format(new Date(time),FORMAT_YYYYMMDDHHMISS);
     }

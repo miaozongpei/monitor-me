@@ -76,7 +76,7 @@ public class RealTimeController {
         String name=request.getParameter("sys_name");
         String method=request.getParameter("point_method");
         method=StringUtils.isEmpty(method)||"all".equals(method)?null:method;
-        List<String> hosts=monitorPointService.queryHosts();
+        List<String> hosts=monitorPointService.queryHostsByName(name);
         BarchartData data=new BarchartData();
         long currentTime=Long.parseLong(DateUtil.formatSecond(new Date().getTime()));
         currentTime=MonitorTimeUtil.toTime(currentTime,MonitorTimeUnitEnum.DAY);

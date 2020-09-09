@@ -1,8 +1,9 @@
 package com.m.monitor.me.client.point.integrator;
 
-import com.alibaba.fastjson.JSON;
 import com.m.monitor.me.client.point.collector.MonitorPoint;
+import com.m.monitor.me.client.point.collector.MonitorPointCollector;
 import com.m.monitro.me.common.utils.DateUtil;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -63,6 +64,18 @@ public class PointIntegrator {
         return Objects.hash(integratorMap, total);
     }
 
+    public Map<String,String> buildMethodChainsMap(){
+        Map<String,String> methodChainMap=new HashMap<>();
+        for (Map<String,PerformanceNorm> map:integratorMap.values()){
+            for (String method:map.keySet()){
+                String chain=MonitorPointCollector.methodChainMap.get(method);
+                if (!StringUtils.isEmpty(chain)){
+                    methodChainMap.put(method,chain);
+                }
+            }
+        }
+        return methodChainMap;
+    }
     @Override
     public String toString() {
         StringBuffer str=new StringBuffer();

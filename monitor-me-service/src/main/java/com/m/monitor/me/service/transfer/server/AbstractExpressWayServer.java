@@ -1,5 +1,6 @@
 package com.m.monitor.me.service.transfer.server;
 
+import com.m.monitro.me.common.utils.TransferSnappyUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -11,9 +12,10 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
+import lombok.extern.slf4j.Slf4j;
 
 
-
+@Slf4j
 public abstract class AbstractExpressWayServer extends ChannelInitializer<SocketChannel> {
 
     protected EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -53,8 +55,13 @@ public abstract class AbstractExpressWayServer extends ChannelInitializer<Socket
 
     class ExpressWayHandler extends SimpleChannelInboundHandler<String>{
         @Override
-        protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-            receive(ctx,msg);
+        protected void channelRead0(ChannelHandlerContext ctx,String msg) throws Exception {
+            try {
+                String msgStr= TransferSnappyUtil.uncompressToStr(msg);
+                receive(ctx,msgStr);
+            } catch (Exception e) {
+                log.error("receive-uncompress exception:",e);
+            }
         }
         @Override
         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.m.monitor.me.client.point.integrator.PointIntegrator;
 import com.m.monitro.me.common.utils.DateUtil;
 import lombok.Getter;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,6 +17,9 @@ public class MonitorPointCollector {
     public static Map<String, MonitorPoint> pointMap = new ConcurrentHashMap<>();
 
     public static List<PointIntegrator> pointIntegrators=new ArrayList<>();
+
+    public static Map<String, String> methodChainMap=new HashMap<>();
+
     static {
         pointIntegrators.add(new PointIntegrator());
     }
@@ -28,6 +33,10 @@ public class MonitorPointCollector {
         point.finished();
         //放入聚合器
         createOrGetIntegrator(point).put(point);
+
+        //放入方法连
+        methodChainMap.put(point.getFullMethodName(), point.toString());
+
         //移除收集器
         pointMap.remove(tranceId);
     }
@@ -45,8 +54,9 @@ public class MonitorPointCollector {
         return integrator;
     }
 
-
-
+    public static synchronized void remove(PointIntegrator pointIntegrator){
+        pointIntegrators.remove(pointIntegrator);
+    }
 
     public static void printPointIntegrator(){
        for(PointIntegrator integrator:pointIntegrators){

@@ -2,7 +2,7 @@
 <script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
-    setInterval(function () {
+    var realtime_interval_id=setInterval(function () {
         var joinData={
         #foreach($data in ${ajax.datas.entrySet()})
         '${data.key}':${data.value},

@@ -4,12 +4,15 @@ import com.m.monitor.me.service.mogodb.base.BaseMongoService;
 import com.m.monitor.me.service.mogodb.norm.*;
 import com.m.monitor.me.service.transfer.server.builder.IntegratorNormBuilder;
 import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
+import com.m.monitor.me.service.transfer.server.record.MonitorMethodChainRecord;
 import com.m.monitor.me.service.transfer.server.record.MonitorPointRecord;
 import com.m.monitro.me.common.transfer.IntegratorContext;
 import com.m.monitro.me.common.utils.DateUtil;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -30,6 +33,8 @@ public class IntegratorSaveTask {
 
     @Resource
     private MonitorPointService monitorPointService;
+    @Resource
+    private MonitorMethodChainService monitorMethodChainService;
 
 
     private ExecutorService tasks;
@@ -57,8 +62,22 @@ public class IntegratorSaveTask {
 
 
                 monitorPointService.saveOrModify(integratorNormBuilder.getMonitorPointRecord());
+                //保存方法链
+                saveMcs(integratorContext);
             }
         });
+    }
+
+    //保存方法链
+    private void saveMcs(IntegratorContext integratorContext){
+        String name=integratorContext.getName();
+        String host=integratorContext.getHost();
+        for (String m:integratorContext.getMcs().keySet()){
+            String mc=integratorContext.getMcs().get(m);
+            if (!StringUtils.isEmpty(mc)) {
+                monitorMethodChainService.saveOrModify(new MonitorMethodChainRecord(name, host, m, mc));
+            }
+        }
     }
 
 }

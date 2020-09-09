@@ -1,5 +1,6 @@
 package com.m.monitor.me.client.point.collector;
 
+import com.m.monitro.me.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,6 +45,7 @@ public class MonitorPoint extends HashMap<Integer,Long> {
     public String toString() {
         long totalTime=endTime-startTime;
         StringBuffer str=new StringBuffer();
+        str.append(DateUtil.format(startTime,DateUtil.FORMAT_YYYYMMDDHHMISSSSS)).append(' ');
         str.append(fullMethodName).append(':').append(totalTime).append("ms").append("\n");
         for(int i=0;i<chains.size()-1;i++){
             Long time=get(i);
