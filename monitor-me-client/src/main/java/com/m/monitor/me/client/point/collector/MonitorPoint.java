@@ -49,7 +49,11 @@ public class MonitorPoint extends HashMap<Integer,Long> {
         str.append(fullMethodName).append(':').append(totalTime).append("ms").append("\n");
         for(int i=0;i<chains.size()-1;i++){
             Long time=get(i);
-            str.append(new DecimalFormat("0.00%").format(time.doubleValue()/totalTime));
+            if(time==null){
+                str.append("error");
+            }else {
+                str.append(new DecimalFormat("0.00%").format(time.doubleValue() / totalTime));
+            }
             str.append('-').append(chains.get(i)).append(':');
             str.append(time).append("ms");
             str.append("\n");

@@ -14,6 +14,8 @@ import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.InetSocketAddress;
+
 
 @Slf4j
 public abstract class AbstractExpressWayServer extends ChannelInitializer<SocketChannel> {
@@ -60,7 +62,7 @@ public abstract class AbstractExpressWayServer extends ChannelInitializer<Socket
                 String msgStr= TransferSnappyUtil.uncompressToStr(msg);
                 receive(ctx,msgStr);
             } catch (Exception e) {
-                log.error("receive-uncompress exception:",e);
+                log.error("receive-uncompress exception:clientIp:{}",((InetSocketAddress)ctx.channel().remoteAddress()).getAddress().getHostAddress());
             }
         }
         @Override
