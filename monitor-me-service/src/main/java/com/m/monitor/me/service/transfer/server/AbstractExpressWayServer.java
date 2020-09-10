@@ -62,7 +62,7 @@ public abstract class AbstractExpressWayServer extends ChannelInitializer<Socket
                 String msgStr= TransferSnappyUtil.uncompressToStr(msg);
                 receive(ctx,msgStr);
             } catch (Exception e) {
-                log.error("receive-uncompress exception:clientIp:{}",((InetSocketAddress)ctx.channel().remoteAddress()).getAddress().getHostAddress());
+                log.error("receive-uncompress clientIp:{} msg:{} exception:",((InetSocketAddress)ctx.channel().remoteAddress()).getAddress().getHostAddress(),msg,e);
             }
         }
         @Override
