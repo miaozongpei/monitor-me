@@ -11,8 +11,9 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 public abstract class AbstractExpressWayClient extends ChannelInitializer<SocketChannel> {
     /**
      * 时间池
@@ -48,6 +49,7 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
                     connect(host,port);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    log.error("asyConnect Exception:",e);
                     close();
                 }
             }
@@ -77,6 +79,7 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
         return clientChannel!=null;
     }
     public boolean checkAndConnect(String host,int port){
+        log.info("checkAndConnect host:{}-port:{}",host,port);
         if(clientChannel!=null){
             if (clientChannel.isActive()){
                 return true;
