@@ -25,6 +25,7 @@ public class TimeTabPage extends BasePage {
 
         RealTimeVisitorsChart realTimeVisitorsChart=new RealTimeVisitorsChart(Beyond.colors.get(1),
                 new AjaxData("/real_time/data_visitors",datas));
+        realTimeVisitorsChart.setVisitorsChartRangesMinId(host);
         return new PageHtml(realTimeVisitorsChart.toHtml());
     }
 }

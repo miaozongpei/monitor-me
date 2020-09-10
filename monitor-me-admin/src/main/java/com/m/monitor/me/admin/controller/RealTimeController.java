@@ -39,8 +39,18 @@ public class RealTimeController {
         String name=request.getParameter("sys_name");
         String method=request.getParameter("point_method");
         String host=request.getParameter("server_host");
-        long currentTime=Long.parseLong(DateUtil.formatSecond(new Date().getTime()));
-        currentTime=MonitorTimeUtil.subTime(currentTime,1,MonitorTimeUnitEnum.MINUTE);
+        String rangesMinTime=request.getParameter("ranges_min_time");
+        long time=System.currentTimeMillis();
+        long currentTime = Long.parseLong(DateUtil.formatSecond(time));
+        if (!StringUtils.isEmpty(rangesMinTime)) {
+            String[] rangesTimes=rangesMinTime.split("-");
+            long sTime=Long.parseLong(rangesTimes[1]);
+            long rangesMinTimeLong=new Double(rangesTimes[0]).longValue()+(time-sTime);
+            Date rangesMinDate=new Date(rangesMinTimeLong);
+            currentTime=Long.parseLong(DateUtil.formatSecond(rangesMinDate.getTime()));
+        }else {
+            currentTime = MonitorTimeUtil.subTime(currentTime, 1, MonitorTimeUnitEnum.MINUTE);
+        }
         method=StringUtils.isEmpty(method)||"all".equals(method)?null:method;
         return normSecondService.queryRealTimeNorm(name,host,method,
                 currentTime,60);

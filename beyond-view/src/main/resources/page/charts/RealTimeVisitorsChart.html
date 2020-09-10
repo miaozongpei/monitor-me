@@ -1,5 +1,7 @@
 <div id="visitors-chart-${id}" class="chart"></div>
 <div id="visitors-chart-overview-${id}" class="chart chart-sm"></div>
+<input type="hidden" id="visitors-chart-ranges-min-${visitorsChartRangesMinId}">
+<input type="hidden" id="visitors-chart-ranges-max-${visitorsChartRangesMaxId}">
 <script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
@@ -14,7 +16,7 @@
                 #end
             },
             success : function(data){
-                new RealTimeVisitorsChart('${id}','${color}').init(data)
+                new RealTimeVisitorsChart('${id}','${color}','${visitorsChartRangesMinId}','${visitorsChartRangesMaxId}').init(data)
             }
         });
     },100);

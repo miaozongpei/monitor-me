@@ -41,7 +41,7 @@ function RealTimeLineChart(elementId,color) {
 }
 
 
-function RealTimeVisitorsChart(elementId,color) {
+function RealTimeVisitorsChart(elementId,color,minId,maxId) {
     return {
         color:color,
         elementId:elementId,
@@ -104,6 +104,8 @@ function RealTimeVisitorsChart(elementId,color) {
                 }
             });
             $("#visitors-chart-"+elementId).bind("plotselected", function (event, ranges) {
+                $("[id='visitors-chart-ranges-min-"+minId+"']").val(ranges.xaxis.from+"-"+new Date().getTime());
+                $("[id='visitors-chart-ranges-max-"+maxId+"']").val(ranges.xaxis.to+"-"+new Date().getTime());
                 plot = $.plot("#visitors-chart-"+elementId, [{ data: data}], $.extend(true, {}, options, {
                     xaxis: {
                         min: ranges.xaxis.from,
@@ -114,6 +116,9 @@ function RealTimeVisitorsChart(elementId,color) {
             });
             $("#visitors-chart-overview-"+elementId).bind("plotselected", function (event, ranges) {
                 plot.setSelection(ranges);
+                //$("[id='warning-"+host+"']")
+                $("[id='visitors-chart-ranges-min-"+minId+"']").val(ranges.xaxis.from+"-"+new Date().getTime());
+                $("[id='visitors-chart-ranges-max-"+maxId+"']").val(ranges.xaxis.to+"-"+new Date().getTime());
             });
         }
     };

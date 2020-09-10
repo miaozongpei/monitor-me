@@ -35,6 +35,8 @@ public class ServerRealTimeWidget {
         Map<String,String> datas=new HashMap<>();
         datas.put("sys_name","$('#sys_name').val()");//$('#sys.name').val()
         datas.put("point_method","$('#point_method').val()");
+        //$("[id='visitors-chart-ranges-min-'"+minId+"']")
+        datas.put("ranges_min_time","$(\"[id='visitors-chart-ranges-min-"+serverIp+"']\").val()");
         datas.put("server_host","'"+serverIp+"'");
         widget.addRow(new MainRow().add(new RealTimeLineChart(color,new AjaxData("/real_time/data",datas))));
 

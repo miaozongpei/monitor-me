@@ -10,10 +10,13 @@ import lombok.Setter;
 public class RealTimeVisitorsChart extends AbstractElement {
     private String color;
     private AjaxData ajax;
-
+    private String visitorsChartRangesMinId;
+    private String visitorsChartRangesMaxId;
     public RealTimeVisitorsChart(String color,AjaxData ajax) {
         super();
         this.color = color;
         this.ajax=ajax;
+        this.visitorsChartRangesMinId=super.id;
+        this.visitorsChartRangesMaxId=super.id;
     }
 }
