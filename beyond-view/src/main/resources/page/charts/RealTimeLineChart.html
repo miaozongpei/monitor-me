@@ -13,7 +13,7 @@
             url : "${ajax.url}",
             dataType: "json",
             data: joinData,
-            async : false,
+            async : true,
             success : function(data){
                 new RealTimeLineChart('${id}','${color}').init(data);
                 var is_warning=(data[0][1]<=0)

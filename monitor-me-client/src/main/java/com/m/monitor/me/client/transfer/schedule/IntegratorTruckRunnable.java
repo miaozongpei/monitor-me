@@ -33,6 +33,7 @@ public class IntegratorTruckRunnable implements Runnable {
     private MonitorExpressWayClient monitorExpressWayClient;
     @Override
     public void run() {
+        log.info("monitor client start");
         List<PointIntegrator>  integrators= MonitorPointCollector.pointIntegrators;
         while (integrators.size()>1){
             PointIntegrator pointIntegrator=integrators.get(0);
