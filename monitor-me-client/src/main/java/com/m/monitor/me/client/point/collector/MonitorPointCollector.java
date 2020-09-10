@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.m.monitor.me.client.point.integrator.PointIntegrator;
 import com.m.monitro.me.common.utils.DateUtil;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
+@Slf4j
 public class MonitorPointCollector {
     public static Map<String, MonitorPoint> pointMap = new ConcurrentHashMap<>();
 
@@ -28,6 +30,7 @@ public class MonitorPointCollector {
     }
 
     public static void finished(String tranceId){
+        log.info("finished:{}",tranceId);
         MonitorPoint point=pointMap.get(tranceId);
         //监控点结束
         point.finished();

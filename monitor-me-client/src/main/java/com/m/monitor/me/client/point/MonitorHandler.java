@@ -42,6 +42,7 @@ public class MonitorHandler extends AbstractAspectHandler{
         }
         String rootMethodName=MethodTraceIdUtil.splitMethodName(traceId.get());
         String fullMethodName=getFullMethodName(context);
+        log.info("doAfter fullMethodName:{}",fullMethodName);
         if (rootMethodName.contains(fullMethodName)) {
             //终止方法调用链
             MethodChainCollector.checkAndPut(rootMethodName,MethodChainCollector.STOP);
