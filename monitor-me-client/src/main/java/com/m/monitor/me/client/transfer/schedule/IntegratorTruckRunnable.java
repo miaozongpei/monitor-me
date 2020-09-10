@@ -52,6 +52,7 @@ public class IntegratorTruckRunnable implements Runnable {
         String jsonPointIntegrator=JSON.toJSONString(new IntegratorContext(monitorApplicationName,pointIntegrator.getIntegratorMap(),pointIntegrator.buildMethodChainsMap()));
         if (monitorExpressWayClient.checkAndConnect(host,port)) {
             Boolean isSend = monitorExpressWayClient.send(jsonPointIntegrator);
+            log.info("[MonitorMe client] Transfer send result:{}",isSend);
         }
         //如果发送失败写入本地文件
         //return isSend?true:MonitorWriterManager.getInstance().writer(jsonPointIntegrator);
@@ -60,6 +61,7 @@ public class IntegratorTruckRunnable implements Runnable {
 
     private long clearExpire=30*60*1000;//30分钟
     public void clearPointMap(){
+        log.info("[MonitorMe client] TempPointMap is clearing. size:{}",MonitorPointCollector.pointMap.size());
         for(Map.Entry<String, MonitorPoint> point:MonitorPointCollector.pointMap.entrySet()){
             String traceId=point.getKey();
             if(System.currentTimeMillis()-MethodTraceIdUtil.splitTime(traceId)>clearExpire){

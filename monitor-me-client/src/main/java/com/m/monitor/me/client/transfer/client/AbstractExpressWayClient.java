@@ -49,7 +49,7 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
                     connect(host,port);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    log.error("asyConnect Exception:",e);
+                    log.error("[MonitorMe client] asyConnect exception:",e);
                     close();
                 }
             }
@@ -62,7 +62,7 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
         try{
             synchronized (this) {
                 if (!isConnected()) {
-                    log.info("ExpressWayClient is connecting  host:{}-port:{}",host,port);
+                    log.info("[MonitorMe client] ExpressWayClient is connecting  host:{}-port:{}",host,port);
                     eventLoopGroup= new NioEventLoopGroup();
                     Bootstrap bootstrap = new Bootstrap();
                     bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class)

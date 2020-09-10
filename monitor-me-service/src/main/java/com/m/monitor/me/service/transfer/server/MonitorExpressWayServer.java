@@ -21,7 +21,7 @@ public class MonitorExpressWayServer extends AbstractExpressWayServer {
     }
     @Override
     public boolean receive(ChannelHandlerContext ctx, String msg) {
-        System.out.println(msg);
+        log.info("[MonitorMe admin] receive msg:{}",msg);
         IntegratorContext integratorContext=JSON.parseObject(msg, IntegratorContext.class);
         InetSocketAddress insocket = (InetSocketAddress) ctx.channel().remoteAddress();
         integratorContext.setHost(insocket.getAddress().getHostAddress());

@@ -12,7 +12,7 @@ public class MonitorInterceptor implements MethodInterceptor {
     private MonitorHandler monitorHandler;
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
-        log.info("MonitorInterceptor invoke method:{}",invocation.getMethod());
+        log.info("[MonitorMe client] MonitorInterceptor invoke method:{}",invocation.getMethod());
         Object proceed = null;
         try {
             MonitorContext context=new MonitorContext(invocation.getMethod());
