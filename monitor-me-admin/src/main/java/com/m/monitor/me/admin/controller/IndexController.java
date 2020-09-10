@@ -19,7 +19,7 @@ public class IndexController {
         model.addAttribute("menu",menu.toHtml());
 
         LoadingContainer loadingContainer=new LoadingContainer();
-        model.addAttribute("loadingContainer",loadingContainer);
+        model.addAttribute("loadingContainer",loadingContainer.toHtml());
 
         MainHeader mainHeader=new MainHeader();
         model.addAttribute("mainHeader",mainHeader.toHtml());
