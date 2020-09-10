@@ -30,9 +30,7 @@ public class MonitorPointCollector {
     }
 
     public static void finished(String tranceId){
-        log.info("finished:{}",tranceId);
         MonitorPoint point=pointMap.get(tranceId);
-        log.info("point finished:{}",point.toString());
         //监控点结束
         point.finished();
         //放入聚合器
@@ -49,7 +47,6 @@ public class MonitorPointCollector {
         PointIntegrator integrator=pointIntegrators.get(pointIntegrators.size()-1);
         int len=integrator.getTotal().intValue();
         Long second= Long.parseLong(DateUtil.formatSecond(point.getEndTime()));
-        log.info("createOrGetIntegrator second:{}",second);
         //if (len>=2000&&integrator.get(second)==null){
         //5秒新建一个聚合器
         if(integrator.getIntegratorMap().size()==5&&integrator.get(second)==null){

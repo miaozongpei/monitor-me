@@ -23,7 +23,6 @@ public class MonitorClientConfig {
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
         advisor.setPointcut(pointcut);
         advisor.setAdvice(monitorInterceptor());
-        log.info("loading DefaultPointcutAdvisor interceptorPackage:{},advisor：{} ",interceptorPackage,advisor.toString());
         return advisor;
     }
     @Bean

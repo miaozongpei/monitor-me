@@ -33,7 +33,6 @@ public class IntegratorTruckRunnable implements Runnable {
     private MonitorExpressWayClient monitorExpressWayClient;
     @Override
     public void run() {
-        log.info("monitor client start pointIntegrators of size:{}",MonitorPointCollector.pointIntegrators.size());
         List<PointIntegrator>  integrators= MonitorPointCollector.pointIntegrators;
         while (integrators.size()>1){
             PointIntegrator pointIntegrator=integrators.get(0);
@@ -49,9 +48,9 @@ public class IntegratorTruckRunnable implements Runnable {
         clearPointMap();
     }
     public boolean transfer(PointIntegrator pointIntegrator){
+
         String jsonPointIntegrator=JSON.toJSONString(new IntegratorContext(monitorApplicationName,pointIntegrator.getIntegratorMap(),pointIntegrator.buildMethodChainsMap()));
         if (monitorExpressWayClient.checkAndConnect(host,port)) {
-
             Boolean isSend = monitorExpressWayClient.send(jsonPointIntegrator);
         }
         //如果发送失败写入本地文件

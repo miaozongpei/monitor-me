@@ -62,6 +62,7 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
         try{
             synchronized (this) {
                 if (!isConnected()) {
+                    log.info("ExpressWayClient is connecting  host:{}-port:{}",host,port);
                     eventLoopGroup= new NioEventLoopGroup();
                     Bootstrap bootstrap = new Bootstrap();
                     bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class)
@@ -79,7 +80,6 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
         return clientChannel!=null;
     }
     public boolean checkAndConnect(String host,int port){
-        log.info("checkAndConnect host:{}-port:{}",host,port);
         if(clientChannel!=null){
             if (clientChannel.isActive()){
                 return true;
