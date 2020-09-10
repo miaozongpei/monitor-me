@@ -1,7 +1,7 @@
 <div id="visitors-chart-${id}" class="chart"></div>
 <div id="visitors-chart-overview-${id}" class="chart chart-sm"></div>
-<input type="hidden" id="visitors-chart-ranges-min-${visitorsChartRangesMinId}">
-<input type="hidden" id="visitors-chart-ranges-max-${visitorsChartRangesMaxId}">
+<input type="hidden" id="visitors-chart-ranges-min-${visitorsChartRangesMinId}" value="">
+<input type="hidden" id="visitors-chart-ranges-max-${visitorsChartRangesMaxId}" value="">
 <script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
@@ -20,6 +20,8 @@
             }
         });
     },100);
+    $("[id='visitors-chart-ranges-min-${visitorsChartRangesMinId}']").val('');
+    $("[id='visitors-chart-ranges-max-${visitorsChartRangesMaxId}']").val('');
    /* setInterval(function () {
         new RealTimeVisitorsChart('${id}','${color}').init(geRealTimeDataByMinute())
     },60*1000);*/
