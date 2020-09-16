@@ -5,6 +5,7 @@ import com.m.beyond.view.data.ajaxs.AjaxData;
 import com.m.beyond.view.page.charts.BarChart;
 import com.m.beyond.view.page.forms.ComboSelect;
 import com.m.beyond.view.page.forms.DateTimePicker;
+import com.m.beyond.view.page.forms.Select2;
 import com.m.beyond.view.page.forms.SelectOption;
 import com.m.beyond.view.page.functions.ToHtml;
 import com.m.beyond.view.page.mains.MainRow;
@@ -38,7 +39,7 @@ public class RealTimeWidgetFactory {
 
         //search
         MainRow searchRow=new MainRow();
-        ComboSelect sysNameSelect=new ComboSelect("sys_name");
+        Select2 sysNameSelect=new Select2("sys_name");
         List<String> names=monitorPointService.queryNames();
         for(String name:names){
             sysNameSelect.add(new SelectOption(name, name).setSelected(defaultName));
@@ -46,7 +47,7 @@ public class RealTimeWidgetFactory {
         sysNameSelect.setBindOnchangeFunction(bindOnchangeFunction.toHtml());
         searchRow.add(sysNameSelect.setLg(3));
 
-        ComboSelect methodSelect =new ComboSelect("point_method");
+        Select2 methodSelect =new Select2("point_method");
         methodSelect.add(new SelectOption("all", "all"));
         if (names.size()>0) {
             defaultName = StringUtils.isEmpty(defaultName)?names.get(0):defaultName;

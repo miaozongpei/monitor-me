@@ -43,7 +43,7 @@ public class RealTimeController {
 
 
         String rangesMinTime=request.getParameter("ranges_min_time");
-        long time=System.currentTimeMillis()-(StringUtils.isEmpty(globalDTime)?0L:Long.parseLong(globalDTime));
+        long time=System.currentTimeMillis()-(StringUtils.isEmpty(globalDTime)||"NaN".equals(globalDTime)?0L:Long.parseLong(globalDTime));
         long currentTime = Long.parseLong(DateUtil.formatSecond(time));
         if (!StringUtils.isEmpty(rangesMinTime)) {
             String[] rangesTimes=rangesMinTime.split("-");

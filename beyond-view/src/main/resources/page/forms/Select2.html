@@ -1,0 +1,11 @@
+<!--Jquery Select2-->
+<script src="assets/js/select2/select2.js"></script>
+<select name="${name}" id="${name}" style="width:100%;">
+    #foreach($option in $options)
+    <option value="${option.value}"  #if(${option.selected})selected#end>${option.label}</option>
+    #end
+</select>
+<script>
+    $('select').select2();
+    $("#${name}").change(${bindOnchangeFunction});
+</script>
