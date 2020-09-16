@@ -39,8 +39,11 @@ public class RealTimeController {
         String name=request.getParameter("sys_name");
         String method=request.getParameter("point_method");
         String host=request.getParameter("server_host");
+        String globalDTime=request.getParameter("global_d_time");
+
+
         String rangesMinTime=request.getParameter("ranges_min_time");
-        long time=System.currentTimeMillis();
+        long time=System.currentTimeMillis()-(StringUtils.isEmpty(globalDTime)?0L:Long.parseLong(globalDTime));
         long currentTime = Long.parseLong(DateUtil.formatSecond(time));
         if (!StringUtils.isEmpty(rangesMinTime)) {
             String[] rangesTimes=rangesMinTime.split("-");
@@ -49,7 +52,7 @@ public class RealTimeController {
             Date rangesMinDate=new Date(rangesMinTimeLong);
             currentTime=Long.parseLong(DateUtil.formatSecond(rangesMinDate.getTime()));
         }else {
-            currentTime = MonitorTimeUtil.subTime(currentTime, 1, MonitorTimeUnitEnum.MINUTE);
+            currentTime = MonitorTimeUtil.subTime(currentTime, 30, MonitorTimeUnitEnum.SECOND);
         }
         method=StringUtils.isEmpty(method)||"all".equals(method)?null:method;
         return normSecondService.queryRealTimeNorm(name,host,method,
@@ -70,9 +73,21 @@ public class RealTimeController {
         if (MonitorTimeUnitEnum.HOUR.name().equals(tabPaneType)) {
             return normMinuteService.queryRealTimeNorm(name, host, method,
                     currentTime, 60);
-        }else if (MonitorTimeUnitEnum.DAY.name().equals(tabPaneType)) {
+        }else if (MonitorTimeUnitEnum.HOUR_6.name().equals(tabPaneType)) {
+            return normMinuteService.queryRealTimeNorm(name, host, method,
+                    currentTime, 6*60);
+        }else if (MonitorTimeUnitEnum.HOUR_12.name().equals(tabPaneType)) {
+            return normMinuteService.queryRealTimeNorm(name, host, method,
+                    currentTime, 12*60);
+        }else if (MonitorTimeUnitEnum.HOUR_24.name().equals(tabPaneType)) {
+            return normMinuteService.queryRealTimeNorm(name, host, method,
+                    currentTime, 24*60);
+        }else if (MonitorTimeUnitEnum.DAY_7.name().equals(tabPaneType)) {
             return normHourService.queryRealTimeNorm(name, host, method,
-                    currentTime, 24);
+                    currentTime, 7*24);
+        }else if (MonitorTimeUnitEnum.DAY_30.name().equals(tabPaneType)) {
+            return normHourService.queryRealTimeNorm(name, host, method,
+                    currentTime, 30*24);
         }else if (MonitorTimeUnitEnum.MONTH.name().equals(tabPaneType)) {
             return normDayService.queryRealTimeNorm(name, host, method,
                     currentTime, 30);

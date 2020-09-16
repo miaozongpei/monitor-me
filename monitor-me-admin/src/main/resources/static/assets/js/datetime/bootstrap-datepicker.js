@@ -136,6 +136,7 @@
 			} else {
 				this.element.prop('value', formated);
 			}
+			this.element.trigger("change");
 		},
 		
 		setValue: function(newDate) {

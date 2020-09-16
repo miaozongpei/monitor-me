@@ -4,6 +4,7 @@ import com.m.beyond.view.Beyond;
 import com.m.beyond.view.data.ajaxs.AjaxData;
 import com.m.beyond.view.page.charts.BarChart;
 import com.m.beyond.view.page.forms.ComboSelect;
+import com.m.beyond.view.page.forms.DateTimePicker;
 import com.m.beyond.view.page.forms.SelectOption;
 import com.m.beyond.view.page.functions.ToHtml;
 import com.m.beyond.view.page.mains.MainRow;
@@ -53,8 +54,10 @@ public class RealTimeWidgetFactory {
                 methodSelect.add(new SelectOption(method, method).setSelected(defaultMethod));
             }
             methodSelect.setBindOnchangeFunction(bindOnchangeFunction.toHtml());
-
             searchRow.add(methodSelect);
+
+            searchRow.add(new DateTimePicker("global_d_time"));
+
             widget.addRow(searchRow);
 
             //ServerRealTimeWidget

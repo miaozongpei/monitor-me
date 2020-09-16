@@ -35,15 +35,19 @@ public class ServerRealTimeWidget {
         Map<String,String> datas=new HashMap<>();
         datas.put("sys_name","$('#sys_name').val()");//$('#sys.name').val()
         datas.put("point_method","$('#point_method').val()");
-        //$("[id='visitors-chart-ranges-min-'"+minId+"']")
+        //$("input[name='mobile']")[0].value
+        datas.put("global_d_time","$(\"input[name='global_d_time']\")[0].value ");
         datas.put("ranges_min_time","$(\"[id='visitors-chart-ranges-min-"+serverIp+"']\").val()");
         datas.put("server_host","'"+serverIp+"'");
         widget.addRow(new MainRow().add(new RealTimeLineChart(color,new AjaxData("/real_time/data",datas))));
 
         Tab timeTabs=new Tab(new AjaxData("/p/time_tab",datas));
-        timeTabs.add(new TabPane("Last 1 hour", MonitorTimeUnitEnum.HOUR.name(),null));
-        timeTabs.add(new TabPane("Last 1 day",MonitorTimeUnitEnum.DAY.name(),null));
-        timeTabs.add(new TabPane("Last 1 month",MonitorTimeUnitEnum.MONTH.name(),null));
+        timeTabs.add(new TabPane("Last 1h", MonitorTimeUnitEnum.HOUR.name(),null));
+        timeTabs.add(new TabPane("Last 6h", MonitorTimeUnitEnum.HOUR_6.name(),null));
+        timeTabs.add(new TabPane("Last 12h", MonitorTimeUnitEnum.HOUR_12.name(),null));
+        timeTabs.add(new TabPane("Last 24h", MonitorTimeUnitEnum.HOUR_12.name(),null));
+        timeTabs.add(new TabPane("Last 7d",MonitorTimeUnitEnum.DAY_7.name(),null));
+        timeTabs.add(new TabPane("Last 30d",MonitorTimeUnitEnum.DAY_30.name(),null));
         widget.addRow(new MainRow().add(timeTabs));
     }
 }

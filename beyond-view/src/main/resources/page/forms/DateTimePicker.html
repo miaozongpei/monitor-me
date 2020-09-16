@@ -1,0 +1,38 @@
+<!--Bootstrap Date Picker-->
+<script src="assets/js/datetime/bootstrap-datepicker.js"></script>
+
+<!--Bootstrap Time Picker-->
+<script src="assets/js/datetime/bootstrap-timepicker.js"></script>
+<div class="input-group">
+    <input class="form-control date-picker" type="text" data-date-format="yyyy-mm-dd" id="data-picker-${id}" value="${defaultDate}">
+    <span class="input-group-addon">
+        <i class="fa fa-calendar"></i>
+    </span>
+    <input class="form-control time-picker" id="time-picker-${id}" value="${defaultTime}">
+    <input type="hidden" name="${dateTimeValueName}" id="date-time-value-${id}">
+    <input type="hidden" name="${dateTimeDValueName}" id="date-time-d-value-${id}">
+    <span class="input-group-addon">
+        <i class="fa fa-clock-o"></i>
+    </span>
+
+</div>
+<script>
+    //--Bootstrap Date Picker--
+    $('#data-picker-${id}').datepicker().on("change",function () {
+        date_time_onchange();
+    });
+    //--Bootstrap Time Picker--
+    $('#time-picker-${id}').timepicker({
+        showSeconds:true,
+        showMeridian:false
+    }).on("change",function () {
+        date_time_onchange();
+    });
+
+    function date_time_onchange(){
+        var _date_time_str=$("#data-picker-${id}").val()+" "+$("#time-picker-${id}").val();
+        $("#date-time-value-${id}").val(_date_time_str);
+        $("#date-time-d-value-${id}").val(Date.now()-new Date(_date_time_str).getTime());
+    }
+    date_time_onchange();
+</script>
