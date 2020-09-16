@@ -33,6 +33,7 @@ public class RealTimeWidgetFactory {
         Map<String,String> datas=new HashMap<>();
         datas.put("sys_name","$('#sys_name').val()");//$('#sys.name').val()
         datas.put("point_method","$('#point_method').val()");
+        datas.put("global_d_time","$(\"input[name='global_d_time']\")[0].value ");
         ToHtml bindOnchangeFunction=new ToHtml(new AjaxData("p/points",datas),"page-body");
 
         //search

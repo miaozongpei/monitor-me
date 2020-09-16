@@ -29,6 +29,12 @@ function RealTimeLineChart(elementId,color) {
                     },
                     shadowSize: 0
                 },
+                tooltip:true,
+                tooltipOpts: {
+                    defaultTheme: false,
+                    dateFormat: "%Y-%m-%d %H:%M:%S",
+                    content: "<span>%x</span> : <span>%y</span>",
+                },
                 grid: {
                     hoverable: true,
                     clickable: false,
@@ -57,8 +63,16 @@ function RealTimeVisitorsChart(elementId,color,minId,maxId) {
                     mode: "x"
                 },
                 grid: {
+                    hoverable: true,
+                    clickable: false,
                     borderWidth: 0,
                     aboveData: false
+                },
+                tooltip:true,
+                tooltipOpts: {
+                    defaultTheme: false,
+                    dateFormat: "%Y-%m-%d %H:%M",
+                    content: "<span>%x</span> : <span>%y</span>",
                 },
                 series: {
                     lines: {
@@ -104,8 +118,8 @@ function RealTimeVisitorsChart(elementId,color,minId,maxId) {
                 }
             });
             $("#visitors-chart-"+elementId).bind("plotselected", function (event, ranges) {
-                $("[id='visitors-chart-ranges-min-"+minId+"']").val(ranges.xaxis.from+"-"+new Date().getTime());
-                $("[id='visitors-chart-ranges-max-"+maxId+"']").val(ranges.xaxis.to+"-"+new Date().getTime());
+                //$("[id='visitors-chart-ranges-min-"+minId+"']").val(ranges.xaxis.from+"-"+new Date().getTime());
+                //$("[id='visitors-chart-ranges-max-"+maxId+"']").val(ranges.xaxis.to+"-"+new Date().getTime());
                 plot = $.plot("#visitors-chart-"+elementId, [{ data: data}], $.extend(true, {}, options, {
                     xaxis: {
                         min: ranges.xaxis.from,
@@ -117,8 +131,8 @@ function RealTimeVisitorsChart(elementId,color,minId,maxId) {
             $("#visitors-chart-overview-"+elementId).bind("plotselected", function (event, ranges) {
                 plot.setSelection(ranges);
                 //$("[id='warning-"+host+"']")
-                $("[id='visitors-chart-ranges-min-"+minId+"']").val(ranges.xaxis.from+"-"+new Date().getTime());
-                $("[id='visitors-chart-ranges-max-"+maxId+"']").val(ranges.xaxis.to+"-"+new Date().getTime());
+                //$("[id='visitors-chart-ranges-min-"+minId+"']").val(ranges.xaxis.from+"-"+new Date().getTime());
+                //$("[id='visitors-chart-ranges-max-"+maxId+"']").val(ranges.xaxis.to+"-"+new Date().getTime());
             });
         }
     };

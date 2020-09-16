@@ -20,6 +20,7 @@ public class TimeTabPage extends BasePage {
         Map<String,String> datas=new HashMap<>();
         datas.put("sys_name","$('#sys_name').val()");//$('#sys.name').val()
         datas.put("point_method","$('#point_method').val()");
+        datas.put("global_d_time","$(\"input[name='global_d_time']\")[0].value ");
         datas.put("server_host","'"+host+"'");
         datas.put("tabPane_type","'"+tabPaneType+"'");
 

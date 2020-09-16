@@ -66,8 +66,10 @@ public class RealTimeController {
         String method=request.getParameter("point_method");
         String host=request.getParameter("server_host");
         String tabPaneType=request.getParameter("tabPane_type");
+        String globalDTime=request.getParameter("global_d_time");
 
-        long currentTime=Long.parseLong(DateUtil.formatSecond(new Date().getTime()));
+        long time=System.currentTimeMillis()-(StringUtils.isEmpty(globalDTime)?0L:Long.parseLong(globalDTime));
+        long currentTime = Long.parseLong(DateUtil.formatSecond(time));
         currentTime=MonitorTimeUtil.subTime(currentTime,1,MonitorTimeUnitEnum.MINUTE);
         method=StringUtils.isEmpty(method)||"all".equals(method)?null:method;
         if (MonitorTimeUnitEnum.HOUR.name().equals(tabPaneType)) {
@@ -103,7 +105,10 @@ public class RealTimeController {
         method=StringUtils.isEmpty(method)||"all".equals(method)?null:method;
         List<String> hosts=monitorPointService.queryHostsByName(name);
         BarchartData data=new BarchartData();
-        long currentTime=Long.parseLong(DateUtil.formatSecond(new Date().getTime()));
+        String globalDTime=request.getParameter("global_d_time");
+
+        long dTime=System.currentTimeMillis()-(StringUtils.isEmpty(globalDTime)?0L:Long.parseLong(globalDTime));
+        long currentTime = Long.parseLong(DateUtil.formatSecond(dTime));
         currentTime=MonitorTimeUtil.toTime(currentTime,MonitorTimeUnitEnum.DAY);
         for(int i=0;i<10;i++) {
             Map<String, Double> yData = new HashMap<>();
