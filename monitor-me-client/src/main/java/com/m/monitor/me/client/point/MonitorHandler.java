@@ -1,5 +1,6 @@
 package com.m.monitor.me.client.point;
 
+import com.m.monitor.me.client.point.collector.MethodChain;
 import com.m.monitor.me.client.point.collector.MethodChainCollector;
 import com.m.monitor.me.client.point.collector.MonitorPoint;
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.Stack;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -16,6 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MonitorHandler extends AbstractAspectHandler{
     public static ThreadLocal<String> traceId = new ThreadLocal<>();
     public static ThreadLocal<AtomicInteger> seq = new ThreadLocal<>();
+    public static ThreadLocal<Stack<MethodChain>>  methodChainStack= new ThreadLocal<>();
 
     @Override
     public void doBefore(MonitorContext context) {
@@ -25,13 +28,16 @@ public class MonitorHandler extends AbstractAspectHandler{
             traceId.set(MethodTraceIdUtil.create(fullMethodName));
             //创建访问顺序
             seq.set(new AtomicInteger(-1));
+            methodChainStack.set(new Stack<MethodChain>());
             //创建监控点（point）
             MonitorPointCollector.create(traceId.get(), fullMethodName);
         }else {
             String rootMethodName = MethodTraceIdUtil.splitMethodName(traceId.get());
-            String chainName=seq.get().incrementAndGet()+":"+fullMethodName;
-            MethodChainCollector.checkAndPut(rootMethodName,chainName);
-            context.setChainName(chainName);
+            //String chainName=seq.get().incrementAndGet()+":"+fullMethodName;
+            MethodChain methodChain=new MethodChain(seq.get().incrementAndGet(),fullMethodName);
+            methodChainStack.get().push(methodChain);//入栈
+            MethodChainCollector.checkAndPut(rootMethodName,methodChain);
+            context.setMethodChain(methodChain);
         }
     }
 
@@ -44,7 +50,7 @@ public class MonitorHandler extends AbstractAspectHandler{
         String fullMethodName=getFullMethodName(context);
         if (rootMethodName.contains(fullMethodName)) {
             //终止方法调用链
-            MethodChainCollector.checkAndPut(rootMethodName,MethodChainCollector.STOP);
+            MethodChainCollector.checkAndPut(rootMethodName,null);
             //监控点结束
             MonitorPointCollector.finished(traceId.get());
             //清除traceId
@@ -53,9 +59,18 @@ public class MonitorHandler extends AbstractAspectHandler{
         }else{
             //获取监控点
             MonitorPoint monitorPoint=MonitorPointCollector.pointMap.get(traceId.get());
+            if(!methodChainStack.get().isEmpty()) {
+                MethodChain chain = methodChainStack.get().pop();//出栈
+            }
+            if(!methodChainStack.get().isEmpty()) {
+                MethodChain parent = methodChainStack.get().peek();
+                if (parent != null) {
+                    context.getMethodChain().setParentIndex(parent.getInvokeSeq());
+                }
+            }
             //添加执行时间
-            Integer integer=Integer.parseInt(context.getChainName().split(":")[0]);
-            monitorPoint.put(integer,System.currentTimeMillis()-context.getChainStartTime());
+            monitorPoint.put(context.getMethodChain().getInvokeSeq(),System.currentTimeMillis()-context.getChainStartTime());
+
         }
     }
 

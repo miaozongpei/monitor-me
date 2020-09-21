@@ -1,5 +1,6 @@
 package com.m.monitor.me.client.point;
 
+import com.m.monitor.me.client.point.collector.MethodChain;
 import lombok.Getter;
 import lombok.Setter;
 import org.aspectj.lang.JoinPoint;
@@ -12,7 +13,7 @@ public class MonitorContext {
     private Method method;
     private Object[] args;
 
-    private String chainName;
+    private MethodChain methodChain;
     private long chainStartTime;
 
     public MonitorContext(Method method) {
