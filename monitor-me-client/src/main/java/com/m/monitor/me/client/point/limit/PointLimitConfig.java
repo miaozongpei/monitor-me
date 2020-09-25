@@ -7,7 +7,11 @@ import java.util.Map;
 
 public class PointLimitConfig {
     public static Map<String, PointLimit> limitConfig=new HashMap<>();
-
+    static {
+        PointLimit pointLimit=new PointLimit();
+        pointLimit.setSleepMillis(1000);
+        limitConfig.put("com.m.monitor.me.example.service.impl.DemoServiceImpl.findUserByName",pointLimit);
+    }
     public static void put(String method,PointLimit pointLimit){
         limitConfig.put(method,pointLimit);
     }

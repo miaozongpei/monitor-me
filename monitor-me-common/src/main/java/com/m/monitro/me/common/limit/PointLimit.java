@@ -1,6 +1,6 @@
 package com.m.monitro.me.common.limit;
 public class PointLimit {
-    private int threadMax=-1;
+    private int waitingThreadMax=Integer.MAX_VALUE;
     private boolean isBreak=false;
     private int tpsMax=Integer.MAX_VALUE;
     private int sleepMillis=0;
@@ -9,12 +9,12 @@ public class PointLimit {
 
     private int currentTps;
 
-    public int getThreadMax() {
-        return threadMax;
+    public int getWaitingThreadMax() {
+        return waitingThreadMax;
     }
 
-    public void setThreadMax(int threadMax) {
-        this.threadMax = threadMax;
+    public void setWaitingThreadMax(int waitingThreadMax) {
+        this.waitingThreadMax = waitingThreadMax;
     }
 
     public boolean isBreak() {

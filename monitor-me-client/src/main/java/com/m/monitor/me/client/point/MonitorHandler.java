@@ -85,22 +85,18 @@ public class MonitorHandler extends AbstractAspectHandler{
     public void doLimit(MonitorContext context) throws Exception {
         String fullMethodName=getFullMethodName(context);
         PointLimit pointLimit=PointLimitConfig.get(fullMethodName);
-        if (pointLimit.getThreadMax()==-1){
-            return;
-        }else {
-            Map<String, MonitorPoint> tempPoints = MonitorPointCollector.tempPointMap.get(fullMethodName);
-            if (pointLimit.isBreak()) {
-                throw new MonitorLimitException("The point is broke");
-            }
-            if ((tempPoints!=null&&tempPoints.size()> pointLimit.getThreadMax())) {
-                throw new MonitorLimitException("The point over limit:"+pointLimit.getThreadMax());
-            }
-            if (pointLimit.getCurrentTps()> pointLimit.getTpsMax()) {
-                throw new MonitorLimitException("The point over max tps:"+pointLimit.getTpsMax());
-            }
-            if (pointLimit.getSleepMillis()> 0) {
-                Thread.sleep(pointLimit.getSleepMillis());
-            }
+        Map<String, MonitorPoint> tempPoints = MonitorPointCollector.tempPointMap.get(fullMethodName);
+        if (pointLimit.isBreak()) {
+            throw new MonitorLimitException("The point is broke");
+        }
+        if ((tempPoints!=null&&tempPoints.size()> pointLimit.getWaitingThreadMax())) {
+            throw new MonitorLimitException("The point of waiting threads over limit:"+pointLimit.getWaitingThreadMax());
+        }
+        if (pointLimit.getCurrentTps()> pointLimit.getTpsMax()) {
+            throw new MonitorLimitException("The point of TPS over max:"+pointLimit.getTpsMax());
+        }
+        if (pointLimit.getSleepMillis()> 0) {
+            Thread.sleep(pointLimit.getSleepMillis());
         }
     }
 }
