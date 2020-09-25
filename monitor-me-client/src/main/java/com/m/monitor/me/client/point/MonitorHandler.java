@@ -85,7 +85,7 @@ public class MonitorHandler extends AbstractAspectHandler{
     public void doLimit(MonitorContext context) throws Exception {
         String fullMethodName=getFullMethodName(context);
         PointLimit pointLimit=PointLimitConfig.get(fullMethodName);
-        if (pointLimit==null||pointLimit.getThreadMax()==-1){
+        if (pointLimit.getThreadMax()==-1){
             return;
         }else {
             Map<String, MonitorPoint> tempPoints = MonitorPointCollector.tempPointMap.get(fullMethodName);
@@ -97,6 +97,9 @@ public class MonitorHandler extends AbstractAspectHandler{
             }
             if (pointLimit.getCurrentTps()> pointLimit.getTpsMax()) {
                 throw new MonitorLimitException("The point over max tps:"+pointLimit.getTpsMax());
+            }
+            if (pointLimit.getSleepMillis()> 0) {
+                Thread.sleep(pointLimit.getSleepMillis());
             }
         }
     }
