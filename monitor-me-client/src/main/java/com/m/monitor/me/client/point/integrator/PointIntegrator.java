@@ -2,7 +2,9 @@ package com.m.monitor.me.client.point.integrator;
 
 import com.m.monitor.me.client.point.collector.MonitorPoint;
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
+import com.m.monitor.me.client.point.limit.PointLimitConfig;
 import com.m.monitro.me.common.utils.DateUtil;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
@@ -17,9 +19,11 @@ public class PointIntegrator {
 
     public void put(MonitorPoint point){
         Long second= Long.parseLong(DateUtil.formatSecond(point.getEndTime()));
-        getAndNew(second,point.getFullMethodName()).add(point);
+        PerformanceNorm performanceNorm=getAndNew(second,point.getFullMethodName());
+        performanceNorm.add(point);
+        //放入当前指标到限制配置中
+        PointLimitConfig.get(point.getFullMethodName()).setCurrentTps(performanceNorm.getTotal().intValue());
         total.incrementAndGet();
-
     }
     public Map<String,PerformanceNorm>  get(Long second){
         Map<String,PerformanceNorm> performanceNormMap=integratorMap.get(second);
@@ -42,7 +46,13 @@ public class PointIntegrator {
         }
         return performanceNorm;
     }
-
+    public PerformanceNorm getCurrentPerformanceNorm(String method){
+        if (!CollectionUtils.isEmpty(integratorMap)) {
+            Map<String, PerformanceNorm> performanceNormMap = integratorMap.get(0);
+            return performanceNormMap.get(method);
+        }
+        return null;
+    }
     public LinkedHashMap<Long, Map<String, PerformanceNorm>> getIntegratorMap() {
         return integratorMap;
     }

@@ -4,11 +4,16 @@ import com.m.monitor.me.client.point.collector.MethodChain;
 import com.m.monitor.me.client.point.collector.MethodChainCollector;
 import com.m.monitor.me.client.point.collector.MonitorPoint;
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
+import com.m.monitor.me.client.point.limit.MonitorLimitException;
+import com.m.monitor.me.client.point.limit.PointLimitConfig;
+import com.m.monitro.me.common.limit.PointLimit;
 import com.m.monitro.me.common.utils.MethodTraceIdUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.Map;
 import java.util.Stack;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -76,4 +81,23 @@ public class MonitorHandler extends AbstractAspectHandler{
         }
     }
 
+    @Override
+    public void doLimit(MonitorContext context) throws Exception {
+        String fullMethodName=getFullMethodName(context);
+        PointLimit pointLimit=PointLimitConfig.get(fullMethodName);
+        if (pointLimit==null||pointLimit.getThreadMax()==-1){
+            return;
+        }else {
+            Map<String, MonitorPoint> tempPoints = MonitorPointCollector.tempPointMap.get(fullMethodName);
+            if (pointLimit.isBreak()) {
+                throw new MonitorLimitException("The point is broke");
+            }
+            if ((tempPoints!=null&&tempPoints.size()> pointLimit.getThreadMax())) {
+                throw new MonitorLimitException("The point over limit:"+pointLimit.getThreadMax());
+            }
+            if (pointLimit.getCurrentTps()> pointLimit.getTpsMax()) {
+                throw new MonitorLimitException("The point over max tps:"+pointLimit.getTpsMax());
+            }
+        }
+    }
 }
