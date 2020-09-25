@@ -23,7 +23,11 @@ public class DemoServiceTests {
 	@Test
 	public void findUserTest() {
 
-		demoService.findUser("123456");
+		//demoService.findUser("123456");
+		demoService.findUserByName("miao");
+		demoService.findUserByName("miao");
+
+		//demoService.updateUser();
 		//demoService.findUserByName("miao");
 		//demoService.updateUser();
 		//MonitorPointCollector.printPointIntegrator();
@@ -37,17 +41,17 @@ public class DemoServiceTests {
 	@Test
 	public void findUserThreadTest() throws ExecutionException, InterruptedException {
 	ExecutorService fixedThreadPool = Executors.newFixedThreadPool(100);
-        for (int i = 0; i < 1002000; i++) {
+        for (int i = 0; i < 10; i++) {
             final int ii = i;
 			Future future= fixedThreadPool.submit(() -> {
-				demoService.findUser("123456");
+				//demoService.findUser("123456");
 				demoService.findUserByName("miao");
 				demoService.updateUser();
             });
 			future.get();
         }
 
-		for (int i = 0; i < 1000000; i++) {
+		/*for (int i = 0; i < 1000000; i++) {
 			final int ii = i;
 			Future future= fixedThreadPool.submit(() -> {
 				//demoService.findUser("123456");
@@ -55,7 +59,7 @@ public class DemoServiceTests {
 				demoService.updateUser();
 			});
 			future.get();
-		}
+		}*/
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {

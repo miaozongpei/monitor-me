@@ -30,13 +30,15 @@ public class MonitorHandler extends AbstractAspectHandler{
             seq.set(new AtomicInteger(-1));
             methodChainStack.set(new Stack<MethodChain>());
             //创建监控点（point）
-            MonitorPointCollector.create(traceId.get(), fullMethodName);
+            MonitorPointCollector.createOrGetMonitorPoint(traceId.get(), fullMethodName);
         }else {
             String rootMethodName = MethodTraceIdUtil.splitMethodName(traceId.get());
             //String chainName=seq.get().incrementAndGet()+":"+fullMethodName;
             MethodChain methodChain=new MethodChain(seq.get().incrementAndGet(),fullMethodName);
             methodChainStack.get().push(methodChain);//入栈
+
             MethodChainCollector.checkAndPut(rootMethodName,methodChain);
+
             context.setMethodChain(methodChain);
         }
     }
@@ -52,13 +54,13 @@ public class MonitorHandler extends AbstractAspectHandler{
             //终止方法调用链
             MethodChainCollector.checkAndPut(rootMethodName,null);
             //监控点结束
-            MonitorPointCollector.finished(traceId.get());
+            MonitorPointCollector.finished(traceId.get(),rootMethodName);
             //清除traceId
             traceId.remove();
 
         }else{
             //获取监控点
-            MonitorPoint monitorPoint=MonitorPointCollector.pointMap.get(traceId.get());
+            MonitorPoint monitorPoint=MonitorPointCollector.createOrGetMonitorPoint(traceId.get(),rootMethodName);
             if(!methodChainStack.get().isEmpty()) {
                 MethodChain chain = methodChainStack.get().pop();//出栈
             }

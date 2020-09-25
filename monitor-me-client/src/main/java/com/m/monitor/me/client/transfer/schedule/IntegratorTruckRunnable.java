@@ -12,6 +12,7 @@ import com.m.monitro.me.common.utils.TransferSnappyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -61,11 +62,15 @@ public class IntegratorTruckRunnable implements Runnable {
 
     private long clearExpire=30*60*1000;//30分钟
     public void clearPointMap(){
-        log.info("[MonitorMe client] TempPointMap is clearing. size:{}",MonitorPointCollector.pointMap.size());
-        for(Map.Entry<String, MonitorPoint> point:MonitorPointCollector.pointMap.entrySet()){
-            String traceId=point.getKey();
-            if(System.currentTimeMillis()-MethodTraceIdUtil.splitTime(traceId)>clearExpire){
-                MonitorPointCollector.pointMap.remove(traceId);
+        for (String method:MonitorPointCollector.tempPointMap.keySet()) {
+            Map<String, MonitorPoint> methodPointMap=MonitorPointCollector.tempPointMap.get(method);
+            if (!CollectionUtils.isEmpty(methodPointMap)) {
+                for (Map.Entry<String, MonitorPoint> point : methodPointMap.entrySet()) {
+                    String traceId = point.getKey();
+                    if (System.currentTimeMillis() - MethodTraceIdUtil.splitTime(traceId) > clearExpire) {
+                        methodPointMap.remove(traceId);
+                    }
+                }
             }
         }
     }

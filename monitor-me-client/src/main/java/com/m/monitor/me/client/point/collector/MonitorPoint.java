@@ -49,7 +49,7 @@ public class MonitorPoint extends HashMap<Integer,Long> {
     @Override
     public String toString() {
         StringBuffer str=new StringBuffer();
-        str.append(this.methodChains).append("|").append(DateUtil.format(startTime,DateUtil.FORMAT_YYYYMMDDHHMISSSSS)).append("\n");
+        str.append(this.methodChains).append("|").append(getNorm()).append("ms|").append(DateUtil.format(startTime,DateUtil.FORMAT_YYYYMMDDHHMISSSSS)).append("\n");
         str.append(this.methodChains.childrenToStr(this.methodChains.getChildren()));
         return str.toString();
     }

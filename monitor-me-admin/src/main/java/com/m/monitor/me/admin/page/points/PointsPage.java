@@ -10,7 +10,9 @@ import com.m.beyond.view.page.mains.MainRow;
 import com.m.monitor.me.admin.page.BasePage;
 import com.m.monitor.me.admin.page.PageHtml;
 import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@Slf4j
 public class PointsPage extends BasePage {
     @Resource
     private MonitorPointService monitorPointService;
@@ -38,10 +41,8 @@ public class PointsPage extends BasePage {
         List<String> methods=monitorPointService.queryMethods();
         dataBoxRow.add(new HalvedDataBox("Method Points",methods.size(),Beyond.bgColors.get(3),Beyond.iconFas.get(2)));
         mainBody.add(dataBoxRow);
-
         mainBody.add(new MainRow().add(new ClearRealtimeInterval()));//清除之前定时
         mainBody.add(new MainRow().add(realTimeWidgetFactory.create("Server Points",host,method)));
-
         return new PageHtml(mainBody.toHtml());
     }
 }

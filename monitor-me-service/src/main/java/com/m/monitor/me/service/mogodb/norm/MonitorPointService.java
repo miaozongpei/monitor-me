@@ -57,5 +57,4 @@ public class MonitorPointService extends BaseMongoService<MonitorPointRecord> {
         return mongoTemplate.findDistinct(query,"ms.m",collectionName,MonitorPointRecord.class,String.class);
     }
 
-
 }

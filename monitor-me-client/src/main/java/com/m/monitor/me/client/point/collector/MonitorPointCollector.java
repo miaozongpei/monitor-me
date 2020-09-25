@@ -16,7 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 @Slf4j
 public class MonitorPointCollector {
-    public static Map<String, MonitorPoint> pointMap = new ConcurrentHashMap<>();
+
+    public static Map<String, Map<String,MonitorPoint>> tempPointMap = new ConcurrentHashMap<>();
 
     public static List<PointIntegrator> pointIntegrators=new ArrayList<>();
 
@@ -25,12 +26,26 @@ public class MonitorPointCollector {
     static {
         pointIntegrators.add(new PointIntegrator());
     }
-    public static void create(String tranceId, String fullMethodName) {
-        pointMap.put(tranceId, new MonitorPoint(fullMethodName, System.currentTimeMillis()));
-    }
+    public static MonitorPoint createOrGetMonitorPoint(String tranceId, String fullMethodName) {
+        Map<String,MonitorPoint> pointMap= createOrGetPointMap(tranceId,fullMethodName);
+        MonitorPoint monitorPoint=pointMap.get(tranceId);
+        if (monitorPoint==null){
+            monitorPoint=new MonitorPoint(fullMethodName, System.currentTimeMillis());
+            pointMap.put(tranceId, monitorPoint);
+        }
+        return monitorPoint;
 
-    public static void finished(String tranceId){
-        MonitorPoint point=pointMap.get(tranceId);
+    }
+    public static Map<String,MonitorPoint> createOrGetPointMap(String tranceId, String fullMethodName) {
+        Map<String,MonitorPoint> pointMap= tempPointMap.get(fullMethodName);
+        if (pointMap==null) {
+            pointMap=new ConcurrentHashMap();
+            tempPointMap.put(fullMethodName,pointMap);
+        }
+       return pointMap;
+    }
+    public static void finished(String tranceId,String fullMethodName){
+        MonitorPoint point=createOrGetMonitorPoint(tranceId,fullMethodName);
         //监控点结束
         point.finished();
         //放入聚合器
@@ -40,7 +55,7 @@ public class MonitorPointCollector {
         methodChainMap.put(point.getFullMethodName(), point.toString());
 
         //移除收集器
-        pointMap.remove(tranceId);
+        createOrGetPointMap(tranceId,fullMethodName).remove(tranceId);
     }
 
     public static PointIntegrator createOrGetIntegrator(MonitorPoint point){
@@ -64,12 +79,6 @@ public class MonitorPointCollector {
        for(PointIntegrator integrator:pointIntegrators){
            System.out.println(JSON.toJSON(integrator));
        }
-    }
-
-    public static void printAll(){
-        for (MonitorPoint point:pointMap.values()){
-            point.print();
-        }
     }
 }
 
