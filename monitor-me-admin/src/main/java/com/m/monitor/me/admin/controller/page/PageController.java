@@ -21,10 +21,11 @@ public class PageController extends BasePageController {
     private TimeTabPage timeTabPage;
     @RequestMapping("/{type}")
     @ResponseBody
+    @Override
     public PageHtml html(HttpServletRequest request, @PathVariable("type") String type) {
-        if (BasePage.points.equals(type)){
+        if (BasePage.POINTS.equals(type)){
             return pointsPage.create(request);
-        }else if (BasePage.time_tab.equals(type)){
+        }else if (BasePage.TIME_TAB.equals(type)){
             return timeTabPage.create(request);
         }
         return null;

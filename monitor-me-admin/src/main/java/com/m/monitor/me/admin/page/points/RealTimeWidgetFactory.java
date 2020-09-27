@@ -66,7 +66,7 @@ public class RealTimeWidgetFactory {
             List<String> hosts=monitorPointService.queryHostsByName(defaultName);
             MainRow realTimeLineChartRow = new MainRow();
             for (int i=0;i<hosts.size();i++){
-                realTimeLineChartRow.add(new ServerRealTimeWidget(hosts.get(i), Beyond.colors.get(1)).getWidget());
+                realTimeLineChartRow.add(new ServerRealTimeWidget(hosts.get(i), Beyond.COLORS.get(1)).getWidget());
                 if ((i+1)%2==0) {
                     widget.addRow(realTimeLineChartRow);
                     realTimeLineChartRow= new MainRow();

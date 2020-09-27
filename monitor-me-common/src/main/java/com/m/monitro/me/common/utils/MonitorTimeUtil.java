@@ -17,8 +17,10 @@ public class MonitorTimeUtil {
             case MINUTE: {
                 return Long.parseLong((time / 100)+"00");
             }
+            default:{
+                return null;
+            }
         }
-        return time;
     }
     public static Long subTime(Long time, int num,MonitorTimeUnitEnum unitEnum){
         long afterTime=DateUtil.parse(time+"",DateUtil.FORMAT_YYYYMMDDHHMISS).getTime()-num*unitEnum.unit*1000;

@@ -25,10 +25,10 @@ public class ServerRealTimeWidget {
         this.serverIp=serverIp;
         this.color=color;
         widget.setHeadTitle(serverIp);
-        widget.setWidgetIcon(Beyond.iconFas.get(1));
+        widget.setWidgetIcon(Beyond.ICON_FAS.get(1));
         widget.setDispose(true);
         widget.setWarning(true);
-        widget.setHeadColor(Beyond.bgColors.get(26));
+        widget.setHeadColor(Beyond.BG_COLORS.get(26));
         initBody(color);
     }
     private void initBody(String color){

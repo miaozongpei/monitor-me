@@ -15,8 +15,12 @@ public class MonitorMethod {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o){
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()){
+            return false;
+        }
         MonitorMethod method = (MonitorMethod) o;
         return m.equals(method.m);
     }

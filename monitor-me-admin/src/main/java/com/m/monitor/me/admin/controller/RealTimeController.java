@@ -48,7 +48,8 @@ public class RealTimeController {
         if (!StringUtils.isEmpty(rangesMinTime)) {
             String[] rangesTimes=rangesMinTime.split("-");
             long sTime=Long.parseLong(rangesTimes[1]);
-            long rangesMinTimeLong=new Double(rangesTimes[0]).longValue()+(time-sTime);
+            Double rangesTime=Double.parseDouble(rangesTimes[0]);
+            long rangesMinTimeLong=rangesTime.longValue()+(time-sTime);
             Date rangesMinDate=new Date(rangesMinTimeLong);
             currentTime=Long.parseLong(DateUtil.formatSecond(rangesMinDate.getTime()));
         }else {

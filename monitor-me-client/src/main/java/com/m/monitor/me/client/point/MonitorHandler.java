@@ -62,6 +62,8 @@ public class MonitorHandler extends AbstractAspectHandler{
             MonitorPointCollector.finished(traceId.get(),rootMethodName);
             //清除traceId
             traceId.remove();
+            seq.remove();
+            methodChainStack.remove();
 
         }else{
             //获取监控点

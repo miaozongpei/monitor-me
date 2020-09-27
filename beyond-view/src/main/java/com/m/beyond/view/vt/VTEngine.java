@@ -71,7 +71,7 @@ public class VTEngine {
         datas.put("point.method","$('#point.method').val()");
         datas.put("server.host","'1111.1.1.1'");
         AjaxData ajaxData=new AjaxData("/real_time/data",datas);
-        RealTimeLineChart realTimeLineChart=new RealTimeLineChart(Beyond.colors.get(0),ajaxData);
+        RealTimeLineChart realTimeLineChart=new RealTimeLineChart(Beyond.COLORS.get(0),ajaxData);
 System.out.println(realTimeLineChart.toHtml());
 
 

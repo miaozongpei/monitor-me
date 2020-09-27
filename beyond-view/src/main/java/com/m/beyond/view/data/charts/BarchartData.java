@@ -37,7 +37,7 @@ public class BarchartData implements Serializable {
     private void initBarColors(int size){
         this.barColors=new String[size];
         for (int i=0;i<size;i++){
-            this.barColors[i]= Beyond.colors.get(i);
+            this.barColors[i]= Beyond.COLORS.get(i);
         }
     }
 

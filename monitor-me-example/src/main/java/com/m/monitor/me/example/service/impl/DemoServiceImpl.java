@@ -21,12 +21,14 @@ public class DemoServiceImpl implements DemoService {
         userService.find("xx");
 
     }
+    @Override
     public void findUserByName(String name) {
         userService.find(name);
     }
     public void findAddr1() {
         addrService.findAddr();
     }
+    @Override
     public void updateUser() {
         try {
             Thread.sleep(1);

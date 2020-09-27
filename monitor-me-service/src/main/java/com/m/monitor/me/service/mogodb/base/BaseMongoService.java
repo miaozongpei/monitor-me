@@ -39,7 +39,7 @@ public class BaseMongoService<T>{
         for (Document document : list) {
             document.entrySet().forEach((key) -> {
                 //提取出索引的名称
-                if (key.getKey().equals("name")) {
+                if ("name".equals(key.getKey())) {
                     indexes.add(key.getValue().toString());
                 }
             });
@@ -55,7 +55,7 @@ public class BaseMongoService<T>{
         Update update = new Update();
         JSONObject jQuery = JSON.parseObject(JSON.toJSONString(info));
         jQuery.forEach((key, value) -> {
-            if (!key.equals("id")) {
+            if (!"id".equals(key)) {
                 update.set(key, value);
             }
         });

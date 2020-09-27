@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Beyond {
 
-    public final static List<String> colors= Arrays.asList(
+    public final static List<String> COLORS= Arrays.asList(
             "#ff6161",
             "#0088cc",
             "#70c24a",
@@ -23,7 +23,7 @@ public class Beyond {
             "#9440ed"
     );
 
-    public final static List<String> bgColors= Arrays.asList(
+    public final static List<String> BG_COLORS= Arrays.asList(
             "bg-themesecondary",
             "bg-themethirdcolor",
             "bg-themefourthcolor",
@@ -68,7 +68,7 @@ public class Beyond {
             "bg-purple",
             "bg-maroon"
     );
-    public final static List<String> iconFas= Arrays.asList(
+    public final static List<String> ICON_FAS= Arrays.asList(
             "fa-cubes",
             "fa-tasks",
             "fa-sun-o"

@@ -3,12 +3,12 @@ package com.m.monitro.me.common.utils;
 import java.util.UUID;
 
 public class MethodTraceIdUtil {
-    private static final String spl=":";
+    private static final String SPL=":";
     public static String create(String methodName){
-        return methodName + spl + System.currentTimeMillis()+spl+UUID.randomUUID().toString();
+        return methodName + SPL + System.currentTimeMillis()+SPL+UUID.randomUUID().toString();
     }
     public static String[] split(String tranceId){
-        return tranceId.split(spl);
+        return tranceId.split(SPL);
     }
     public static String splitMethodName(String tranceId){
         return split(tranceId)[0];
