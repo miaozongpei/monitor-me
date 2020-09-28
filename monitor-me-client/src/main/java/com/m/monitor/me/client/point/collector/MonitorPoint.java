@@ -36,7 +36,6 @@ public class MonitorPoint extends HashMap<Integer,Long> {
 
         this.methodChains= new MethodChains(new MethodChain(-1,this.fullMethodName), 0,this.getNorm(),this.getNorm());
         this.methodChains.buildChildren(this);
-        print();
     }
 
 
