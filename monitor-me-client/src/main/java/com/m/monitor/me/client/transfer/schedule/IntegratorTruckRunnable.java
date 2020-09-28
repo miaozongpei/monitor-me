@@ -1,77 +1,39 @@
 package com.m.monitor.me.client.transfer.schedule;
 
 import com.alibaba.fastjson.JSON;
-import com.m.monitor.me.client.point.collector.MonitorPoint;
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
 import com.m.monitor.me.client.point.integrator.PointIntegrator;
-import com.m.monitor.me.client.transfer.client.MonitorExpressWayClient;
-import com.m.monitor.me.client.transfer.file.MonitorWriterManager;
+import com.m.monitro.me.common.enums.MonitorTransferTypeEnum;
 import com.m.monitro.me.common.transfer.IntegratorContext;
-import com.m.monitro.me.common.utils.MethodTraceIdUtil;
-import com.m.monitro.me.common.utils.TransferSnappyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @Slf4j
-public class IntegratorTruckRunnable implements Runnable {
+public class IntegratorTruckRunnable extends AbstractTruckRunnable implements Runnable {
     @Value("${monitor.me.application.name:monitor-me}")
     private String monitorApplicationName="monitor-me";
-
-    @Value("${monitor.me.admin.host:localhost}")
-    private String host="localhost";
-
-    @Value("${monitor.me.admin.port:8899}")
-    private int port=8899;
-    @Resource
-    private MonitorExpressWayClient monitorExpressWayClient;
     @Override
-    public void run() {
+    public MonitorTransferTypeEnum transferType() {
+        return MonitorTransferTypeEnum.POINT_INTEGRATOR;
+    }
+    @Override
+    public List<Object> transferContents() {
         List<PointIntegrator>  integrators= MonitorPointCollector.pointIntegrators;
+        List<Object> contents=new ArrayList<>();
         while (integrators.size()>1){
             PointIntegrator pointIntegrator=integrators.get(0);
             synchronized (pointIntegrator) {
-                if (transfer(pointIntegrator)) {
+                IntegratorContext integratorContext= new IntegratorContext(monitorApplicationName,pointIntegrator.getIntegratorMap(),pointIntegrator.buildMethodChainsMap());
+                if (contents.add(integratorContext)) {
                     MonitorPointCollector.pointIntegrators.remove(pointIntegrator);
                 }
             }
         }
-        //MonitorWriterManager.getInstance().flush();
-
-        //清除异常不完整的监控点
-        clearPointMap();
-    }
-    public boolean transfer(PointIntegrator pointIntegrator){
-
-        String jsonPointIntegrator=JSON.toJSONString(new IntegratorContext(monitorApplicationName,pointIntegrator.getIntegratorMap(),pointIntegrator.buildMethodChainsMap()));
-        if (monitorExpressWayClient.checkAndConnect(host,port)) {
-            Boolean isSend = monitorExpressWayClient.send(jsonPointIntegrator);
-            log.info("[MonitorMe client] Transfer send result:{}",isSend);
-        }
-        //如果发送失败写入本地文件
-        //return isSend?true:MonitorWriterManager.getInstance().writer(jsonPointIntegrator);
-        return true;
-    }
-
-    private long clearExpire=30*60*1000;//30分钟
-    public void clearPointMap(){
-        for (String method:MonitorPointCollector.tempPointMap.keySet()) {
-            Map<String, MonitorPoint> methodPointMap=MonitorPointCollector.tempPointMap.get(method);
-            if (!CollectionUtils.isEmpty(methodPointMap)) {
-                for (Map.Entry<String, MonitorPoint> point : methodPointMap.entrySet()) {
-                    String traceId = point.getKey();
-                    if (System.currentTimeMillis() - MethodTraceIdUtil.splitTime(traceId) > clearExpire) {
-                        methodPointMap.remove(traceId);
-                    }
-                }
-            }
-        }
+        return contents;
     }
 }

@@ -31,7 +31,8 @@ public class RealTimeController {
     @Resource
     private NormDayService normDayService;
     @Resource
-    private MonitorPointService monitorPointService;
+    private MonitorHostService monitorHostService;
+
 
     @RequestMapping("/data")
     @ResponseBody
@@ -104,7 +105,7 @@ public class RealTimeController {
         String name=request.getParameter("sys_name");
         String method=request.getParameter("point_method");
         method=StringUtils.isEmpty(method)||"all".equals(method)?null:method;
-        List<String> hosts=monitorPointService.queryHostsByName(name);
+        List<String> hosts=monitorHostService.queryHostsByName(name);
         BarchartData data=new BarchartData();
         String globalDTime=request.getParameter("global_d_time");
 

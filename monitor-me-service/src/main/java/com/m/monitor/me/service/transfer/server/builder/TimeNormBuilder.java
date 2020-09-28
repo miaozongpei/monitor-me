@@ -2,7 +2,6 @@ package com.m.monitor.me.service.transfer.server.builder;
 
 import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
 import com.m.monitor.me.service.transfer.server.norm.TimeNorm;
-import com.m.monitor.me.service.transfer.server.record.MonitorMethod;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import com.m.monitro.me.common.utils.MonitorTimeUtil;
 import lombok.Getter;
@@ -73,22 +72,4 @@ public class TimeNormBuilder {
         timeNorm.cal();//计算平均
         return timeNorm;
     }
-
-
-
-
-    public Set<MonitorMethod> buildMonitorMethod(){
-        Map<String, MethodNorm> all = new HashMap<>();
-        for (Map.Entry<Long,MethodNormBuilder> entry:this.minuteMap.entrySet()){
-            MethodNormBuilder methodNormBuilder=entry.getValue();
-            all.putAll(methodNormBuilder.getMethodNormMap());
-        }
-        Set<MonitorMethod> methods=new HashSet<>();
-        for (Map.Entry<String,MethodNorm> entry:all.entrySet()){
-            MonitorMethod method=new MonitorMethod(entry.getKey());
-            methods.add(method);
-        }
-        return methods;
-    }
-
 }

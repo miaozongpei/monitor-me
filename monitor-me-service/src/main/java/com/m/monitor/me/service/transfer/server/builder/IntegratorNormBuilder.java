@@ -46,8 +46,6 @@ public class IntegratorNormBuilder {
         minuteRecord.setTs(timeNormBuilder.buildTimeNorms(timeNormBuilder.getMinuteMap()));
         hourRecord.setTs(timeNormBuilder.buildTimeNorms(timeNormBuilder.getHourMap()));
         dayRecord.setTs(timeNormBuilder.buildTimeNorms(timeNormBuilder.getDayMap()));
-
-        monitorPointRecord.setMs(timeNormBuilder.buildMonitorMethod());
         return this;
     }
     private void putIntegratorContext(){

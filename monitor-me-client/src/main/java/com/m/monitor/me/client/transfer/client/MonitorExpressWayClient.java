@@ -22,6 +22,6 @@ public class MonitorExpressWayClient extends AbstractExpressWayClient {
     }
     @Override
     public void replay(ChannelHandlerContext ctx, String msg) {
-
+        System.out.println(ctx);
     }
 }

@@ -10,6 +10,7 @@ import com.m.beyond.view.page.forms.SelectOption;
 import com.m.beyond.view.page.functions.ToHtml;
 import com.m.beyond.view.page.mains.MainRow;
 import com.m.beyond.view.page.widgets.Widget;
+import com.m.monitor.me.service.mogodb.norm.MonitorHostService;
 import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -23,7 +24,8 @@ import java.util.Map;
 public class RealTimeWidgetFactory {
     @Resource
     private MonitorPointService monitorPointService;
-
+    @Resource
+    private MonitorHostService monitorHostService;
     public Widget create(String title,String defaultName,String defaultMethod){
         Widget widget=new Widget();
 
@@ -40,7 +42,7 @@ public class RealTimeWidgetFactory {
         //search
         MainRow searchRow=new MainRow();
         Select2 sysNameSelect=new Select2("sys_name");
-        List<String> names=monitorPointService.queryNames();
+        List<String> names=monitorHostService.queryNames();
         for(String name:names){
             sysNameSelect.add(new SelectOption(name, name).setSelected(defaultName));
         }
@@ -63,7 +65,7 @@ public class RealTimeWidgetFactory {
             widget.addRow(searchRow);
 
             //ServerRealTimeWidget
-            List<String> hosts=monitorPointService.queryHostsByName(defaultName);
+            List<String> hosts=monitorHostService.queryHostsByName(defaultName);
             MainRow realTimeLineChartRow = new MainRow();
             for (int i=0;i<hosts.size();i++){
                 realTimeLineChartRow.add(new ServerRealTimeWidget(hosts.get(i), Beyond.COLORS.get(1)).getWidget());

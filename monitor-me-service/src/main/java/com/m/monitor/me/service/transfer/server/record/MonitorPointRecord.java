@@ -13,7 +13,6 @@ public class MonitorPointRecord {
     private String name;
     private String host;
     private String status="0";//正常
-    private Set<MonitorMethod> ms=new HashSet<>();
 
     public MonitorPointRecord(String name, String host) {
         this.name = name;

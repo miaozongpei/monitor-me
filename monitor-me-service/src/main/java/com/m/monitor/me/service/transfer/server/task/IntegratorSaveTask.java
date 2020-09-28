@@ -34,7 +34,7 @@ public class IntegratorSaveTask {
     @Resource
     private MonitorPointService monitorPointService;
     @Resource
-    private MonitorMethodChainService monitorMethodChainService;
+    private MonitorHostService monitorHostService;
 
 
     private ExecutorService tasks;
@@ -61,21 +61,21 @@ public class IntegratorSaveTask {
                 normDayService.saveOrModify(integratorNormBuilder);
 
 
-                monitorPointService.saveOrModify(integratorNormBuilder.getMonitorPointRecord());
-                //保存方法链
-                saveMcs(integratorContext);
+                monitorHostService.saveOrModify(integratorNormBuilder.getMonitorPointRecord());
+                //保存监控点
+                saveMonitorPoint(integratorContext);
             }
         });
     }
 
-    //保存方法链
-    private void saveMcs(IntegratorContext integratorContext){
+    //保存监控点
+    private void saveMonitorPoint(IntegratorContext integratorContext){
         String name=integratorContext.getName();
         String host=integratorContext.getHost();
         for (String m:integratorContext.getMcs().keySet()){
             String mc=integratorContext.getMcs().get(m);
             if (!StringUtils.isEmpty(mc)) {
-                monitorMethodChainService.saveOrModify(new MonitorMethodChainRecord(name, host, m, mc));
+                monitorPointService.saveOrModify(new MonitorMethodChainRecord(name, host, m, mc));
             }
         }
     }

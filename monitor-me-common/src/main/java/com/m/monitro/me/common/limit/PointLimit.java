@@ -4,10 +4,11 @@ public class PointLimit {
     private boolean isBreak=false;
     private int tpsMax=Integer.MAX_VALUE;
     private int sleepMillis=0;
+    private String synStatus="S";
 
 
 
-    private int currentTps;
+    private Integer currentTps;
 
     public int getWaitingThreadMax() {
         return waitingThreadMax;
@@ -41,11 +42,11 @@ public class PointLimit {
         this.sleepMillis = sleepMillis;
     }
 
-    public int getCurrentTps() {
+    public Integer getCurrentTps() {
         return currentTps;
     }
 
-    public void setCurrentTps(int currentTps) {
+    public void setCurrentTps(Integer currentTps) {
         this.currentTps = currentTps;
     }
 }

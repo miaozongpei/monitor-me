@@ -9,6 +9,7 @@ import com.m.beyond.view.page.mains.MainBody;
 import com.m.beyond.view.page.mains.MainRow;
 import com.m.monitor.me.admin.page.BasePage;
 import com.m.monitor.me.admin.page.PageHtml;
+import com.m.monitor.me.service.mogodb.norm.MonitorHostService;
 import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -27,6 +28,9 @@ public class PointsPage extends BasePage {
     private MonitorPointService monitorPointService;
     @Resource
     private RealTimeWidgetFactory realTimeWidgetFactory;
+
+    @Resource
+    private MonitorHostService monitorHostService;
     @Override
     public PageHtml create(HttpServletRequest request) {
         String host=request.getParameter("sys_name");
@@ -34,9 +38,9 @@ public class PointsPage extends BasePage {
         MainBody mainBody=new MainBody();
         //dataBoxRow
         MainRow dataBoxRow=new MainRow();
-        List<String> names=monitorPointService.queryNames();
+        List<String> names=monitorHostService.queryNames();
         dataBoxRow.add(new HalvedDataBox("Applications",names.size(), Beyond.BG_COLORS.get(1),Beyond.ICON_FAS.get(0)));
-        List<String> hosts=monitorPointService.queryHosts();
+        List<String> hosts=monitorHostService.queryHosts();
         dataBoxRow.add(new HalvedDataBox("Servers",hosts.size(),Beyond.BG_COLORS.get(2),Beyond.ICON_FAS.get(1)));
         List<String> methods=monitorPointService.queryMethods();
         dataBoxRow.add(new HalvedDataBox("Method Points",methods.size(),Beyond.BG_COLORS.get(3),Beyond.ICON_FAS.get(2)));

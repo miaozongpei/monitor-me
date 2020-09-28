@@ -17,6 +17,9 @@ public class MonitorTimeUtil {
             case MINUTE: {
                 return Long.parseLong((time / 100)+"00");
             }
+            case SECOND: {
+                return time;
+            }
             default:{
                 return null;
             }
