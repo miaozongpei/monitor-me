@@ -1,10 +1,11 @@
 package com.m.monitor.me.service.mogodb.norm;
 
 
-import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
-import com.m.monitor.me.service.transfer.server.norm.TimeNorm;
-import com.m.monitor.me.service.transfer.server.record.IntegratorNormRecord;
+import com.m.monitor.me.service.transfer.norm.MethodNorm;
+import com.m.monitor.me.service.transfer.norm.TimeNorm;
+import com.m.monitor.me.service.transfer.record.IntegratorNormRecord;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
+import com.m.monitro.me.common.enums.QueryNormTypeEnum;
 import com.m.monitro.me.common.utils.DateUtil;
 import com.m.monitro.me.common.utils.DoubleUtil;
 import com.m.monitro.me.common.utils.MonitorTimeUtil;
@@ -38,7 +39,7 @@ public class MonitorNormBuilder {
         return normMap;
     }
 
-    public List<double[]> build(List<IntegratorNormRecord> records, String targetMethod) {
+    public List<double[]> build(String queryNormType,List<IntegratorNormRecord> records, String targetMethod) {
         Map<Long,Double> normMap=buildNormMap();
         for (IntegratorNormRecord record : records) {
             for (TimeNorm timeNorm : record.getTs()) {
@@ -46,10 +47,14 @@ public class MonitorNormBuilder {
                 Double targetNorm=normMap.get(targetTime);
                 if (targetNorm!=null) {
                     if (StringUtils.isEmpty(targetMethod)) {
-                        normMap.put(targetTime, targetNorm + timeNorm.getAvg());
+                        targetNorm+= QueryNormTypeEnum.TP.name().equals(queryNormType)?timeNorm.getTotal():timeNorm.getAvg();
                     } else {
-                        normMap.put(targetTime,targetNorm+timeNorm.getMethodNorm(targetMethod).getAvg());
+                        MethodNorm methodNorm=timeNorm.getMethodNorm(targetMethod);
+                        if (methodNorm!=null) {
+                            targetNorm += QueryNormTypeEnum.TP.name().equals(queryNormType) ? methodNorm.getTotal() : methodNorm.getAvg();
+                        }
                     }
+                    normMap.put(targetTime, targetNorm );
                 }
             }
         }
@@ -61,6 +66,7 @@ public class MonitorNormBuilder {
         }
         return targetList;
     }
+
 
 
 

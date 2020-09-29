@@ -1,4 +1,4 @@
-package com.m.monitor.me.service.transfer.server.norm;
+package com.m.monitor.me.service.transfer.norm;
 
 import com.m.monitro.me.common.utils.DoubleUtil;
 import lombok.Data;

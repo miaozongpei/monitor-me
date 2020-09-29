@@ -22,6 +22,8 @@ import java.util.Map;
 @Component
 @Slf4j
 public class HeartBeatTruckRunnable extends AbstractTruckRunnable{
+    @Value("${monitor.me.application.name:monitor-me}")
+    private String monitorApplicationName="monitor-me";
     @Override
     public MonitorTransferTypeEnum transferType() {
         return MonitorTransferTypeEnum.HEART_BEAT;
@@ -29,6 +31,6 @@ public class HeartBeatTruckRunnable extends AbstractTruckRunnable{
 
     @Override
     public List<Object> transferContents() {
-        return Arrays.asList("ok");
+        return Arrays.asList(monitorApplicationName);
     }
 }

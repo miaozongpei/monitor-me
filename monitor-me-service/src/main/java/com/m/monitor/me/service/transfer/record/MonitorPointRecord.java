@@ -1,4 +1,4 @@
-package com.m.monitor.me.service.transfer.server.record;
+package com.m.monitor.me.service.transfer.record;
 
 import com.m.monitro.me.common.limit.PointLimit;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-public class MonitorMethodChainRecord {
+public class MonitorPointRecord {
     private String id;
     private String name;
     private String host;
@@ -16,7 +16,7 @@ public class MonitorMethodChainRecord {
 
     private String mc;
 
-    public MonitorMethodChainRecord(String name, String host, String m, String mc) {
+    public MonitorPointRecord(String name, String host, String m, String mc) {
         this.name = name;
         this.host = host;
         this.m = m;

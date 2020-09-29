@@ -1,4 +1,4 @@
-package com.m.monitor.me.service.transfer.server;
+package com.m.monitor.me.service.transfer;
 
 import com.m.monitro.me.common.utils.TransferSnappyUtil;
 import io.netty.bootstrap.Bootstrap;

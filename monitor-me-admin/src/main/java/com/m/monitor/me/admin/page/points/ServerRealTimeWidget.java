@@ -33,6 +33,7 @@ public class ServerRealTimeWidget {
     }
     private void initBody(String color){
         Map<String,String> datas=new HashMap<>();
+        datas.put("norm_type","$('#norm_type').val()");
         datas.put("sys_name","$('#sys_name').val()");//$('#sys.name').val()
         datas.put("point_method","$('#point_method').val()");
         //$("input[name='mobile']")[0].value

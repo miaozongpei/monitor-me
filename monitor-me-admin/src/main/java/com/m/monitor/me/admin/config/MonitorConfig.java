@@ -1,7 +1,7 @@
 package com.m.monitor.me.admin.config;
 
-import com.m.monitor.me.service.transfer.server.MonitorExpressWayServer;
-import com.m.monitor.me.service.transfer.server.task.IntegratorSaveTask;
+import com.m.monitor.me.service.transfer.MonitorExpressWayServer;
+import com.m.monitor.me.service.transfer.task.IntegratorSaveTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

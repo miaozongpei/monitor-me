@@ -1,7 +1,7 @@
-package com.m.monitor.me.service.transfer.server.builder;
+package com.m.monitor.me.service.transfer.builder;
 
-import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
-import com.m.monitor.me.service.transfer.server.norm.TimeNorm;
+import com.m.monitor.me.service.transfer.norm.MethodNorm;
+import com.m.monitor.me.service.transfer.norm.TimeNorm;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import com.m.monitro.me.common.utils.MonitorTimeUtil;
 import lombok.Getter;

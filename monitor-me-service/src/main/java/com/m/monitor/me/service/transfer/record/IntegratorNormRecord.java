@@ -1,7 +1,7 @@
-package com.m.monitor.me.service.transfer.server.record;
+package com.m.monitor.me.service.transfer.record;
 
-import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
-import com.m.monitor.me.service.transfer.server.norm.TimeNorm;
+import com.m.monitor.me.service.transfer.norm.MethodNorm;
+import com.m.monitor.me.service.transfer.norm.TimeNorm;
 import lombok.Data;
 
 import java.util.ArrayList;

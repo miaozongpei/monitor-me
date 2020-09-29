@@ -12,6 +12,7 @@ import com.m.beyond.view.page.mains.MainRow;
 import com.m.beyond.view.page.widgets.Widget;
 import com.m.monitor.me.service.mogodb.norm.MonitorHostService;
 import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
+import com.m.monitro.me.common.enums.QueryNormTypeEnum;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -26,7 +27,7 @@ public class RealTimeWidgetFactory {
     private MonitorPointService monitorPointService;
     @Resource
     private MonitorHostService monitorHostService;
-    public Widget create(String title,String defaultName,String defaultMethod){
+    public Widget create(String title,String defaultType,String defaultName,String defaultMethod){
         Widget widget=new Widget();
 
         widget.setHeadTitle(title);
@@ -34,21 +35,31 @@ public class RealTimeWidgetFactory {
 
         //ToHtml
         Map<String,String> datas=new HashMap<>();
-        datas.put("sys_name","$('#sys_name').val()");//$('#sys.name').val()
+        datas.put("norm_type","$('#norm_type').val()");
+        datas.put("sys_name","$('#sys_name').val()");
         datas.put("point_method","$('#point_method').val()");
         datas.put("global_d_time","$(\"input[name='global_d_time']\")[0].value ");
         ToHtml bindOnchangeFunction=new ToHtml(new AjaxData("p/points",datas),"page-body");
 
         //search
         MainRow searchRow=new MainRow();
+        //norm_type
+        Select2 normTypeSelect=new Select2("norm_type");
+        normTypeSelect.add(new SelectOption(QueryNormTypeEnum.RT.name(), QueryNormTypeEnum.RT.name()).setSelected(defaultType));
+        normTypeSelect.add(new SelectOption(QueryNormTypeEnum.TP.name(), QueryNormTypeEnum.TP.name()).setSelected(defaultType));
+        normTypeSelect.setBindOnchangeFunction(bindOnchangeFunction.toHtml());
+        searchRow.add(normTypeSelect);
+
+        //sys_name
         Select2 sysNameSelect=new Select2("sys_name");
         List<String> names=monitorHostService.queryNames();
         for(String name:names){
             sysNameSelect.add(new SelectOption(name, name).setSelected(defaultName));
         }
         sysNameSelect.setBindOnchangeFunction(bindOnchangeFunction.toHtml());
-        searchRow.add(sysNameSelect.setLg(3));
+        searchRow.add(sysNameSelect);
 
+        //point_method
         Select2 methodSelect =new Select2("point_method");
         methodSelect.add(new SelectOption("all", "all"));
         if (names.size()>0) {
@@ -60,6 +71,7 @@ public class RealTimeWidgetFactory {
             methodSelect.setBindOnchangeFunction(bindOnchangeFunction.toHtml());
             searchRow.add(methodSelect);
 
+            //global_d_time
             searchRow.add(new DateTimePicker("global_d_time"));
 
             widget.addRow(searchRow);

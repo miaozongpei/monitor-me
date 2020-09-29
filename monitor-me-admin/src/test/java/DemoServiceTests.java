@@ -1,9 +1,8 @@
-import com.alibaba.fastjson.JSON;
 import com.m.monitor.me.admin.MonitorMeAdminApplication;
 import com.m.monitor.me.service.mogodb.norm.NormMinuteService;
-import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
-import com.m.monitor.me.service.transfer.server.norm.TimeNorm;
-import com.m.monitor.me.service.transfer.server.record.IntegratorNormRecord;
+import com.m.monitor.me.service.transfer.norm.MethodNorm;
+import com.m.monitor.me.service.transfer.norm.TimeNorm;
+import com.m.monitor.me.service.transfer.record.IntegratorNormRecord;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import com.m.monitro.me.common.utils.DoubleUtil;
 import com.m.monitro.me.common.utils.MonitorTimeUtil;
@@ -14,11 +13,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MonitorMeAdminApplication.class)

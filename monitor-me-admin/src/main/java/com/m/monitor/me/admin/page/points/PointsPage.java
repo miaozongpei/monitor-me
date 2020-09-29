@@ -33,6 +33,7 @@ public class PointsPage extends BasePage {
     private MonitorHostService monitorHostService;
     @Override
     public PageHtml create(HttpServletRequest request) {
+        String type=request.getParameter("norm_type");
         String host=request.getParameter("sys_name");
         String method=request.getParameter("point_method");
         MainBody mainBody=new MainBody();
@@ -46,7 +47,7 @@ public class PointsPage extends BasePage {
         dataBoxRow.add(new HalvedDataBox("Method Points",methods.size(),Beyond.BG_COLORS.get(3),Beyond.ICON_FAS.get(2)));
         mainBody.add(dataBoxRow);
         mainBody.add(new MainRow().add(new ClearRealtimeInterval()));//清除之前定时
-        mainBody.add(new MainRow().add(realTimeWidgetFactory.create("Server Points",host,method)));
+        mainBody.add(new MainRow().add(realTimeWidgetFactory.create("Server Points",type,host,method)));
         return new PageHtml(mainBody.toHtml());
     }
 }

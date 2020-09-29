@@ -1,21 +1,17 @@
 package com.m.monitor.me.service.mogodb.norm;
 
 import com.m.monitor.me.service.mogodb.base.BaseMongoService;
-import com.m.monitor.me.service.transfer.server.builder.IntegratorNormBuilder;
-import com.m.monitor.me.service.transfer.server.builder.MethodNormBuilder;
-import com.m.monitor.me.service.transfer.server.norm.TimeNorm;
-import com.m.monitor.me.service.transfer.server.record.IntegratorNormRecord;
+import com.m.monitor.me.service.transfer.builder.IntegratorNormBuilder;
+import com.m.monitor.me.service.transfer.norm.TimeNorm;
+import com.m.monitor.me.service.transfer.record.IntegratorNormRecord;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
-import com.m.monitro.me.common.utils.DoubleUtil;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public abstract class BaseNormService extends BaseMongoService<IntegratorNormRecord>{
     public abstract String getCollectionName();
@@ -61,7 +57,7 @@ public abstract class BaseNormService extends BaseMongoService<IntegratorNormRec
         query.addCriteria(Criteria.where("ts.t").is(time));
         return this.mongoTemplate.findOne(query,IntegratorNormRecord.class,getCollectionName());
     }
-    public List<double[]> queryRealTimeNorm(String name,String host,
+    public List<double[]> queryRealTimeNorm(String normType,String name,String host,
                                             String methodName,
                                             long currentTime,
                                             int size){
@@ -74,9 +70,9 @@ public abstract class BaseNormService extends BaseMongoService<IntegratorNormRec
         }
         query.addCriteria(Criteria.where("ts.t").gte(builder.getBeforeTime()).lt(currentTime));
         List<IntegratorNormRecord> list=this.find(getCollectionName(),query,IntegratorNormRecord.class);
-        return builder.build(list,methodName);
+        return builder.build(normType,list,methodName);
     }
-    public double[] queryRealTimeNorm(String name,String host,
+    public double[] queryRealTimeNorm(String normType,String name,String host,
                                             String methodName,
                                             long currentTime){
         MonitorNormBuilder builder=new MonitorNormBuilder(currentTime, getMonitorTimeUnitEnum(),1);
@@ -88,7 +84,7 @@ public abstract class BaseNormService extends BaseMongoService<IntegratorNormRec
         }
         query.addCriteria(Criteria.where("ts.t").is(currentTime));
         List<IntegratorNormRecord> list=this.find(getCollectionName(),query,IntegratorNormRecord.class);
-        List<double[]> result= builder.build(list,methodName);
+        List<double[]> result= builder.build(normType,list,methodName);
         return CollectionUtils.isEmpty(result)?new double[]{Double.parseDouble(currentTime+""),0D}:result.get(0);
     }
 

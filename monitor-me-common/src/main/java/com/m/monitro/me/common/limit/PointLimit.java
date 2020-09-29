@@ -1,11 +1,10 @@
 package com.m.monitro.me.common.limit;
+
 public class PointLimit {
     private int waitingThreadMax=Integer.MAX_VALUE;
     private boolean isBreak=false;
     private int tpsMax=Integer.MAX_VALUE;
     private int sleepMillis=0;
-    private String synStatus="S";
-
 
 
     private Integer currentTps;
@@ -45,7 +44,6 @@ public class PointLimit {
     public Integer getCurrentTps() {
         return currentTps;
     }
-
     public void setCurrentTps(Integer currentTps) {
         this.currentTps = currentTps;
     }

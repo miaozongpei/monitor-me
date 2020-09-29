@@ -1,15 +1,13 @@
-package com.m.monitor.me.service.transfer.server.builder;
+package com.m.monitor.me.service.transfer.builder;
 
-import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
-import com.m.monitor.me.service.transfer.server.norm.TimeNorm;
-import com.m.monitor.me.service.transfer.server.record.IntegratorNormRecord;
-import com.m.monitor.me.service.transfer.server.record.MonitorPointRecord;
+import com.m.monitor.me.service.transfer.norm.MethodNorm;
+import com.m.monitor.me.service.transfer.norm.TimeNorm;
+import com.m.monitor.me.service.transfer.record.MonitorHostRecord;
+import com.m.monitor.me.service.transfer.record.IntegratorNormRecord;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import com.m.monitro.me.common.transfer.IntegratorContext;
-import com.m.monitro.me.common.utils.MonitorTimeUtil;
 import lombok.Getter;
 
-import java.util.List;
 import java.util.Map;
 @Getter
 public class IntegratorNormBuilder {
@@ -18,7 +16,7 @@ public class IntegratorNormBuilder {
     private IntegratorNormRecord hourRecord;
     private IntegratorNormRecord dayRecord;
 
-    private MonitorPointRecord monitorPointRecord;
+    private MonitorHostRecord monitorHostRecord;
 
 
     private TimeNormBuilder timeNormBuilder=new TimeNormBuilder();
@@ -40,7 +38,7 @@ public class IntegratorNormBuilder {
         hourRecord=new IntegratorNormRecord(name,host);
         dayRecord=new IntegratorNormRecord(name,host);
 
-        monitorPointRecord=new MonitorPointRecord(name,host);
+        monitorHostRecord =new MonitorHostRecord(name,host);
 
         secondRecord.setTs(timeNormBuilder.buildTimeNorms(timeNormBuilder.getSecondMap()));
         minuteRecord.setTs(timeNormBuilder.buildTimeNorms(timeNormBuilder.getMinuteMap()));

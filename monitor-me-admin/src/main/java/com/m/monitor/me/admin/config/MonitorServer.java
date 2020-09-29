@@ -1,6 +1,6 @@
 package com.m.monitor.me.admin.config;
 
-import com.m.monitor.me.service.transfer.server.MonitorExpressWayServer;
+import com.m.monitor.me.service.transfer.MonitorExpressWayServer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

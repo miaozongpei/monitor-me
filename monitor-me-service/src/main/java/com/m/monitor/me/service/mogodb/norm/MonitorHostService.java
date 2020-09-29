@@ -1,7 +1,7 @@
 package com.m.monitor.me.service.mogodb.norm;
 
 import com.m.monitor.me.service.mogodb.base.BaseMongoService;
-import com.m.monitor.me.service.transfer.server.record.MonitorPointRecord;
+import com.m.monitor.me.service.transfer.record.MonitorHostRecord;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
@@ -9,44 +9,37 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class MonitorHostService extends BaseMongoService<MonitorPointRecord> {
+public class MonitorHostService extends BaseMongoService<MonitorHostRecord> {
     private String collectionName="monitor_host";
-    public MonitorPointRecord queryOne(String name,String host){
+    public MonitorHostRecord queryOne(String name, String host){
         Query query = new Query();
         query.addCriteria(Criteria.where("name").is(name));
         query.addCriteria(Criteria.where("host").is(host));
-        return this.mongoTemplate.findOne(query,MonitorPointRecord.class,collectionName);
+        return this.mongoTemplate.findOne(query, MonitorHostRecord.class,collectionName);
     }
-    public void saveOrModify(MonitorPointRecord monitorPointRecord){
-        String name=monitorPointRecord.getName();
-        String host=monitorPointRecord.getHost();
-        MonitorPointRecord current=queryOne(name,host);
+    public void saveOrModify(MonitorHostRecord monitorHostRecord){
+        String name= monitorHostRecord.getName();
+        String host= monitorHostRecord.getHost();
+        MonitorHostRecord current=queryOne(name,host);
         if (current==null){
-            insert(collectionName,monitorPointRecord);
+            insert(collectionName, monitorHostRecord);
         }else {
-            current.setStatus(monitorPointRecord.getStatus());
+            current.setStatus(monitorHostRecord.getStatus());
             update(collectionName,current.getId(),current);
         }
     }
     public List<String> queryNames(){
         Query query = new Query();
-        return mongoTemplate.findDistinct(query,"name",collectionName,MonitorPointRecord.class,String.class);
+        return mongoTemplate.findDistinct(query,"name",collectionName, MonitorHostRecord.class,String.class);
     }
     public List<String> queryHosts(){
         Query query = new Query();
-        return mongoTemplate.findDistinct(query,"host",collectionName,MonitorPointRecord.class,String.class);
+        return mongoTemplate.findDistinct(query,"host",collectionName, MonitorHostRecord.class,String.class);
     }
 
     public List<String> queryHostsByName(String name){
         Query query = new Query();
         query.addCriteria(Criteria.where("name").is(name));
-        return mongoTemplate.findDistinct(query,"host",collectionName,MonitorPointRecord.class,String.class);
+        return mongoTemplate.findDistinct(query,"host",collectionName, MonitorHostRecord.class,String.class);
     }
-
-    public List<String> queryMethodsByHost(String host){
-        Query query = new Query();
-        query.addCriteria(Criteria.where("host").is(host));
-        return mongoTemplate.findDistinct(query,"ms.m",collectionName,MonitorPointRecord.class,String.class);
-    }
-
 }

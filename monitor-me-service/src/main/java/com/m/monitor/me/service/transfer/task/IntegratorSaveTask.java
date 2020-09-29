@@ -1,18 +1,12 @@
-package com.m.monitor.me.service.transfer.server.task;
+package com.m.monitor.me.service.transfer.task;
 
-import com.m.monitor.me.service.mogodb.base.BaseMongoService;
 import com.m.monitor.me.service.mogodb.norm.*;
-import com.m.monitor.me.service.transfer.server.builder.IntegratorNormBuilder;
-import com.m.monitor.me.service.transfer.server.norm.MethodNorm;
-import com.m.monitor.me.service.transfer.server.record.MonitorMethodChainRecord;
-import com.m.monitor.me.service.transfer.server.record.MonitorPointRecord;
+import com.m.monitor.me.service.transfer.builder.IntegratorNormBuilder;
+import com.m.monitor.me.service.transfer.record.MonitorPointRecord;
 import com.m.monitro.me.common.transfer.IntegratorContext;
-import com.m.monitro.me.common.utils.DateUtil;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -61,23 +55,25 @@ public class IntegratorSaveTask {
                 normDayService.saveOrModify(integratorNormBuilder);
 
 
-                monitorHostService.saveOrModify(integratorNormBuilder.getMonitorPointRecord());
+                monitorHostService.saveOrModify(integratorNormBuilder.getMonitorHostRecord());
                 //保存监控点
-                saveMonitorPoint(integratorContext);
+                saveMonitorPointMc(integratorContext);
             }
         });
     }
 
     //保存监控点
-    private void saveMonitorPoint(IntegratorContext integratorContext){
+    private void saveMonitorPointMc(IntegratorContext integratorContext){
         String name=integratorContext.getName();
         String host=integratorContext.getHost();
         for (String m:integratorContext.getMcs().keySet()){
             String mc=integratorContext.getMcs().get(m);
             if (!StringUtils.isEmpty(mc)) {
-                monitorPointService.saveOrModify(new MonitorMethodChainRecord(name, host, m, mc));
+                monitorPointService.saveOrModifyMc(new MonitorPointRecord(name, host, m, mc));
             }
         }
     }
+
+
 
 }

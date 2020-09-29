@@ -1,4 +1,4 @@
-package com.m.monitor.me.service.transfer.server.record;
+package com.m.monitor.me.service.transfer.record;
 
 import lombok.Data;
 
@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-public class MonitorPointRecord {
+public class MonitorHostRecord {
     private String id;
     private String name;
     private String host;
     private String status="0";//正常
 
-    public MonitorPointRecord(String name, String host) {
+    public MonitorHostRecord(String name, String host) {
         this.name = name;
         this.host = host;
     }
