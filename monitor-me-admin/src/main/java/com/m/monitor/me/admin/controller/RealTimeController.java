@@ -55,7 +55,7 @@ public class RealTimeController {
             Date rangesMinDate=new Date(rangesMinTimeLong);
             currentTime=Long.parseLong(DateUtil.formatSecond(rangesMinDate.getTime()));
         }else {
-            currentTime = MonitorTimeUtil.subTime(currentTime, 30, MonitorTimeUnitEnum.SECOND);
+            currentTime = MonitorTimeUtil.subTime(currentTime, 15, MonitorTimeUnitEnum.SECOND);
         }
         method=StringUtils.isEmpty(method)||"all".equals(method)?null:method;
         return normSecondService.queryRealTimeNorm(type,name,host,method,

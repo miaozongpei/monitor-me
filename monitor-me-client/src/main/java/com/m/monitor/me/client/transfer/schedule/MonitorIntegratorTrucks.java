@@ -20,14 +20,14 @@ public class MonitorIntegratorTrucks implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         ScheduledExecutorService  scheduledThreadPool = new ScheduledThreadPoolExecutor(10);
-        //每隔30S发送一次心跳
-        scheduledThreadPool.scheduleAtFixedRate(heartBeatTruckRunnable,0,30, TimeUnit.SECONDS);
+        //每隔15S发送一次心跳
+        scheduledThreadPool.scheduleAtFixedRate(heartBeatTruckRunnable,0,13, TimeUnit.SECONDS);
 
-        //每隔每隔17S开启传输监控聚合器通道
-        scheduledThreadPool.scheduleAtFixedRate(integratorTruckRunnable,5,17, TimeUnit.SECONDS);
+        //每隔每隔11S开启传输监控聚合器通道
+        scheduledThreadPool.scheduleAtFixedRate(integratorTruckRunnable,5,11, TimeUnit.SECONDS);
 
-        //每隔19S清理一次临时监控点
-        scheduledThreadPool.scheduleAtFixedRate(clearTempPointMapRunnable,10,19, TimeUnit.SECONDS);
+        //每隔30S清理一次临时监控点
+        scheduledThreadPool.scheduleAtFixedRate(clearTempPointMapRunnable,10,30, TimeUnit.SECONDS);
 
     }
 }

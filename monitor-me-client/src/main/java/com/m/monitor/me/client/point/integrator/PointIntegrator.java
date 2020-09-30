@@ -3,6 +3,7 @@ package com.m.monitor.me.client.point.integrator;
 import com.m.monitor.me.client.point.collector.MonitorPoint;
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
 import com.m.monitor.me.client.point.limit.PointLimitConfig;
+import com.m.monitro.me.common.limit.PointLimit;
 import com.m.monitro.me.common.utils.DateUtil;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -22,7 +23,10 @@ public class PointIntegrator {
         PerformanceNorm performanceNorm=getAndNew(second,point.getFullMethodName());
         performanceNorm.add(point);
         //放入当前指标到限制配置中
-        PointLimitConfig.get(point.getFullMethodName()).setCurrentTps(performanceNorm.getTotal().intValue());
+        PointLimit pointLimit=PointLimitConfig.get(point.getFullMethodName());
+        if (pointLimit!=null) {
+            pointLimit.getCurrentTps().set(performanceNorm.getTotal().intValue());
+        }
         total.incrementAndGet();
     }
     public Map<String,PerformanceNorm>  get(Long second){

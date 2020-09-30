@@ -13,6 +13,6 @@ public class AddrServiceImpl implements AddrService {
     private DemoService demoService;
     @Override
     public void findAddr() {
-        demoService.updateUser();
+        //demoService.updateUser();
     }
 }

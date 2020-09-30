@@ -1,13 +1,15 @@
 package com.m.monitro.me.common.limit;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class PointLimit {
     private int waitingThreadMax=Integer.MAX_VALUE;
-    private boolean isBreak=false;
+    private int breakFlag=0;
     private int tpsMax=Integer.MAX_VALUE;
     private int sleepMillis=0;
 
 
-    private Integer currentTps;
+    private AtomicInteger currentTps;
 
     public int getWaitingThreadMax() {
         return waitingThreadMax;
@@ -17,12 +19,12 @@ public class PointLimit {
         this.waitingThreadMax = waitingThreadMax;
     }
 
-    public boolean isBreak() {
-        return isBreak;
+    public int getBreakFlag() {
+        return breakFlag;
     }
 
-    public void setBreak(boolean aBreak) {
-        isBreak = aBreak;
+    public void setBreakFlag(int breakFlag) {
+        this.breakFlag = breakFlag;
     }
 
     public int getTpsMax() {
@@ -41,10 +43,10 @@ public class PointLimit {
         this.sleepMillis = sleepMillis;
     }
 
-    public Integer getCurrentTps() {
+    public  AtomicInteger getCurrentTps() {
+        if (currentTps==null){
+            currentTps=new AtomicInteger();
+        }
         return currentTps;
-    }
-    public void setCurrentTps(Integer currentTps) {
-        this.currentTps = currentTps;
     }
 }

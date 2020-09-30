@@ -10,9 +10,6 @@ public class PointLimitConfig {
 
     public static PointLimit get(String method){
         PointLimit pointLimit=limitConfig.get(method);
-        if (pointLimit==null){
-            pointLimit=new PointLimit();
-        }
         return pointLimit;
     }
 }
