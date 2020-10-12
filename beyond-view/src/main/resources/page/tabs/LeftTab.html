@@ -1,17 +1,17 @@
-<div class="tabbable tabs-below">
+<div class="tabbable tabs-left">
+    <ul class="nav nav-tabs" id="myTab8">
+        #foreach($tabPane in $tabPanes)
+        <li #if($tabPane.active)class="active"#end>
+            <a data-toggle="tab" href="#tab${tabPane.id}" onclick="to_tab${id}('${tabPane.id}','${tabPane.type}')">${tabPane.title}</a>
+        </li>
+        #end
+    </ul>
     <div class="tab-content tabs-flat">
 #foreach($tabPane in $tabPanes)
         <div id="tab${tabPane.id}" class="tab-pane#if($tabPane.active) in active#end">
         </div>
 #end
     </div>
-    <ul class="nav nav-tabs" id="myTab8">
-#foreach($tabPane in $tabPanes)
-        <li #if($tabPane.active)class="active"#end>
-            <a data-toggle="tab" href="#tab${tabPane.id}" onclick="to_tab${id}('${tabPane.id}','${tabPane.type}')">${tabPane.title}</a>
-        </li>
-#end
-    </ul>
 </div>
 <script>
 

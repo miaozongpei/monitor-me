@@ -55,6 +55,7 @@ public class PointIntegrator {
             Map<String, PerformanceNorm> performanceNormMap = integratorMap.get(0);
             return performanceNormMap.get(method);
         }
+
         return null;
     }
     public LinkedHashMap<Long, Map<String, PerformanceNorm>> getIntegratorMap() {

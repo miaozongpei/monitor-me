@@ -7,11 +7,12 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Setter
 @Getter
-public class Tab extends AbstractElement {
-    private AjaxData ajax;
-    private List<TabPane> tabPanes=new ArrayList<>();
+public abstract class Tab extends AbstractElement {
+    protected AjaxData ajax;
+    protected List<TabPane> tabPanes=new ArrayList<>();
     public Tab(AjaxData ajax) {
         this.ajax = ajax;
     }

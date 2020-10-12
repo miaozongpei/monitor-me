@@ -3,6 +3,7 @@ package com.m.monitor.me.admin.page.points;
 import com.m.beyond.view.Beyond;
 import com.m.beyond.view.data.ajaxs.AjaxData;
 import com.m.beyond.view.page.charts.BarChart;
+import com.m.beyond.view.page.divs.SearchDiv;
 import com.m.beyond.view.page.forms.ComboSelect;
 import com.m.beyond.view.page.forms.DateTimePicker;
 import com.m.beyond.view.page.forms.Select2;
@@ -42,6 +43,7 @@ public class RealTimeWidgetFactory {
         ToHtml bindOnchangeFunction=new ToHtml(new AjaxData("p/points",datas),"page-body");
 
         //search
+        SearchDiv searchDiv=new SearchDiv();
         MainRow searchRow=new MainRow();
         //norm_type
         Select2 normTypeSelect=new Select2("norm_type");
@@ -74,7 +76,8 @@ public class RealTimeWidgetFactory {
             //global_d_time
             searchRow.add(new DateTimePicker("global_d_time"));
 
-            widget.addRow(searchRow);
+            searchDiv.addRow(searchRow);
+            widget.addRow(new MainRow().add(searchDiv));
 
             //ServerRealTimeWidget
             List<String> hosts=monitorHostService.queryHostsByName(defaultName);

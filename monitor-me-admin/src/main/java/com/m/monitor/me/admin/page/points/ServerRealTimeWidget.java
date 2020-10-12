@@ -5,6 +5,7 @@ import com.m.beyond.view.data.ajaxs.AjaxData;
 import com.m.beyond.view.page.charts.RealTimeLineChart;
 import com.m.beyond.view.page.charts.RealTimeVisitorsChart;
 import com.m.beyond.view.page.mains.MainRow;
+import com.m.beyond.view.page.tabs.BelowTab;
 import com.m.beyond.view.page.tabs.Tab;
 import com.m.beyond.view.page.tabs.TabPane;
 import com.m.beyond.view.page.widgets.Widget;
@@ -42,7 +43,7 @@ public class ServerRealTimeWidget {
         datas.put("server_host","'"+serverIp+"'");
         widget.addRow(new MainRow().add(new RealTimeLineChart(color,new AjaxData("/real_time/data",datas))));
 
-        Tab timeTabs=new Tab(new AjaxData("/p/time_tab",datas));
+        BelowTab timeTabs=new BelowTab(new AjaxData("/p/time_tab",datas));
         timeTabs.add(new TabPane("Last 1h", MonitorTimeUnitEnum.HOUR.name(),null));
         timeTabs.add(new TabPane("Last 6h", MonitorTimeUnitEnum.HOUR_6.name(),null));
         timeTabs.add(new TabPane("Last 12h", MonitorTimeUnitEnum.HOUR_12.name(),null));
