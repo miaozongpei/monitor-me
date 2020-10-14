@@ -87,7 +87,9 @@ public abstract class BaseNormService extends BaseMongoService<IntegratorNormRec
         Query query = new Query();
         query.addCriteria(Criteria.where("name").is(name));
         query.addCriteria(Criteria.where("host").is(host));
-        query.addCriteria(Criteria.where("ts.ms.m").is(methodName));
+        if (!StringUtils.isEmpty(methodName)) {
+            query.addCriteria(Criteria.where("ts.ms.m").is(methodName));
+        }
         query.addCriteria(Criteria.where("ts.t").is(currentTime));
         List<IntegratorNormRecord> list=this.find(getCollectionName(),query,IntegratorNormRecord.class);
         List<double[]> result= builder.build(normType,list,methodName);

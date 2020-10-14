@@ -98,7 +98,7 @@ public class MonitorHandler extends AbstractAspectHandler{
             throw new MonitorLimitException("The point of waiting threads over limit:"+pointLimit.getWaitingThreadMax());
         }
         if (pointLimit.getCurrentTps()!=null&&pointLimit.getCurrentTps().decrementAndGet()> pointLimit.getTpsMax()) {
-            Thread.sleep(1);
+            Thread.sleep(100);
             throw new MonitorLimitException("The point of TPS over max:"+pointLimit.getTpsMax());
         }
         if (pointLimit.getSleepMillis()> 0) {

@@ -17,7 +17,7 @@
             success : function(data){
                 new RealTimeLineChart('${id}','${color}').init(data);
                 var is_warning=(data[0][1]<=0)
-                widget_warning(joinData.server_host,is_warning);
+                widget_warning(joinData.warning_id,is_warning);
             }
         });
     },1000);

@@ -43,11 +43,17 @@ public class MethodLimitSettingPage extends BasePage {
         String name=request.getParameter("tabPane_type");
 
 
-        Map<String,String> datas=new HashMap<>();
+        /*Map<String,String> datas=new HashMap<>();
         datas.put("tabPane_title","'"+method+"'");
         datas.put("tabPane_type","'"+name+"'");
         RealTimeLineChart serverRealTimeChart=new RealTimeLineChart(Beyond.COLORS.get(1),new AjaxData("/real_time/data_group",datas));
-        mainBody.add(new MainRow().add(serverRealTimeChart));
+        mainBody.add(new MainRow().add(serverRealTimeChart));*/
+        List<MonitorPointRecord> serverChains=monitorPointService.queryList(name,method);
+        for (MonitorPointRecord serverChain:serverChains){
+            String serverIP=serverChain.getHost();
+            mainBody.add(new MainRow().add(new ServerRealTimeLimitWidget(serverIP,name,method,serverChain.getMl().toString()).getWidget()));
+
+        }
 
         Widget LimitSettingWidget=new FormWidget("Setting",new FormAjaxConfirmForResultMsg("/limit/setting"));
 
@@ -61,7 +67,7 @@ public class MethodLimitSettingPage extends BasePage {
 
 
         CheckBoxAccordion hostCheckBoxGroup=new CheckBoxAccordion("hosts");
-        List<MonitorPointRecord> serverChains=monitorPointService.queryList(name,method);
+
         PointLimit currentDefaultLimit=new PointLimit();
         for (MonitorPointRecord serverChain:serverChains){
             String bodyTxt=serverChain.getMc().getChain();

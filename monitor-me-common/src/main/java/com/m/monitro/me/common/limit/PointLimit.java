@@ -49,4 +49,12 @@ public class PointLimit {
         }
         return currentTps;
     }
+
+    @Override
+    public String toString() {
+        return "maxWaiting=" + waitingThreadMax +
+                ", maxTps=" + tpsMax +
+                ", sleep=" + sleepMillis +
+                ", isBreak=" + (breakFlag!=0);
+    }
 }

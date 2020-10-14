@@ -41,6 +41,7 @@ public class ServerRealTimeWidget {
         datas.put("global_d_time","$(\"input[name='global_d_time']\")[0].value ");
         datas.put("ranges_min_time","$(\"[id='visitors-chart-ranges-min-"+serverIp+"']\").val()");
         datas.put("server_host","'"+serverIp+"'");
+        datas.put("warning_id","'"+this.getWidget().getId()+"'");
         widget.addRow(new MainRow().add(new RealTimeLineChart(color,new AjaxData("/real_time/data",datas))));
 
         BelowTab timeTabs=new BelowTab(new AjaxData("/p/time_tab",datas));
