@@ -3,9 +3,9 @@ package com.m.monitro.me.common.limit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class PointLimit {
-    private int waitingThreadMax=Integer.MAX_VALUE;
+    private int waitingThreadMax=9999;
     private int breakFlag=0;
-    private int tpsMax=Integer.MAX_VALUE;
+    private int tpsMax=9999;
     private int sleepMillis=0;
 
 

@@ -56,6 +56,8 @@ public class MonitorHandler extends AbstractAspectHandler{
         String rootMethodName=MethodTraceIdUtil.splitMethodName(traceId.get());
         String fullMethodName=getFullMethodName(context);
         if (rootMethodName.contains(fullMethodName)) {
+            //调用结束后限制
+            doFinishLimit(context);
             //终止方法调用链
             MethodChainCollector.checkAndPut(rootMethodName,null);
             //监控点结束
@@ -64,6 +66,8 @@ public class MonitorHandler extends AbstractAspectHandler{
             traceId.remove();
             seq.remove();
             methodChainStack.remove();
+
+
 
         }else{
             //获取监控点
@@ -84,7 +88,7 @@ public class MonitorHandler extends AbstractAspectHandler{
     }
 
     @Override
-    public void doLimit(MonitorContext context) throws Exception {
+    public void doBeforeLimit(MonitorContext context) throws Exception {
         String fullMethodName=getFullMethodName(context);
         PointLimit pointLimit=PointLimitConfig.get(fullMethodName);
         if (pointLimit==null){
@@ -98,11 +102,23 @@ public class MonitorHandler extends AbstractAspectHandler{
             throw new MonitorLimitException("The point of waiting threads over limit:"+pointLimit.getWaitingThreadMax());
         }
         if (pointLimit.getCurrentTps()!=null&&pointLimit.getCurrentTps().decrementAndGet()> pointLimit.getTpsMax()) {
-            Thread.sleep(100);
+            Thread.sleep(200);
             throw new MonitorLimitException("The point of TPS over max:"+pointLimit.getTpsMax());
         }
-        if (pointLimit.getSleepMillis()> 0) {
-            Thread.sleep(pointLimit.getSleepMillis());
+    }
+
+    private void doFinishLimit(MonitorContext context){
+        try {
+            String fullMethodName = getFullMethodName(context);
+            PointLimit pointLimit = PointLimitConfig.get(fullMethodName);
+            if (pointLimit == null) {
+                return;
+            }
+            if (pointLimit.getSleepMillis() > 0) {
+                Thread.sleep(pointLimit.getSleepMillis());
+            }
+        }catch (Exception e){
+            log.error("doAfterLimit error:",e);
         }
     }
 }

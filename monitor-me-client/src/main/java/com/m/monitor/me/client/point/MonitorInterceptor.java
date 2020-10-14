@@ -15,7 +15,7 @@ public class MonitorInterceptor implements MethodInterceptor {
         log.debug("[MonitorMe client] MonitorInterceptor invoke method:{}",invocation.getMethod());
         Object proceed = null;
         MonitorContext context=new MonitorContext(invocation.getMethod());
-        monitorHandler.doLimit(context);
+        monitorHandler.doBeforeLimit(context);
         monitorHandler.doBefore(context);
         proceed = invocation.proceed();
         monitorHandler.doAfter(context);

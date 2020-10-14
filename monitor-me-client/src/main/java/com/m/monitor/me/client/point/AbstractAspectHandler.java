@@ -7,6 +7,7 @@ public abstract class AbstractAspectHandler {
 
     public abstract void doBefore(MonitorContext context);
     public abstract void doAfter(MonitorContext context);
-    public abstract void doLimit(MonitorContext context)throws Exception ;
+    public abstract void doBeforeLimit(MonitorContext context)throws Exception ;
+
 
 }
