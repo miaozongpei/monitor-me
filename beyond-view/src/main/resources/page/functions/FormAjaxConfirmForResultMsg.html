@@ -1,0 +1,20 @@
+<script>
+    function ${functionName}(){
+        bootbox.confirm("Are you sure?", function (result) {
+            if (result) {
+                $.ajax({
+                    url:'${url}',
+                    data:$('#${formId}').serialize(),//将表单数据序列化，格式为name=value
+                    type:'POST',
+                    dataType:'json',
+                    success:function(result){
+                        Notify(result.msg, 'top-right', '5000', result.type,result.icon, true);
+                    },
+                    error:function(){
+                        console.log("提交ajax异常");
+                    },
+                });
+            }
+        });
+    }
+</script>

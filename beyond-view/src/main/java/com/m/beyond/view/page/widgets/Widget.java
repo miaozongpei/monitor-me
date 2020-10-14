@@ -20,17 +20,21 @@ public class Widget extends AbstractElement {
     private boolean isDispose=false;//关闭
     private MainBody body=new MainBody();
     public Widget(){
+        super();
     }
 
     public Widget(String headTitle) {
+        super();
         this.headTitle = headTitle;
     }
 
     public Widget(String headTitle, MainBody body) {
+        super();
         this.headTitle = headTitle;
         setBody(body);
     }
     public Widget(String headTitle, AbstractElement body) {
+        super();
         this.headTitle = headTitle;
         setBody(new MainBody().add(new MainRow().add(body)));
     }

@@ -92,7 +92,7 @@ public class MonitorHandler extends AbstractAspectHandler{
         }
         Map<String, MonitorPoint> tempPoints = MonitorPointCollector.tempPointMap.get(fullMethodName);
         if (pointLimit.getBreakFlag()>0) {
-            throw new MonitorLimitException("The point is broke");
+            throw new MonitorLimitException("The point is broken");
         }
         if ((tempPoints!=null&&tempPoints.size()> pointLimit.getWaitingThreadMax())) {
             throw new MonitorLimitException("The point of waiting threads over limit:"+pointLimit.getWaitingThreadMax());

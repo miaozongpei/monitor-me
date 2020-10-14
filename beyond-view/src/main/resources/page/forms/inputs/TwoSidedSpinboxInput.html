@@ -4,7 +4,7 @@
             <i class="fa fa-minus"></i>
         </button>
     </div>
-    <input type="text" class="spinbox-input form-control" value="">
+    <input type="text" class="spinbox-input form-control" name="${name}" value="${defaultValue}">
     <div class="spinbox-buttons	btn-group spinbox-buttons-right">
         <button type="button" class="btn spinbox-up blue">
             <i class="fa fa-plus"></i>
@@ -13,5 +13,7 @@
 </div>
 <script>
     //--Fuelux Spinbox--
-    $('.spinbox').spinbox();
+    $('.spinbox').spinbox({
+        max: 2147483647
+    });
 </script>

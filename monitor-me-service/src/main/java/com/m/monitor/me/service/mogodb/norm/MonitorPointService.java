@@ -6,13 +6,16 @@ import com.m.monitor.me.service.transfer.norm.SlowMonitorPoint;
 import com.m.monitor.me.service.transfer.record.MonitorPointRecord;
 import com.m.monitor.me.service.transfer.record.MonitorHostRecord;
 import com.m.monitro.me.common.enums.PointLimitSynStatusEnum;
+import com.m.monitro.me.common.limit.PointLimit;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.client.result.UpdateResult;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -57,17 +60,14 @@ public class MonitorPointService extends BaseMongoService<MonitorPointRecord> {
             update(collectionName,current.getId(),current);
         }
     }
-    public void saveOrModifyMl(MonitorPointRecord monitorPointRecord){
-        String name=monitorPointRecord.getName();
-        String host=monitorPointRecord.getHost();
-        String method=monitorPointRecord.getM();
-        MonitorPointRecord current=queryOne(name,host,method);
-        if (current==null){
-            insert(collectionName,monitorPointRecord);
-        }else {
-            current.setMl(monitorPointRecord.getMl());
-            update(collectionName,current.getId(),current);
-        }
+    public void modifyMl(String name, String method,String[] hosts,PointLimit pointLimit){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("name").is(name));
+        query.addCriteria(Criteria.where("m").is(method));
+        query.addCriteria(Criteria.where("host").in(hosts));
+        Update update=new Update();
+        update.set("ml",pointLimit);
+        UpdateResult updateResult= mongoTemplate.updateMulti(query,update, MonitorPointRecord.class,collectionName);
     }
     public List<MonitorPointRecord> queryPointLimit(String name, String host){
         Query query = new Query();

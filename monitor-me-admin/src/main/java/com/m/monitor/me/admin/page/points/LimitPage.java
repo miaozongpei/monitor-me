@@ -1,18 +1,11 @@
 package com.m.monitor.me.admin.page.points;
 
-import com.m.beyond.view.Beyond;
 import com.m.beyond.view.data.ajaxs.AjaxData;
-import com.m.beyond.view.page.accordions.Accordion;
-import com.m.beyond.view.page.charts.RealTimeVisitorsChart;
-import com.m.beyond.view.page.databoxes.HalvedDataBox;
 import com.m.beyond.view.page.divs.SearchDiv;
-import com.m.beyond.view.page.forms.IconInput;
+import com.m.beyond.view.page.forms.inputs.IconInput;
 import com.m.beyond.view.page.functions.ClearRealtimeInterval;
-import com.m.beyond.view.page.lists.MoreList;
-import com.m.beyond.view.page.lists.TasksList;
 import com.m.beyond.view.page.mains.MainBody;
 import com.m.beyond.view.page.mains.MainRow;
-import com.m.beyond.view.page.tabs.BelowTab;
 import com.m.beyond.view.page.tabs.LeftTab;
 import com.m.beyond.view.page.tabs.TabPane;
 import com.m.beyond.view.page.widgets.Widget;
@@ -20,14 +13,11 @@ import com.m.monitor.me.admin.page.BasePage;
 import com.m.monitor.me.admin.page.PageHtml;
 import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
 import com.m.monitor.me.service.transfer.norm.SlowMonitorPoint;
-import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class LimitPage extends BasePage {
@@ -43,7 +33,7 @@ public class LimitPage extends BasePage {
 
 
         SearchDiv searchDiv=new SearchDiv();
-        searchDiv.addRow(new MainRow().add(new IconInput()));
+        searchDiv.addRow(new MainRow().add(new IconInput("search.key","")));
         limitWidget.addRow(new MainRow().add(searchDiv));
 
         LeftTab methodTabs=new LeftTab(new AjaxData("/p/method_limit_setting",null));
