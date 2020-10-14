@@ -2,9 +2,14 @@ package com.m.monitor.me.service.mogodb.norm;
 
 import com.m.monitor.me.service.mogodb.base.BaseMongoService;
 import com.m.monitor.me.service.transfer.builder.IntegratorNormBuilder;
+import com.m.monitor.me.service.transfer.norm.SlowMonitorPoint;
 import com.m.monitor.me.service.transfer.norm.TimeNorm;
 import com.m.monitor.me.service.transfer.record.IntegratorNormRecord;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
+import com.m.monitro.me.common.enums.QueryNormTypeEnum;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.util.CollectionUtils;
@@ -12,6 +17,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BaseNormService extends BaseMongoService<IntegratorNormRecord>{
     public abstract String getCollectionName();
@@ -64,7 +70,9 @@ public abstract class BaseNormService extends BaseMongoService<IntegratorNormRec
         MonitorNormBuilder builder=new MonitorNormBuilder(currentTime, getMonitorTimeUnitEnum(),size);
         Query query = new Query();
         query.addCriteria(Criteria.where("name").is(name));
-        query.addCriteria(Criteria.where("host").is(host));
+        if (!StringUtils.isEmpty(host)) {
+            query.addCriteria(Criteria.where("host").is(host));
+        }
         if (!StringUtils.isEmpty(methodName)) {
             query.addCriteria(Criteria.where("ts.ms.m").is(methodName));
         }
@@ -79,9 +87,7 @@ public abstract class BaseNormService extends BaseMongoService<IntegratorNormRec
         Query query = new Query();
         query.addCriteria(Criteria.where("name").is(name));
         query.addCriteria(Criteria.where("host").is(host));
-        if (!StringUtils.isEmpty(methodName)) {
-            query.addCriteria(Criteria.where("ts.ms.m").is(methodName));
-        }
+        query.addCriteria(Criteria.where("ts.ms.m").is(methodName));
         query.addCriteria(Criteria.where("ts.t").is(currentTime));
         List<IntegratorNormRecord> list=this.find(getCollectionName(),query,IntegratorNormRecord.class);
         List<double[]> result= builder.build(normType,list,methodName);

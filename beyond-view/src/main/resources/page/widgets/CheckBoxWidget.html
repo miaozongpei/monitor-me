@@ -1,4 +1,4 @@
-<div class="widget">
+<div class="widget collapsed">
     <div class="widget-header ${headColor} #if($headBottom) bordered-bottom bordered-themeprimary#end">
     #if($warning)
         <a class="wave in warning" id="warning-${headTitle}" href="#"></a>
@@ -6,7 +6,12 @@
     #if("$widgetIcon"!="")
        <i class="widget-icon fa $widgetIcon"></i>
     #end
-        <span class="widget-caption">${headTitle}</span>
+        <span class="widget-caption">
+            <label>
+                <input type="checkbox" name="${name}" class="colored-blue" checked="checked" value="${text}">
+                <span class="text">${headTitle}</span>
+            </label>
+        </span>
         <div class="widget-buttons">
     #if($maximize)
             <a href="#" data-toggle="maximize">
@@ -25,7 +30,6 @@
     #end
         </div>
     </div>
-
     <div class="widget-body">
         ${htmlBody}
     </div>

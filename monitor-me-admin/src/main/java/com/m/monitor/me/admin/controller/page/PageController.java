@@ -3,6 +3,7 @@ package com.m.monitor.me.admin.controller.page;
 import com.m.monitor.me.admin.page.BasePage;
 import com.m.monitor.me.admin.page.PageHtml;
 import com.m.monitor.me.admin.page.points.LimitPage;
+import com.m.monitor.me.admin.page.points.MethodLimitSettingPage;
 import com.m.monitor.me.admin.page.points.PointsPage;
 import com.m.monitor.me.admin.page.points.TimeTabPage;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,8 @@ public class PageController extends BasePageController {
     private TimeTabPage timeTabPage;
     @Resource
     private LimitPage limitPage;
-
+    @Resource
+    private MethodLimitSettingPage methodLimitSettingPage;
 
     @RequestMapping("/{type}")
     @ResponseBody
@@ -34,6 +36,8 @@ public class PageController extends BasePageController {
             return timeTabPage.create(request);
         }else if (BasePage.LIMIT.equals(type)){
             return limitPage.create(request);
+        }else if (BasePage.METHOD_LIMIT_SETTING.equals(type)){
+            return methodLimitSettingPage.create(request);
         }
         return null;
     }

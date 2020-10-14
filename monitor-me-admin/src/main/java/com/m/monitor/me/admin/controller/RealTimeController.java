@@ -3,6 +3,7 @@ package com.m.monitor.me.admin.controller;
 import com.m.beyond.view.data.charts.BarchartData;
 import com.m.monitor.me.service.mogodb.norm.*;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
+import com.m.monitro.me.common.enums.QueryNormTypeEnum;
 import com.m.monitro.me.common.utils.DateUtil;
 import com.m.monitro.me.common.utils.MonitorTimeUtil;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,18 @@ public class RealTimeController {
         }
         method=StringUtils.isEmpty(method)||"all".equals(method)?null:method;
         return normSecondService.queryRealTimeNorm(type,name,host,method,
+                currentTime,60);
+    }
+
+    @RequestMapping("/data_group")
+    @ResponseBody
+    public List<double[]> dataGroup(HttpServletRequest request) {
+        String name=request.getParameter("tabPane_type");
+        String method=request.getParameter("tabPane_title");
+        long time=System.currentTimeMillis();
+        long currentTime = Long.parseLong(DateUtil.formatSecond(time));
+        currentTime = MonitorTimeUtil.subTime(currentTime, 15, MonitorTimeUnitEnum.SECOND);
+        return normSecondService.queryRealTimeNorm(QueryNormTypeEnum.RT.name(),name,null,method,
                 currentTime,60);
     }
 

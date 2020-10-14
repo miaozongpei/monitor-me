@@ -39,6 +39,12 @@ public class MonitorPointService extends BaseMongoService<MonitorPointRecord> {
         query.addCriteria(Criteria.where("name").is(name));
         return mongoTemplate.findDistinct(query,"m",collectionName, MonitorPointRecord.class,String.class);
     }
+    public List<String> queryHosts(String name,String method){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("name").is(name));
+        query.addCriteria(Criteria.where("m").is(method));
+        return mongoTemplate.findDistinct(query,"host",collectionName, MonitorPointRecord.class,String.class);
+    }
     public void saveOrModifyMc(MonitorPointRecord monitorPointRecord){
         String name=monitorPointRecord.getName();
         String host=monitorPointRecord.getHost();

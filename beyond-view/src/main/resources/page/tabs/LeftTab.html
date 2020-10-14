@@ -2,7 +2,7 @@
     <ul class="nav nav-tabs" id="myTab8">
         #foreach($tabPane in $tabPanes)
         <li #if($tabPane.active)class="active"#end>
-            <a data-toggle="tab" href="#tab${tabPane.id}" onclick="to_tab${id}('${tabPane.id}','${tabPane.type}')">${tabPane.title}</a>
+            <a data-toggle="tab" href="#tab${tabPane.id}" onclick="to_tab${id}('${tabPane.id}','${tabPane.title}','${tabPane.type}')">${tabPane.title}</a>
         </li>
         #end
     </ul>
@@ -15,7 +15,7 @@
 </div>
 <script>
 
-    function to_tab${id}(id,tabPane_type) {
+    function to_tab${id}(id,tabPane_title,tabPane_type) {
         $.ajax({
             type : "GET",
             url : '${ajax.url}',
@@ -24,6 +24,7 @@
                 #foreach($data in ${ajax.datas.entrySet()})
                 '${data.key}':${data.value},
                 #end
+                'tabPane_title':tabPane_title,
                 'tabPane_type':tabPane_type
             },
             async : false,
@@ -34,7 +35,7 @@
     }
 #foreach($tabPane in $tabPanes)
     #if($tabPane.active)
-    to_tab${id}('${tabPane.id}','${tabPane.type}');
+    to_tab${id}('${tabPane.id}','${tabPane.title}','${tabPane.type}');
     #end
 #end
 </script>

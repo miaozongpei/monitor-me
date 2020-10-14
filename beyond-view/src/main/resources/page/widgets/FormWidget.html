@@ -27,7 +27,11 @@
     </div>
 
     <div class="widget-body">
-        ${htmlBody}
+        <form role="form">
+            ${htmlBody}
+            <button type="button" class="btn btn-primary" onclick="formConfirm()">Submit</button>
+            <button type="reset" class="btn">Default</button>
+        </form>
     </div>
 </div>
 <script>
@@ -39,4 +43,14 @@
             $("[id='warning-"+host+"']").attr("class","");;
         }
     }
+    function formConfirm(){
+        bootbox.confirm("Are you sure?", function (result) {
+            if (result) {
+                alert(1)
+            }else{
+                alert(0)
+            }
+        });
+    }
+
 </script>

@@ -71,7 +71,10 @@ public class Beyond {
     public final static List<String> ICON_FAS= Arrays.asList(
             "fa-cubes",
             "fa-tasks",
-            "fa-sun-o"
+            "fa-sun-o",
+            "fa-gears"
+
+
     );
 
 }

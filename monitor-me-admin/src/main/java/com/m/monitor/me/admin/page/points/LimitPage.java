@@ -38,21 +38,22 @@ public class LimitPage extends BasePage {
         MainBody mainBody=new MainBody();
         mainBody.add(new MainRow().add(new ClearRealtimeInterval()));//清除之前定时
 
+        Widget limitWidget=new Widget("Limit");
+        limitWidget.setHeadBottom(true);
 
 
-        LeftTab methodTabs=new LeftTab(new AjaxData("/p/time_tab",null));
+        SearchDiv searchDiv=new SearchDiv();
+        searchDiv.addRow(new MainRow().add(new IconInput()));
+        limitWidget.addRow(new MainRow().add(searchDiv));
+
+        LeftTab methodTabs=new LeftTab(new AjaxData("/p/method_limit_setting",null));
         List<SlowMonitorPoint> slows=monitorPointService.querySlow(20);
         for(SlowMonitorPoint slow:slows) {
             methodTabs.add(new TabPane(slow.getM(),slow.getName(), null));
         }
-        MainBody body=new MainBody();
-        SearchDiv searchDiv=new SearchDiv();
-        searchDiv.addRow(new MainRow().add(new IconInput()));
+        limitWidget.addRow(new MainRow().add(methodTabs));
 
-        mainBody.add(new MainRow().add(searchDiv));
-        mainBody.add(new MainRow().add(methodTabs));
-
-
+        mainBody.add(new MainRow().add(limitWidget));
         return new PageHtml(mainBody.toHtml());
     }
 }
