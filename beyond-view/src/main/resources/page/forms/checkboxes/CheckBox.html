@@ -1,0 +1,13 @@
+<div class="checkbox">
+    <label>
+        <input type="checkbox"  class="colored-primary" name="${name}" value="${defaultValue}" #if($checked)checked="checked"#end>
+        <span class="text">${text}</span>
+    </label>
+</div>
+<script>
+    #if("$bindOnchangeFunction"!="")
+    $(function() {
+        $("input[name='${name}']").change(${bindOnchangeFunction});
+    });
+    #end
+</script>

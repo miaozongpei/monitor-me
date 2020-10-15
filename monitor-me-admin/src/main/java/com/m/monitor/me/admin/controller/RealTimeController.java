@@ -63,18 +63,6 @@ public class RealTimeController {
                 currentTime,60);
     }
 
-    @RequestMapping("/data_group")
-    @ResponseBody
-    public List<double[]> dataGroup(HttpServletRequest request) {
-        String name=request.getParameter("tabPane_type");
-        String method=request.getParameter("tabPane_title");
-        long time=System.currentTimeMillis();
-        long currentTime = Long.parseLong(DateUtil.formatSecond(time));
-        currentTime = MonitorTimeUtil.subTime(currentTime, 15, MonitorTimeUnitEnum.SECOND);
-        return normSecondService.queryRealTimeNorm(QueryNormTypeEnum.RT.name(),name,null,method,
-                currentTime,60);
-    }
-
     @RequestMapping("/data_visitors")
     @ResponseBody
     public List<double[]> dataVisitors(HttpServletRequest request) {

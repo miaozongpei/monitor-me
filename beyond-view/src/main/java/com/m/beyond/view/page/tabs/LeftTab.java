@@ -11,7 +11,6 @@ import java.util.List;
 @Setter
 @Getter
 public class LeftTab extends Tab {
-
     public LeftTab(AjaxData ajax) {
         super(ajax);
     }

@@ -23,6 +23,6 @@ public class MonitorPointServiceTest {
 	private MonitorPointService monitorPointService;
 	@Test
 	public void querySlowTest() {
-		monitorPointService.querySlow(20);
+		monitorPointService.querySlow(null,false,20);
 	}
 }

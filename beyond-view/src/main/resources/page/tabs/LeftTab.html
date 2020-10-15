@@ -2,7 +2,10 @@
     <ul class="nav nav-tabs" id="myTab8">
         #foreach($tabPane in $tabPanes)
         <li #if($tabPane.active)class="active"#end>
-            <a data-toggle="tab" href="#tab${tabPane.id}" onclick="to_tab${id}('${tabPane.id}','${tabPane.title}','${tabPane.type}')">${tabPane.title}</a>
+            <a data-toggle="tab" href="#tab${tabPane.id}" onclick="to_tab${id}('${tabPane.id}','${tabPane.title}','${tabPane.type}')">
+                ${tabPane.htmlTitleLabel}
+                ${tabPane.title}
+            </a>
         </li>
         #end
     </ul>

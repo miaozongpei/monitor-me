@@ -11,6 +11,7 @@ import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import com.m.monitro.me.common.enums.QueryNormTypeEnum;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class ServerRealTimeLimitWidget {
         this.serverIp=serverIp;
         this.sysName=sysName;
         this.pointMethod=pointMethod;
-        String headTitle="host="+serverIp+", "+exTitle;
+        String headTitle="host="+serverIp+ (StringUtils.isEmpty(exTitle)?"":", "+exTitle);
         widget.setHeadTitle(headTitle);
         widget.setWarning(true);
 

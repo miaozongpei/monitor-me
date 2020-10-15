@@ -1,12 +1,10 @@
 package com.m.monitor.me.admin.page.points;
 
 import com.m.beyond.view.Beyond;
-import com.m.beyond.view.data.ajaxs.AjaxData;
 import com.m.beyond.view.page.accordions.AccordionItem;
 import com.m.beyond.view.page.accordions.CheckBoxAccordion;
-import com.m.beyond.view.page.charts.RealTimeLineChart;
 import com.m.beyond.view.page.divs.FormGroupDiv;
-import com.m.beyond.view.page.forms.inputs.CheckboxSliderInput;
+import com.m.beyond.view.page.forms.checkboxes.SliderCheckbox;
 import com.m.beyond.view.page.forms.inputs.HiddenInput;
 import com.m.beyond.view.page.forms.inputs.TwoSidedSpinboxInput;
 import com.m.beyond.view.page.functions.ClearRealtimeInterval;
@@ -25,9 +23,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class MethodLimitSettingPage extends BasePage {
@@ -43,23 +39,18 @@ public class MethodLimitSettingPage extends BasePage {
         String name=request.getParameter("tabPane_type");
 
 
-        /*Map<String,String> datas=new HashMap<>();
-        datas.put("tabPane_title","'"+method+"'");
-        datas.put("tabPane_type","'"+name+"'");
-        RealTimeLineChart serverRealTimeChart=new RealTimeLineChart(Beyond.COLORS.get(1),new AjaxData("/real_time/data_group",datas));
-        mainBody.add(new MainRow().add(serverRealTimeChart));*/
+
         List<MonitorPointRecord> serverChains=monitorPointService.queryList(name,method);
         for (MonitorPointRecord serverChain:serverChains){
             String serverIP=serverChain.getHost();
-            mainBody.add(new MainRow().add(new ServerRealTimeLimitWidget(serverIP,name,method,serverChain.getMl().toString()).getWidget()));
+            String exTitle=serverChain.getMl()==null?"":serverChain.getMl().toString();
+            mainBody.add(new MainRow().add(new ServerRealTimeLimitWidget(serverIP,name,method,exTitle).getWidget()));
 
         }
 
         Widget LimitSettingWidget=new FormWidget("Setting",new FormAjaxConfirmForResultMsg("/limit/setting"));
-
-        LimitSettingWidget.setWidgetIcon(Beyond.ICON_FAS.get(3));
-
-        LimitSettingWidget.setHeadColor(Beyond.BG_COLORS.get(1));
+        LimitSettingWidget.setWidgetIcon(Beyond.ICONS.get(3));
+        LimitSettingWidget.setHeadColor(Beyond.BG_COLORS.get(43));
 
 
         LimitSettingWidget.addRow(new MainRow().add(new HiddenInput("point_method",method)));
@@ -67,7 +58,6 @@ public class MethodLimitSettingPage extends BasePage {
 
 
         CheckBoxAccordion hostCheckBoxGroup=new CheckBoxAccordion("hosts");
-
         PointLimit currentDefaultLimit=new PointLimit();
         for (MonitorPointRecord serverChain:serverChains){
             String bodyTxt=serverChain.getMc().getChain();
@@ -92,7 +82,7 @@ public class MethodLimitSettingPage extends BasePage {
 
 
         LimitSettingWidget.addRow(new MainRow()
-                .add(new CheckboxSliderInput("breakFlag","1","isBreak",currentDefaultLimit.getBreakFlag()!=0))
+                .add(new SliderCheckbox("breakFlag","1","isBreak",currentDefaultLimit.getBreakFlag()!=0))
         );
         LimitSettingWidget.addRow(new Hr());
 

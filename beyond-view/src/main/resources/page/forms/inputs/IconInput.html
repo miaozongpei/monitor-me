@@ -1,4 +1,11 @@
 <span class="input-icon">
-<input type="text" class="form-control" name="" placeholder="">
+<input type="text" class="form-control" name="${name}" placeholder="" value="${defaultValue}">
 <i class="fa fa-search gray"></i>
 </span>
+<script>
+    #if("$bindOnchangeFunction"!="")
+    $(function() {
+        $("input[name='${name}']").change(${bindOnchangeFunction});
+    });
+    #end
+</script>

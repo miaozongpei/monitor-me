@@ -9,6 +9,7 @@ import lombok.Setter;
 public abstract class AbstractInput extends AbstractElement {
     protected String name;
     protected String defaultValue;
+    protected String bindOnchangeFunction;
 
     public AbstractInput(String name, String defaultValue) {
         this.name = name;

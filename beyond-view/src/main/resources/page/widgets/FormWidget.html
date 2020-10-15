@@ -4,7 +4,7 @@
         <a class="wave in warning" id="warning-${headTitle}" href="#"></a>
     #end
     #if("$widgetIcon"!="")
-       <i class="widget-icon fa $widgetIcon"></i>
+       <i class="widget-icon fa fa-$widgetIcon"></i>
     #end
         <span class="widget-caption">${headTitle}</span>
         <div class="widget-buttons">
@@ -29,8 +29,9 @@
     <div class="widget-body">
         <form role="form" id="form-${formFunction.id}">
             ${htmlBody}
-            <button type="button" class="btn btn-primary" onclick="${formFunctionName}()">confirm</button>
-            <button type="reset" class="btn">default</button>
+            <button type="button" class="btn btn-primary" onclick="${formFunctionName}('confirm')"><i class="fa fa-cog"></i>confirm</button>
+            <button type="button" class="btn" onclick="${formFunctionName}('delete')"><i class="fa fa-times"></i>delete</button>
+            <button type="reset" class="btn"><i class="fa fa-mail-reply-all"></i>reset</button>
         </form>
     </div>
 </div>

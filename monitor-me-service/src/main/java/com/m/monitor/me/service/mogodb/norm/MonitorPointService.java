@@ -17,11 +17,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @Component
 public class MonitorPointService extends BaseMongoService<MonitorPointRecord> {
@@ -71,10 +73,29 @@ public class MonitorPointService extends BaseMongoService<MonitorPointRecord> {
     }
     public List<MonitorPointRecord> queryPointLimit(String name, String host){
         Query query = new Query();
-        query.addCriteria(Criteria.where("name").is(name));
-        query.addCriteria(Criteria.where("host").is(host));
-        query.addCriteria(Criteria.where("ml").exists(true));
+        if (!StringUtils.isEmpty(name)) {
+            query.addCriteria(Criteria.where("name").is(name));
+        }
+        if (!StringUtils.isEmpty(host)) {
+            query.addCriteria(Criteria.where("host").is(host));
+        }
+        query.addCriteria(Criteria.where("ml").ne(null));
         return find(collectionName,query,MonitorPointRecord.class);
+    }
+    public long queryPointLimitCount(String name, String host,String method){
+        Query query = new Query();
+        if (!StringUtils.isEmpty(name)) {
+            query.addCriteria(Criteria.where("name").is(name));
+        }
+        if (!StringUtils.isEmpty(host)) {
+            query.addCriteria(Criteria.where("host").is(host));
+        }
+        if (!StringUtils.isEmpty(method)) {
+            query.addCriteria(Criteria.where("m").is(method));
+        }
+        query.addCriteria(Criteria.where("ml").ne(null));
+
+        return mongoTemplate.count(query,MonitorPointRecord.class,collectionName);
     }
     public List<MonitorPointRecord> queryList(String name,String method){
         Query query = new Query();
@@ -82,8 +103,22 @@ public class MonitorPointService extends BaseMongoService<MonitorPointRecord> {
         query.addCriteria(Criteria.where("m").is(method));
         return find(collectionName,query,MonitorPointRecord.class);
     }
-    public List<SlowMonitorPoint> querySlow(int limit){
+    public List<SlowMonitorPoint> querySlow(String searchKey,boolean isLimit,int limit){
+        Criteria criteria = new Criteria();
+        if (!StringUtils.isEmpty(searchKey)) {
+            Pattern pattern = Pattern.compile("^.*" + searchKey + ".*$", Pattern.CASE_INSENSITIVE);
+            criteria.orOperator(
+                    Criteria.where("name").regex(pattern),
+                    Criteria.where("m").regex(pattern),
+                    Criteria.where("host").regex(pattern)
+            );
+        }
+        if(isLimit) {
+            criteria.andOperator(Criteria.where("ml").ne(null));
+        }
+
         Aggregation aggregation= Aggregation.newAggregation(
+                Aggregation.match(criteria),
                 Aggregation.group("name","m").avg("mc.norm").as("avgNorm"),
                 Aggregation.limit(limit),
                 Aggregation.sort(new Sort(Sort.Direction.DESC, "avgNorm"))

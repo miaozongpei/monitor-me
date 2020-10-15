@@ -29,9 +29,16 @@ public class LimitController {
         String[] hosts=request.getParameterValues("hosts");
         String name=request.getParameter("sys_name");
         String method=request.getParameter("point_method");
+        String type=request.getParameter("type");
         try {
-            monitorPointService.modifyMl(name,method,hosts,pointLimit);
-            return ResultMsg.success("setting is successful!");
+            if ("delete".equals(type)) {
+                monitorPointService.modifyMl(name, method, hosts, null);
+                return ResultMsg.success("deleted successfully!");
+
+            }else{
+                monitorPointService.modifyMl(name, method, hosts, pointLimit);
+                return ResultMsg.success("setting is successful!");
+            }
         }catch (Exception e){
             log.error("setting pointLimit error:",e);
             return ResultMsg.fail("setting is fail!");

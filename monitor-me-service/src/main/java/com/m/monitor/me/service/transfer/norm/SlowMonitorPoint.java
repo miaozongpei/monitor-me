@@ -6,4 +6,5 @@ import lombok.Data;
 public class SlowMonitorPoint {
     private String name;
     private String m;
+    private Double avgNorm;
 }

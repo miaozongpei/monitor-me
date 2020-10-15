@@ -40,11 +40,11 @@ public class PointsPage extends BasePage {
         //dataBoxRow
         MainRow dataBoxRow=new MainRow();
         List<String> names=monitorHostService.queryNames();
-        dataBoxRow.add(new HalvedDataBox("Applications",names.size(), Beyond.BG_COLORS.get(1),Beyond.ICON_FAS.get(0)));
+        dataBoxRow.add(new HalvedDataBox("Applications",names.size(), Beyond.BG_COLORS.get(1),Beyond.ICONS.get(0)));
         List<String> hosts=monitorHostService.queryHosts();
-        dataBoxRow.add(new HalvedDataBox("Servers",hosts.size(),Beyond.BG_COLORS.get(2),Beyond.ICON_FAS.get(1)));
+        dataBoxRow.add(new HalvedDataBox("Servers",hosts.size(),Beyond.BG_COLORS.get(2),Beyond.ICONS.get(1)));
         List<String> methods=monitorPointService.queryMethods();
-        dataBoxRow.add(new HalvedDataBox("Method Points",methods.size(),Beyond.BG_COLORS.get(3),Beyond.ICON_FAS.get(2)));
+        dataBoxRow.add(new HalvedDataBox("Method Points",methods.size(),Beyond.BG_COLORS.get(3),Beyond.ICONS.get(2)));
         mainBody.add(dataBoxRow);
         mainBody.add(new MainRow().add(new ClearRealtimeInterval()));//清除之前定时
         mainBody.add(new MainRow().add(realTimeWidgetFactory.create("Server Points",type,host,method)));

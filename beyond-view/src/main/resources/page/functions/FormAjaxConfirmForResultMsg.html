@@ -1,9 +1,9 @@
 <script>
-    function ${functionName}(){
+    function ${functionName}(type){
         bootbox.confirm("Are you sure?", function (result) {
             if (result) {
                 $.ajax({
-                    url:'${url}',
+                    url:'${url}'+'?type='+type,
                     data:$('#${formId}').serialize(),//将表单数据序列化，格式为name=value
                     type:'POST',
                     dataType:'json',

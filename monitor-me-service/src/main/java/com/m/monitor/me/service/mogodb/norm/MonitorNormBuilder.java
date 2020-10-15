@@ -41,6 +41,7 @@ public class MonitorNormBuilder {
 
     public List<double[]> build(String queryNormType,List<IntegratorNormRecord> records, String targetMethod) {
         Map<Long,Double> normMap=buildNormMap();
+        Set<String> hostSet=new HashSet<>();
         for (IntegratorNormRecord record : records) {
             for (TimeNorm timeNorm : record.getTs()) {
                 long targetTime = MonitorTimeUtil.toTime(timeNorm.getT(), timeUnit);
@@ -54,6 +55,7 @@ public class MonitorNormBuilder {
                             targetNorm += QueryNormTypeEnum.TP.name().equals(queryNormType) ? methodNorm.getTotal() : methodNorm.getAvg();
                         }
                     }
+                    hostSet.add(record.getHost());
                     normMap.put(targetTime, targetNorm );
                 }
             }
@@ -62,7 +64,11 @@ public class MonitorNormBuilder {
         List<double[]> targetList=new ArrayList<>();
         for (Map.Entry<Long,Double> entry:normMap.entrySet()){
             long time=DateUtil.parse(entry.getKey()+"",DateUtil.FORMAT_YYYYMMDDHHMISS).getTime();
-            targetList.add(new double[]{Double.parseDouble(time+""), DoubleUtil.avg(entry.getValue(),1)});
+            long avgCount=1;
+            if (hostSet.size()!=0){
+                avgCount=avgCount*hostSet.size();
+            }
+            targetList.add(new double[]{Double.parseDouble(time+""), DoubleUtil.avg(entry.getValue(),avgCount)});
         }
         return targetList;
     }
