@@ -13,7 +13,7 @@ public class MonitorPointRecord {
     private String name;
     private String host;
     private String m;
-    private PointLimit ml=new PointLimit();
+    private PointLimit ml;
 
     private MethodChan mc;
 
