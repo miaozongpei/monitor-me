@@ -20,6 +20,9 @@
             },
             success : function(data){
                 new RealTimeVisitorsChart('${id}','${color}','${visitorsChartRangesMinId}','${visitorsChartRangesMaxId}').init(data)
+            },
+            error:function(){
+                console.log("RealTimeVisitorsChart geData异常");
             }
         });
     },100);

@@ -11,6 +11,9 @@ function() {
         async : true,
         success:function (data) {
             $("#${toHtmlId}").html(data.html);
+        },
+        error:function(){
+            console.log("ajax异常");
         }
     });
 }

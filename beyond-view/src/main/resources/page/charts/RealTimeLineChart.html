@@ -18,6 +18,9 @@
                 new RealTimeLineChart('${id}','${color}').init(data);
                 var is_warning=(data[0][1]<=0)
                 widget_warning(joinData.warning_id,is_warning);
+            },
+            error:function(){
+                console.log("RealTimeLineChart geData异常");
             }
         });
     },1000);

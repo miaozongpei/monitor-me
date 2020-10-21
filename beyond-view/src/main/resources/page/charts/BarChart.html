@@ -14,6 +14,9 @@
             async : false,
             success : function(data){
                 _datas=data;
+            },
+            error:function(){
+                console.log("BarChart geData异常");
             }
         });
         return _datas;

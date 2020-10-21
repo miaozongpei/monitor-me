@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-@Component
+//@Component
 public class MonitorServer implements CommandLineRunner {
     @Value("${monitor.me.admin.port:8899}")
     private int port=8899;
