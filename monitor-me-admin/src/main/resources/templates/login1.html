@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<!--
+Beyond Admin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3
+Version: 1.0.0
+Purchase: http://wrapbootstrap.com
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--Head-->
+<head>
+    <meta charset="utf-8" />
+    <title>Login Page</title>
+
+    <meta name="description" content="login page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="assets/css/beyond.min.css" rel="stylesheet" />
+    <link href="assets/css/demo.min.css" rel="stylesheet" />
+    <link href="assets/css/animate.min.css" rel="stylesheet" />
+    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="assets/js/skins.min.js"></script>
+</head>
+<!--Head Ends-->
+<!--Body-->
+<body>
+<canvas style="display:none;background-color:#F00;" id="canvas" width="320" height="320">
+</canvas>
+    <div class="login-container animated fadeInDown">
+        <div class="loginbox bg-white">
+            <div class="loginbox-title">海口存管实时监控系统</div>
+            <div class="social-title ">&nbsp;</div>
+            <div class="loginbox-social">
+                <video id="video" style="display:none;" width="220" height="120" autoplay>
+                </video>
+                <img  id="login_logo" src="assets/img/login.png" width="220" height="120" >
+            </div>
+            <div class="loginbox-or">
+                <div class="or-line"></div>
+                <div class="or"><i onclick="startVideoLogin()" class="btn btn-palegreen btn-xs fa fa-video-camera"></i></div>
+            </div>
+            <div class="loginbox-textbox">
+                <input type="text" class="form-control" id="username" placeholder="用户名" />
+            </div>
+            <div class="loginbox-textbox">
+                <input type="password" class="form-control" id="password" placeholder="密码" />
+            </div>
+            <div class="loginbox-submit">
+                <input type="button" class="btn btn-primary btn-block" onclick="accountLogin()" value="登录">
+            </div>
+            <div class="loginbox-textbox">
+                <span style="color: red" id="errorMsg"></span>
+            </div>
+        </div>
+        <div class="logobox">
+
+        </div>
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="assets/js/jquery-2.0.3.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="assets/js/beyond.js"></script>
+<script>
+    var isImg=1;
+    function startVideoLogin() {
+        if(isImg==1){
+            if (video.mozSrcObject !== undefined){
+                $("#login_logo").hide();
+                $("#video").show();
+                getMedia(0);
+                isImg=0;
+            }else{
+                alert('Native device media streaming (getUserMedia) not supported in this browser.');
+            }
+        }else{
+            location.href="";
+        }
+    }
+    var canvas = document.getElementById("canvas"), context = canvas.getContext("2d"), video = document.getElementById("video");
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+    var exArray = []; //存储设备源ID
+    MediaStreamTrack.getSources(function (sourceInfos) {
+        for (var i = 0; i != sourceInfos.length; ++i) {
+            var sourceInfo = sourceInfos[i];
+//这里会遍历audio,video，所以要加以区分
+            if (sourceInfo.kind === 'video') {
+                exArray.push(sourceInfo.id);
+            }
+        }
+    });
+        function getMedia(a) {
+            if (navigator.getUserMedia) {
+                navigator.getUserMedia({
+                    'video': {
+                        'optional': [{
+                            'sourceId': exArray[a] //0为前置摄像头，1为后置
+                        }]
+                    },
+                    'audio': false
+                }, successFunc, errorFunc); //success是获取成功的回调函数
+            }
+            else {
+                alert('Native device media streaming (getUserMedia) not supported in this browser.');
+            }
+        }
+        function successFunc(stream) {
+            if (video.mozSrcObject !== undefined) {
+            //Firefox中，video.mozSrcObject最初为null，而不是未定义的，我们可以靠这个来检测Firefox的支持
+                video.mozSrcObject = stream;
+            }
+            else {
+                video.src = window.URL && window.URL.createObjectURL(stream) || stream;
+            }
+            startPat();
+        }
+        function errorFunc(e) {
+            alert('Error！' + e);
+        }
+    //开始拍照
+    function startPat(){
+        setTimeout(function () {
+            context.drawImage(video, 0, 0, 320, 320);
+            matchFace();
+        },1000);
+    }
+    var failNum=0;
+    function matchFace() {
+        if(canvas!=null)
+        {
+            //以下开始编 数据
+            var imgData = canvas.toDataURL();
+            var base64Data = imgData.substr(22); //在前端截取22位之后的字符串作为图像数据
+            $.ajax({
+                url: "login/face/match",
+                type: "post",
+                dataType: "json",
+                async : false,
+                data: {
+                    "image":base64Data
+                },
+                success: function (res) {
+                    var random="";
+                    for(var i=0;i<4;i++)
+                    {
+                        random+=Math.floor(Math.random()*10);
+                    }
+                    if(res){
+                        location.href="index.html?random="+random;
+                    }else{
+                        $("#errorMsg").html("登录失败！");
+                        if(failNum++<=5){startPat();}
+                    }
+                }
+            });
+        }
+    }
+    function accountLogin() {
+        $("#errorMsg").html("");
+        var userName=$("#username").val();
+        var passWord=$("#password").val();
+        var flag = true;
+        if (userName == "") {
+            flag = false;
+            $("#errorMsg").html("用户名不能为空！");
+        } else if (userName != "" && passWord == "") {
+            flag = false;
+            $("#errorMsg").html("密码不能为空！");
+        }
+        if (flag) {
+            $.ajax({
+                url: "login/accountlogin",
+                type: "post",
+                dataType: "json",
+                async : false,
+                data: {
+                    "userName":userName,
+                    "passWord":passWord
+                },
+                success: function (res) {
+                    var random="";
+                    for(var i=0;i<4;i++)
+                    {
+                        random+=Math.floor(Math.random()*10);
+                    }
+                    if(res == "success"){
+                        location.href="index.html?random="+random;
+                    }else if (res == "pwError") {
+                        $("#errorMsg").html("密码错误！");
+                    }else if (res == "userError") {
+                        $("#errorMsg").html("用户不存在！");
+                    }
+                }
+            });
+        }
+    }
+</script>
+</body>
+<!--Body Ends-->
+</html>
