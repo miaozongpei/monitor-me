@@ -23,8 +23,8 @@ public class BaiduApiFace extends AipFace{
             String param = "group_id=" + groupId + "&image=" +  URLEncoder.encode(image, "UTF-8"); ;
             String result = HttpUtil.post(url, this.accessToken, param);
             Map<String, Object> map = JSON.parseObject(result);
+            //result:{"log_id":3039494049,"result_num":1,"result":[{"uid":"miaozp","user_info":"","scores":[73.035263061523],"group_id":"user"}]}
             JSONArray r= (JSONArray) map.get("result");
-            System.out.println(r);
             com.alibaba.fastjson.JSONObject x=r.getJSONObject(0);
             BigDecimal scores=(BigDecimal)((JSONArray)x.get("scores")).get(0);
             return scores.doubleValue()>=80;

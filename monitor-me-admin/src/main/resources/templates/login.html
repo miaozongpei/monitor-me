@@ -38,7 +38,7 @@ Purchase: http://wrapbootstrap.com
 <!--Head Ends-->
 <!--Body-->
 <body>
-<canvas style="display:none;" id="login_canvas" width="320" height="320"></canvas>
+<canvas style="display:none;" id="login_canvas" width="180" height="200"></canvas>
 <div class="login-container animated fadeInDown">
     <div class="loginbox bg-white">
         <div class="loginbox-title">Monitor Me</div>
@@ -145,10 +145,11 @@ Purchase: http://wrapbootstrap.com
                 var image=videoImg.getImgData();
                 console.log(image);
                 doFaceLogin(image);
+            },function () {
+                $("#login_social").hide();
+                $("#login_video").show();
+                isImg=0;
             });
-            $("#login_social").hide();
-            $("#login_video").show();
-            isImg=0;
         }else{
             window.location.reload();
         }

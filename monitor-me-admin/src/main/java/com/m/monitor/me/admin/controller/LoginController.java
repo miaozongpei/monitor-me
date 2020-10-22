@@ -62,11 +62,16 @@ public class LoginController {
     private FaceLoginService faceLoginService;
     @RequestMapping("/doFaceLogin")
     @ResponseBody
-    public ResultMsg doFaceLogin(String image) {
+    public ResultMsg doFaceLogin(HttpServletRequest request,String image) {
+        boolean isAuth=false;
         try {
-            faceLoginService.loginAuth(image);
+             isAuth=faceLoginService.loginAuth(image);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (isAuth){
+            request.getSession().setAttribute(LOGIN_TOKEN,UUID.randomUUID().toString());
+            return ResultMsg.success("Login success!");
         }
         return ResultMsg.fail("Name or Password is incorrect!");
     }
