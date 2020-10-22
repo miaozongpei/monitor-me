@@ -1,6 +1,6 @@
 package com.m.monitor.me.admin.config;
 
-import com.m.monitor.me.admin.login.interceptor.LoginInterceptor;
+import com.m.monitor.me.admin.auth.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -26,6 +26,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
             add("**/*.css");
             add("/doLogin");
             add("/login");
+            add("/doFaceLogin");
+
 
         }
     };

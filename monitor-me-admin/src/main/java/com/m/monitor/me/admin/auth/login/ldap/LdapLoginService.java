@@ -1,6 +1,6 @@
-package com.m.monitor.me.admin.login.ldap.service;
+package com.m.monitor.me.admin.auth.login.ldap;
 
-import com.m.monitor.me.admin.login.AbstractLoginService;
+import com.m.monitor.me.admin.auth.login.AbstractLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.filter.EqualsFilter;

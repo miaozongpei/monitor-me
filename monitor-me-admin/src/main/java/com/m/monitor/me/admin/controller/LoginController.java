@@ -1,8 +1,8 @@
 package com.m.monitor.me.admin.controller;
 import com.m.beyond.view.data.forms.ResultMsg;
-import com.m.monitor.me.admin.login.ldap.service.LdapLoginService;
-import com.m.monitor.me.admin.login.properties.PropertiesLoginService;
-import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
+import com.m.monitor.me.admin.auth.login.face.FaceLoginService;
+import com.m.monitor.me.admin.auth.login.ldap.LdapLoginService;
+import com.m.monitor.me.admin.auth.login.properties.PropertiesLoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +32,7 @@ public class LoginController {
     public String login(Model model) {
         return PAGE_LOGIN;
     }
+
     @RequestMapping("/doLogin")
     @ResponseBody
     public ResultMsg doLogin(HttpServletRequest request) {
@@ -56,5 +57,17 @@ public class LoginController {
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute(LOGIN_TOKEN);
         return PAGE_INDEX;
+    }
+    @Resource
+    private FaceLoginService faceLoginService;
+    @RequestMapping("/doFaceLogin")
+    @ResponseBody
+    public ResultMsg doFaceLogin(String image) {
+        try {
+            faceLoginService.loginAuth(image);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResultMsg.fail("Name or Password is incorrect!");
     }
 }

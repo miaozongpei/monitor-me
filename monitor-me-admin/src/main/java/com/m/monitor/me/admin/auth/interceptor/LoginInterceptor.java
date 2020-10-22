@@ -1,4 +1,4 @@
-package com.m.monitor.me.admin.login.interceptor;
+package com.m.monitor.me.admin.auth.interceptor;
 
 import com.m.monitor.me.admin.controller.LoginController;
 import com.m.monitor.me.admin.utils.RequestIpUtils;

@@ -38,12 +38,14 @@ Purchase: http://wrapbootstrap.com
 <!--Head Ends-->
 <!--Body-->
 <body>
+<canvas style="display:none;" id="login_canvas" width="320" height="320"></canvas>
 <div class="login-container animated fadeInDown">
     <div class="loginbox bg-white">
         <div class="loginbox-title">Monitor Me</div>
         <div class="loginbox-social">
             <div class="social-title "></div>
-            <div class="social-buttons">
+            <video id="login_video" style="display:none;" width="220" height="80" autoplay=""></video>
+            <div class="social-buttons" id="login_social">
                 <a href="" class="button-facebook">
                     <i class="social-icon fa fa-cubes"></i>
                 </a>
@@ -57,7 +59,7 @@ Purchase: http://wrapbootstrap.com
         </div>
         <div class="loginbox-or">
             <div class="or-line"></div>
-            <div class="or"><i class="btn btn-palegreen btn-xs fa fa-video-camera"></i></div>
+            <div class="or"><i class="btn btn-palegreen btn-xs fa fa-video-camera" onclick="startVideoLogin()"></i></div>
         </div>
         <form id="loginForm" method="post" class="form-horizontal">
         <div class="loginbox-textbox">
@@ -99,6 +101,10 @@ Purchase: http://wrapbootstrap.com
 
 <!--Page Related Scripts-->
 <script src="assets/js/toastr/toastr.js"></script>
+
+<!--me videoimg Scripts-->
+<script src="assets/js/videoimg/videoimg.js"></script>
+
 </body>
 <!--Body Ends-->
 </html>
@@ -115,6 +121,43 @@ Purchase: http://wrapbootstrap.com
         $.ajax({
             url:'doLogin',
             data:$('#loginForm').serialize(),
+            type:'POST',
+            dataType:'json',
+            success:function(result){
+                if (result.type=='success'){
+                    $(location).attr('href', 'index');
+                }else{
+                    Notify(result.msg, 'top-right', '5000', result.type,result.icon, true);
+                }
+            },
+            error:function(){
+                console.log("提交ajax异常");
+            },
+        });
+    }
+
+
+    var isImg=1;
+    function startVideoLogin() {
+        if(isImg==1){
+            var videoImg= new VideoImg("login_video","login_canvas");
+            videoImg.start(function () {
+                var image=videoImg.getImgData();
+                console.log(image);
+                doFaceLogin(image);
+            });
+            $("#login_social").hide();
+            $("#login_video").show();
+            isImg=0;
+        }else{
+            window.location.reload();
+        }
+    }
+
+    function doFaceLogin(img) {
+        $.ajax({
+            url:'doFaceLogin',
+            data:{image:img},
             type:'POST',
             dataType:'json',
             success:function(result){

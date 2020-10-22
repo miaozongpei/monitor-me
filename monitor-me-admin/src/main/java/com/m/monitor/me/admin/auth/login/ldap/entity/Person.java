@@ -1,4 +1,4 @@
-package com.m.monitor.me.admin.login.ldap.entity;
+package com.m.monitor.me.admin.auth.login.ldap.entity;
  
 import lombok.Data;
 import org.springframework.ldap.odm.annotations.*;

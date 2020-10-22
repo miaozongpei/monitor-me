@@ -1,6 +1,5 @@
 import com.m.monitor.me.admin.MonitorMeAdminApplication;
-import com.m.monitor.me.admin.login.ldap.service.LdapLoginService;
-import com.m.monitor.me.admin.login.ldap.repository.PersonRepository;
+import com.m.monitor.me.admin.auth.login.ldap.LdapLoginService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,8 +7,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import javax.naming.NamingException;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MonitorMeAdminApplication.class)

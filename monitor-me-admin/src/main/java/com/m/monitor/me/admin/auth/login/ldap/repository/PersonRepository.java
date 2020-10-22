@@ -1,6 +1,6 @@
-package com.m.monitor.me.admin.login.ldap.repository;
+package com.m.monitor.me.admin.auth.login.ldap.repository;
  
-import com.m.monitor.me.admin.login.ldap.entity.Person;
+import com.m.monitor.me.admin.auth.login.ldap.entity.Person;
 import org.springframework.data.repository.CrudRepository;
  
 import javax.naming.Name;
