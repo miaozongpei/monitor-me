@@ -25,9 +25,12 @@ public class BaiduApiFace extends AipFace{
             Map<String, Object> map = JSON.parseObject(result);
             //result:{"log_id":3039494049,"result_num":1,"result":[{"uid":"miaozp","user_info":"","scores":[73.035263061523],"group_id":"user"}]}
             JSONArray r= (JSONArray) map.get("result");
-            com.alibaba.fastjson.JSONObject x=r.getJSONObject(0);
-            BigDecimal scores=(BigDecimal)((JSONArray)x.get("scores")).get(0);
-            return scores.doubleValue()>=80;
+            if (r!=null) {
+                com.alibaba.fastjson.JSONObject x = r.getJSONObject(0);
+                BigDecimal scores = (BigDecimal) ((JSONArray) x.get("scores")).get(0);
+                return scores.doubleValue() >= 80;
+            }
+            return false;
         } catch (Exception e) {
             log.error("人脸识别登录异常：",e);
             return false;
