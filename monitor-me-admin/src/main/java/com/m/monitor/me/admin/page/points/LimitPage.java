@@ -2,6 +2,7 @@ package com.m.monitor.me.admin.page.points;
 
 import com.m.beyond.view.Beyond;
 import com.m.beyond.view.data.ajaxs.AjaxData;
+import com.m.beyond.view.page.buttons.Button;
 import com.m.beyond.view.page.divs.SearchDiv;
 import com.m.beyond.view.page.forms.checkboxes.AbstactCheckBox;
 import com.m.beyond.view.page.forms.checkboxes.CheckBox;
@@ -42,16 +43,13 @@ public class LimitPage extends BasePage {
         MainBody mainBody=new MainBody();
         mainBody.add(new MainRow().add(new ClearRealtimeInterval()));//清除之前定时
 
-        Widget limitWidget=new Widget("Limit");
-        limitWidget.setHeadBottom(true);
-
-
 
 
 
         //search
         SearchDiv searchDiv=new SearchDiv();
         MainRow searchRow=new MainRow();
+
         //searchInput
         AbstractInput searchInput= new IconInput("search_key",searchKey);
         Map<String,String> datas=new HashMap<>();
@@ -62,11 +60,19 @@ public class LimitPage extends BasePage {
         searchDiv.addRow(new MainRow().add(searchInput));
 
         //limitedCheckBox
+        MainRow limitedCheckRow=new MainRow();
         boolean isLimited="limited".equals(limited);
         AbstactCheckBox limitedCheckBox=new CheckBox("limited","limited","limited", isLimited);
         limitedCheckBox.setBindOnchangeFunction(bindOnchangeFunction.toHtml());
+        limitedCheckRow.add(limitedCheckBox);
 
-        searchDiv.addRow(new MainRow().add(limitedCheckBox));
+        Button refresh=new Button("刷新","to_main('p/limit')");
+        refresh.setBtnColor(Button.BtnColorEnum.Default);
+        refresh.setBtnSize(Button.BtnSizeEnum.Mini);
+        refresh.setFloatType("float-right");
+        limitedCheckRow.add(refresh);
+
+        searchDiv.addRow(limitedCheckRow);
 
         mainBody.add(new MainRow().add(searchDiv));
 
@@ -85,7 +91,6 @@ public class LimitPage extends BasePage {
         }
         mainBody.add(new MainRow().add(methodTabs));
 
-        //mainBody.add(new MainRow().add(limitWidget));
         return new PageHtml(mainBody.toHtml());
     }
 }

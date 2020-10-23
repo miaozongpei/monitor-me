@@ -155,3 +155,6 @@
 .spinbox.spinbox-horizontal.spinbox-two-sided input {
     padding-left: 35px !important;
 }
+
+.float-right{padding: 10px 0px 10px 0px !important;float:right;}
+.float-left{padding: 10px 0px 10px 0px !important;float:left;}
