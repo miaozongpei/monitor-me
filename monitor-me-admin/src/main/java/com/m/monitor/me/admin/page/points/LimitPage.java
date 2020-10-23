@@ -62,15 +62,16 @@ public class LimitPage extends BasePage {
         //limitedCheckBox
         MainRow limitedCheckRow=new MainRow();
         boolean isLimited="limited".equals(limited);
-        AbstactCheckBox limitedCheckBox=new CheckBox("limited","limited","limited", isLimited);
+        CheckBox limitedCheckBox=new CheckBox("limited","limited","limited", isLimited);
         limitedCheckBox.setBindOnchangeFunction(bindOnchangeFunction.toHtml());
-        limitedCheckRow.add(limitedCheckBox);
-
         Button refresh=new Button("刷新","to_main('p/limit')");
         refresh.setBtnColor(Button.BtnColorEnum.Default);
         refresh.setBtnSize(Button.BtnSizeEnum.Mini);
         refresh.setFloatType("float-right");
-        limitedCheckRow.add(refresh);
+        limitedCheckBox.setAppendHtml(refresh.toHtml());
+        limitedCheckRow.add(limitedCheckBox);
+
+
 
         searchDiv.addRow(limitedCheckRow);
 
