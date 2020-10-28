@@ -47,7 +47,7 @@ public class DemoServiceTests {
 
 
 	//@PerfTest(threads = 1000, duration = 30000)
-	@PerfTest(threads = 1000, invocations = 10000)
+	@PerfTest(threads = 1000, invocations = 1)
 
 	@Test
 	public void findUserThreadTest() throws ExecutionException, InterruptedException {
