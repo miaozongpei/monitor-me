@@ -13,6 +13,10 @@ public class AddrServiceImpl implements AddrService {
     private DemoService demoService;
     @Override
     public void findAddr() {
-        //demoService.updateUser();
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

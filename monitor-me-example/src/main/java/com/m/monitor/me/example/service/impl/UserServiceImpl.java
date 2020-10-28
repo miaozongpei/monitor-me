@@ -16,15 +16,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String find(String userId) {
         addrService.findAddr();
-        int i=0;
-                //i=i/0;
         userService.findName(userId);
-
-        try {
-            Thread.sleep((int)(Math.random()*10+1));//find db
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return "Leo";
     }
 
