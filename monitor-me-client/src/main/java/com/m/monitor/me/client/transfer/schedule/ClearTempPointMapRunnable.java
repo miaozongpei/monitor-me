@@ -15,10 +15,15 @@ public class ClearTempPointMapRunnable implements Runnable {
     private long clearExpire=30*60*1000;//30分钟
     @Override
     public void run() {
-        for (String method:MonitorPointCollector.tempPointMap.keySet()) {
-            Map<String, MonitorPoint> methodPointMap=MonitorPointCollector.tempPointMap.get(method);
-            clearMonitorPointMap(methodPointMap);
+        try {
+            for (String method:MonitorPointCollector.tempPointMap.keySet()) {
+                Map<String, MonitorPoint> methodPointMap=MonitorPointCollector.tempPointMap.get(method);
+                clearMonitorPointMap(methodPointMap);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
     public void clearMonitorPointMap(Map<String,MonitorPoint> monitorPointMap){
         if (CollectionUtils.isEmpty(monitorPointMap)) {

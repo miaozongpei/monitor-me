@@ -9,26 +9,19 @@ import java.util.HashMap;
 import java.util.List;
 
 @Getter
+
 @Slf4j
 public class MonitorPoint extends HashMap<Integer,Long> {
     private String fullMethodName;
     private Long startTime=0L;
     private Long endTime=0L;
-    private List<MethodChain> chains;
+    private List<MethodChain> chains=new ArrayList<MethodChain>();
     private MethodChains methodChains;
 
     public MonitorPoint(String fullMethodName, Long startTime) {
         super();
         this.fullMethodName = fullMethodName;
         this.startTime = startTime;
-        this.initChains();
-    }
-    private void initChains(){
-        this.chains=MethodChainCollector.chainMap.get(this.fullMethodName);
-        if (this.chains==null){
-            this.chains=new ArrayList<MethodChain>();
-            MethodChainCollector.chainMap.put(this.fullMethodName,this.chains);
-        }
     }
 
     public void finished(){

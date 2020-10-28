@@ -37,13 +37,12 @@ public class MonitorHandler extends AbstractAspectHandler{
             //创建监控点（point）
             MonitorPointCollector.createOrGetMonitorPoint(traceId.get(), fullMethodName);
         }else {
-            String rootMethodName = MethodTraceIdUtil.splitMethodName(traceId.get());
-            //String chainName=seq.get().incrementAndGet()+":"+fullMethodName;
             MethodChain methodChain=new MethodChain(seq.get().incrementAndGet(),fullMethodName);
             methodChainStack.get().push(methodChain);//入栈
+            String rootMethodName = MethodTraceIdUtil.splitMethodName(traceId.get());
 
-            MethodChainCollector.checkAndPut(rootMethodName,methodChain);
-
+            MonitorPoint monitorPoint=MonitorPointCollector.createOrGetMonitorPoint(traceId.get(),rootMethodName);
+            monitorPoint.getChains().add(methodChain);
             context.setMethodChain(methodChain);
         }
     }
@@ -59,7 +58,7 @@ public class MonitorHandler extends AbstractAspectHandler{
             //调用结束后限制
             doFinishLimit(context);
             //终止方法调用链
-            MethodChainCollector.checkAndPut(rootMethodName,null);
+            //MethodChainCollector.checkAndPut(rootMethodName,null);
             //监控点结束
             MonitorPointCollector.finished(traceId.get(),rootMethodName);
             //清除traceId
@@ -90,8 +89,8 @@ public class MonitorHandler extends AbstractAspectHandler{
     @Override
     public void doBeforeLimit(MonitorContext context) throws Exception {
         String fullMethodName=getFullMethodName(context);
-        PointLimit pointLimit=PointLimitConfig.get(fullMethodName);
-        if (pointLimit==null){
+        PointLimit pointLimit =PointLimitConfig.get(fullMethodName);
+        if (pointLimit ==null){
             return;
         }
         Map<String, MonitorPoint> tempPoints = MonitorPointCollector.tempPointMap.get(fullMethodName);
@@ -99,11 +98,11 @@ public class MonitorHandler extends AbstractAspectHandler{
             throw new MonitorLimitException("The point is broken");
         }
         if ((tempPoints!=null&&tempPoints.size()> pointLimit.getWaitingThreadMax())) {
-            throw new MonitorLimitException("The point of waiting threads over limit:"+pointLimit.getWaitingThreadMax());
+            throw new MonitorLimitException("The point of waiting threads over limit:"+ pointLimit.getWaitingThreadMax());
         }
-        if (pointLimit.getCurrentTps()!=null&&pointLimit.getCurrentTps().decrementAndGet()> pointLimit.getTpsMax()) {
-            Thread.sleep(200);
-            throw new MonitorLimitException("The point of TPS over max:"+pointLimit.getTpsMax());
+        if (pointLimit.getCurrentTps()!=null&& pointLimit.getCurrentTps().decrementAndGet() > pointLimit.getTpsMax()) {
+            Thread.sleep(100);
+            throw new MonitorLimitException("The point of TPS over max:"+ pointLimit.getTpsMax());
         }
     }
 
