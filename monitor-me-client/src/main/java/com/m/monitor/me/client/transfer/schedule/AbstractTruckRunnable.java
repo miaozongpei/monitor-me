@@ -20,11 +20,16 @@ public abstract class AbstractTruckRunnable implements Runnable {
     private MonitorExpressWayClient monitorExpressWayClient;
     @Override
     public void run() {
-        for (Object msg:this.transferContents()) {
-            synchronized (this) {
-                transfer(this.transferType(),msg);
+        try {
+            for (Object msg:this.transferContents()) {
+                synchronized (this) {
+                    transfer(this.transferType(),msg);
+                }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
     public boolean transfer(MonitorTransferTypeEnum transferTypeEnum,Object msg){
         boolean isSend =false;

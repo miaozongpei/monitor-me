@@ -12,10 +12,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class PointIntegrator {
-    private LinkedHashMap<Long, Map<String,PerformanceNorm>> integratorMap=new LinkedHashMap<>();
+    private Map<Long, Map<String,PerformanceNorm>> integratorMap=new ConcurrentHashMap<>();
     private AtomicLong total= new AtomicLong(0);
 
     public void put(MonitorPoint point){
@@ -58,7 +59,7 @@ public class PointIntegrator {
 
         return null;
     }
-    public LinkedHashMap<Long, Map<String, PerformanceNorm>> getIntegratorMap() {
+    public Map<Long, Map<String, PerformanceNorm>> getIntegratorMap() {
         return integratorMap;
     }
 

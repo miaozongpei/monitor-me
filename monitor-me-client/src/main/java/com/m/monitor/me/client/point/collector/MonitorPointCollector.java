@@ -5,12 +5,8 @@ import com.m.monitor.me.client.point.integrator.PointIntegrator;
 import com.m.monitro.me.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
@@ -19,7 +15,7 @@ public class MonitorPointCollector {
 
     public static Map<String, Map<String,MonitorPoint>> tempPointMap = new ConcurrentHashMap<>();
 
-    public static List<PointIntegrator> pointIntegrators=new ArrayList<>();
+    public static List<PointIntegrator> pointIntegrators= Collections.synchronizedList(new ArrayList<>());
 
     public static Map<String, String> methodChainMap=new HashMap<>();
 

@@ -1,7 +1,6 @@
 package com.m.monitor.me.client.point;
 
 import com.m.monitor.me.client.point.collector.MethodChain;
-import com.m.monitor.me.client.point.collector.MethodChainCollector;
 import com.m.monitor.me.client.point.collector.MonitorPoint;
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
 import com.m.monitor.me.client.point.limit.MonitorLimitException;
