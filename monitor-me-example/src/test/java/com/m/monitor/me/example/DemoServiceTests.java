@@ -2,6 +2,9 @@ package com.m.monitor.me.example;
 
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
 import com.m.monitor.me.example.service.DemoService;
+import org.databene.contiperf.PerfTest;
+import org.databene.contiperf.junit.ContiPerfRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +12,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,41 +42,19 @@ public class DemoServiceTests {
 			e.printStackTrace();
 		}*/
 	}
+	@Rule
+	public ContiPerfRule contiPerfRule = new ContiPerfRule();
+
+
+	//@PerfTest(threads = 1000, duration = 30000)
+	@PerfTest(threads = 1000, invocations = 10000)
 
 	@Test
 	public void findUserThreadTest() throws ExecutionException, InterruptedException {
-	ExecutorService fixedThreadPool = Executors.newFixedThreadPool(1000);
-        for (int i = 0; i < 10000000; i++) {
-            final int ii = i;
-			Future future= fixedThreadPool.submit(() -> {
-				try {
-					demoService.findUser("123456");
-					demoService.updateUser();
-				}catch (Exception e){
-					e.printStackTrace();
-				}
-            });
-			future.get();
-        }
+		demoService.findUserByName("miao");
 
-		for (int i = 0; i < 100000000; i++) {
-			final int ii = i;
-			Future future= fixedThreadPool.submit(() -> {
-				try {
-					//demoService.findUser("123456");
-					//demoService.findUserByName("miao");
-					demoService.updateUser();
-				}catch (Exception e){
-					e.printStackTrace();
-				}
-			});
-			future.get();
-		}
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+
 	}
+
 
 }
