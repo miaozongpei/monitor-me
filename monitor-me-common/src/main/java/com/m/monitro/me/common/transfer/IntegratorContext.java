@@ -5,14 +5,14 @@ import java.util.Map;
 
 public class IntegratorContext {
     private String name;
-    private LinkedHashMap its;
+    private Map its;
     private Map<String,String> mcs;
     private String host;
 
     public IntegratorContext() {
     }
 
-    public IntegratorContext(String name, LinkedHashMap its,Map<String,String> mcs) {
+    public IntegratorContext(String name, Map its,Map<String,String> mcs) {
         this.name = name;
         this.its = its;
         this.mcs=mcs;
@@ -36,7 +36,7 @@ public class IntegratorContext {
         this.host = host;
     }
 
-    public LinkedHashMap getIts() {
+    public Map getIts() {
         return its;
     }
 
