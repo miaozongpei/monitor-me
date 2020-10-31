@@ -1,4 +1,4 @@
-package com.m.monitor.me.service.transfer;
+package com.m.monitor.me.service.transfer.server;
 
 import com.alibaba.fastjson.JSON;
 import com.m.monitor.me.service.mogodb.record.MonitorPointRecord;
