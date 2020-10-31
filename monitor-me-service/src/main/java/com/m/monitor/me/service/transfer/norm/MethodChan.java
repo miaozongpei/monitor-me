@@ -1,6 +1,11 @@
 package com.m.monitor.me.service.transfer.norm;
 
-import lombok.Data;
+/**
+ * 方法调用链
+ *
+ * @Author: miaozp
+ * @Date: 2020/10/31 4:00 下午
+ **/
 public class MethodChan {
     private long norm;
     private String chain;
@@ -13,10 +18,10 @@ public class MethodChan {
         splitBuildNorm(chain);
     }
 
-    private void splitBuildNorm(String chain){
-        String[] s=chain.split("\\|");
-        String normStr=s[1].replaceFirst("ms","");
-        this.norm=Long.parseLong(normStr);
+    private void splitBuildNorm(String chain) {
+        String[] s = chain.split("\\|");
+        String normStr = s[1].replaceFirst("ms", "");
+        this.norm = Long.parseLong(normStr);
     }
 
     public long getNorm() {

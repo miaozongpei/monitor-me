@@ -1,4 +1,4 @@
-package com.m.monitor.me.service.transfer.record;
+package com.m.monitor.me.service.mogodb.record;
 
 import com.m.monitor.me.service.transfer.norm.MethodNorm;
 import com.m.monitor.me.service.transfer.norm.TimeNorm;
@@ -6,6 +6,11 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * 聚合指标记录
+ * @Author: miaozp
+ * @Date: 2020/10/31 3:04 下午
+ **/
 @Data
 public class IntegratorNormRecord {
     private String id;

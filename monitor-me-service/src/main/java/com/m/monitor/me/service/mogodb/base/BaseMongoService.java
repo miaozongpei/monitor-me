@@ -7,22 +7,28 @@ import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-
+/**
+ * 操作mongodb基础类
+ * 1、create collection
+ * 2、create&query index
+ * 3、crud  collection
+ * @Author: miaozp
+ * @Date: 2020/10/31 11:31 上午
+ **/
 @Component
-public class BaseMongoService<T>{
+public class BaseMongoService<T> {
+    private static final String ID="id";
+    private static final String NAME="name";
 
     @Autowired
     protected MongoTemplate mongoTemplate;
@@ -30,16 +36,18 @@ public class BaseMongoService<T>{
     public void createCollection(String collectionName) {
         mongoTemplate.createCollection(collectionName);
     }
-    public String createIndex(String collectionName, String filedName,boolean isUnique) {
-        return mongoTemplate.getCollection(collectionName).createIndex(Indexes.ascending(filedName),  new IndexOptions().unique(isUnique));
+
+    public String createIndex(String collectionName, String filedName, boolean isUnique) {
+        return mongoTemplate.getCollection(collectionName).createIndex(Indexes.ascending(filedName), new IndexOptions().unique(isUnique));
     }
+
     public List<String> getAllIndexes(String collectionName) {
         ListIndexesIterable<Document> list = mongoTemplate.getCollection(collectionName).listIndexes();
         List<String> indexes = new ArrayList<>();
         for (Document document : list) {
             document.entrySet().forEach((key) -> {
                 //提取出索引的名称
-                if ("name".equals(key.getKey())) {
+                if (NAME.equals(key.getKey())) {
                     indexes.add(key.getValue().toString());
                 }
             });
@@ -47,41 +55,45 @@ public class BaseMongoService<T>{
         return indexes;
     }
 
-    public void insert(String collectionName,T t) {
+    public void insert(String collectionName, T t) {
         mongoTemplate.insert(t, collectionName);
     }
 
-    public void update( String collectionName, String id,T info) {
+    public void update(String collectionName, String id, T info) {
         Update update = new Update();
         JSONObject jQuery = JSON.parseObject(JSON.toJSONString(info));
         jQuery.forEach((key, value) -> {
-            if (!"id".equals(key)) {
+            if (!ID.equals(key)) {
                 update.set(key, value);
             }
         });
         mongoTemplate.updateMulti(createQuery(id), update, info.getClass(), collectionName);
     }
 
-    public void delete(String id,String collectionName,Class<T> clazz) {
+    public void delete(String id, String collectionName, Class<T> clazz) {
         mongoTemplate.remove(createQuery(id), clazz, collectionName);
     }
+
     public T find(String id, Class<T> clazz, String collectionName) {
         return mongoTemplate.findById(id, clazz, collectionName);
     }
+
     public List<T> findAll(String collectName, Class<T> clazz) {
-        return findPage(collectName ,null,null, null,clazz);
+        return findPage(collectName, null, null, null, clazz);
     }
 
-    public List<T> findPage(String collectName,Query query, Integer currentPage, Integer size,Class<T> clazz) {
+    public List<T> findPage(String collectName, Query query, Integer currentPage, Integer size, Class<T> clazz) {
         if (!ObjectUtils.isEmpty(currentPage) && ObjectUtils.isEmpty(size)) {
             query.limit(size).skip(size * (currentPage - 1));
         }
         return mongoTemplate.find(query, clazz, collectName);
     }
-    public List<T> find(String collectName,Query query, Class<T> clazz) {
+
+    public List<T> find(String collectName, Query query, Class<T> clazz) {
         return mongoTemplate.find(query, clazz, collectName);
     }
-    private Query createQuery(String id){
+
+    private Query createQuery(String id) {
         return new Query(Criteria.where("id").is(id));
     }
 }
