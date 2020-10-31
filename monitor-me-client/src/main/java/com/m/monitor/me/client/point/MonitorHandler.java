@@ -9,14 +9,17 @@ import com.m.monitro.me.common.limit.PointLimit;
 import com.m.monitro.me.common.utils.MethodTraceIdUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
 import java.util.Stack;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * 监控切面处理类
+ * @Author: miaozp
+ * @Date: 2020/10/31 6:51 下午
+ **/
 @Component
 @Slf4j
 public class MonitorHandler extends AbstractAspectHandler{
@@ -37,7 +40,8 @@ public class MonitorHandler extends AbstractAspectHandler{
             MonitorPointCollector.createOrGetMonitorPoint(traceId.get(), fullMethodName);
         }else {
             MethodChain methodChain=new MethodChain(seq.get().incrementAndGet(),fullMethodName);
-            methodChainStack.get().push(methodChain);//入栈
+            //入栈
+            methodChainStack.get().push(methodChain);
             String rootMethodName = MethodTraceIdUtil.splitMethodName(traceId.get());
 
             MonitorPoint monitorPoint=MonitorPointCollector.createOrGetMonitorPoint(traceId.get(),rootMethodName);
@@ -56,8 +60,6 @@ public class MonitorHandler extends AbstractAspectHandler{
         if (rootMethodName.contains(fullMethodName)) {
             //调用结束后限制
             doFinishLimit(context);
-            //终止方法调用链
-            //MethodChainCollector.checkAndPut(rootMethodName,null);
             //监控点结束
             MonitorPointCollector.finished(traceId.get(),rootMethodName);
             //清除traceId
@@ -71,7 +73,8 @@ public class MonitorHandler extends AbstractAspectHandler{
             //获取监控点
             MonitorPoint monitorPoint=MonitorPointCollector.createOrGetMonitorPoint(traceId.get(),rootMethodName);
             if(!methodChainStack.get().isEmpty()) {
-                MethodChain chain = methodChainStack.get().pop();//出栈
+                //出栈
+                MethodChain chain = methodChainStack.get().pop();
             }
             if(!methodChainStack.get().isEmpty()) {
                 MethodChain parent = methodChainStack.get().peek();
@@ -86,7 +89,7 @@ public class MonitorHandler extends AbstractAspectHandler{
     }
 
     @Override
-    public void doBeforeLimit(MonitorContext context) throws Exception {
+    public void doBeforeLimit(MonitorContext context) throws MonitorLimitException {
         String fullMethodName=getFullMethodName(context);
         PointLimit pointLimit =PointLimitConfig.get(fullMethodName);
         if (pointLimit ==null){
@@ -94,14 +97,17 @@ public class MonitorHandler extends AbstractAspectHandler{
         }
         Map<String, MonitorPoint> tempPoints = MonitorPointCollector.tempPointMap.get(fullMethodName);
         if (pointLimit.getBreakFlag()>0) {
-            throw new MonitorLimitException("The point is broken");
+            throw MonitorLimitException.ErrorEnum.POINT_BROKEN.format();
         }
         if ((tempPoints!=null&&tempPoints.size()> pointLimit.getWaitingThreadMax())) {
-            throw new MonitorLimitException("The point of waiting threads over limit:"+ pointLimit.getWaitingThreadMax());
+            throw MonitorLimitException.ErrorEnum.POINT_OVER_WAITING_THREADS.format(pointLimit.getWaitingThreadMax());
         }
         if (pointLimit.getCurrentTps()!=null&& pointLimit.getCurrentTps().decrementAndGet() > pointLimit.getTpsMax()) {
-            Thread.sleep(100);
-            throw new MonitorLimitException("The point of TPS over max:"+ pointLimit.getTpsMax());
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+            }
+            throw MonitorLimitException.ErrorEnum.POINT_OVER_WAITING_THREADS.format(pointLimit.getTpsMax());
         }
     }
 

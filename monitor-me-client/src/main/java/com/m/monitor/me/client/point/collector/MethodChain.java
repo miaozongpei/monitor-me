@@ -1,7 +1,11 @@
 package com.m.monitor.me.client.point.collector;
 
 import lombok.Getter;
-
+/**
+ * 方法调用节点
+ * @Author: miaozp
+ * @Date: 2020/10/31 5:36 下午
+ **/
 @Getter
 public class MethodChain {
     private int invokeSeq;

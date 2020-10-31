@@ -14,9 +14,19 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-
+/**
+ * 监控聚合器
+ * @Author: miaozp
+ * @Date: 2020/10/31 5:52 下午
+ **/
 public class PointIntegrator {
+    /**
+     * 聚合器集合
+     **/
     private Map<Long, Map<String,PerformanceNorm>> integratorMap=new ConcurrentHashMap<>();
+    /**
+     * 聚合器中监控点总数
+     **/
     private AtomicLong total= new AtomicLong(0);
 
     public void put(MonitorPoint point){
@@ -81,7 +91,7 @@ public class PointIntegrator {
     }
 
     public Map<String,String> buildMethodChainsMap(){
-        Map<String,String> methodChainMap=new HashMap<>();
+        Map<String,String> methodChainMap=new HashMap<>(50);
         for (Map<String,PerformanceNorm> map:integratorMap.values()){
             for (String method:map.keySet()){
                 String chain=MonitorPointCollector.methodChainMap.get(method);
@@ -92,6 +102,12 @@ public class PointIntegrator {
         }
         return methodChainMap;
     }
+    /**
+     * 格式化输出
+     * @Author: miaozp
+     * @Date: 2020/10/31 5:54 下午
+     * @return: java.lang.String
+     **/
     @Override
     public String toString() {
         StringBuffer str=new StringBuffer();

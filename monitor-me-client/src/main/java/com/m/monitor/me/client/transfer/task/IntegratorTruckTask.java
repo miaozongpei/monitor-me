@@ -1,6 +1,5 @@
-package com.m.monitor.me.client.transfer.schedule;
+package com.m.monitor.me.client.transfer.task;
 
-import com.alibaba.fastjson.JSON;
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
 import com.m.monitor.me.client.point.integrator.PointIntegrator;
 import com.m.monitro.me.common.enums.MonitorTransferTypeEnum;
@@ -11,10 +10,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 传输聚合监控点任务
+ * @Author: miaozp
+ * @Date: 2020/10/31 6:46 下午
+ **/
 @Component
 @Slf4j
-public class IntegratorTruckRunnable extends AbstractTruckRunnable implements Runnable {
+public class IntegratorTruckTask extends AbstractTruckTask {
     @Value("${monitor.me.application.name:monitor-me}")
     private String monitorApplicationName="monitor-me";
     @Override

@@ -13,57 +13,78 @@ import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 抽象传输通道客户端
+ *
+ * @Author: miaozp
+ * @Date: 2020/10/31 6:25 下午
+ **/
 @Slf4j
 public abstract class AbstractExpressWayClient extends ChannelInitializer<SocketChannel> {
     /**
-     * 时间池
+     * 事件池
      */
     protected EventLoopGroup eventLoopGroup;
-     /**
+    /**
      * 客户端通道
      */
-     protected Channel clientChannel;
+    protected Channel clientChannel;
+     /**
+      * 初始化通道
+      * @Author: miaozp
+      * @Date: 2020/10/31 6:26 下午
+      * @param ch:
+      * @return: void
+      **/
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
-        pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE,0,4,0,4));
+        pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
         pipeline.addLast(new LengthFieldPrepender(4));
         pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8));
         pipeline.addLast(new StringEncoder(CharsetUtil.UTF_8));
-        ExpressWayHandler channelHandler=new ExpressWayHandler();
+        ExpressWayHandler channelHandler = new ExpressWayHandler();
         pipeline.addLast(channelHandler);
     }
-    public AbstractExpressWayClient(){
-
-    }
-    public AbstractExpressWayClient(String host, int port) {
-        asyConnect(host,port);//异步建立链接
-        waitingConnect();//等待建立链接
-    }
-
+    /**
+     * 异步连接监控服务端
+     * @Author: miaozp
+     * @Date: 2020/10/31 6:27 下午
+     * @param host:
+     * @param port:
+     * @return: void
+     **/
     protected void asyConnect(String host, int port) {
-        Thread connectThread=new Thread(new Runnable() {
+        Thread connectThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    connect(host,port);
+                    connect(host, port);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    log.error("[MonitorMe client] asyConnect exception:",e);
+                    log.error("[MonitorMe client] asyConnect exception:", e);
                     close();
                 }
             }
         });
-        connectThread.setDaemon(true);//设置成守护线程
+        //设置成守护线程
+        connectThread.setDaemon(true);
         connectThread.start();
     }
-
-    private void connect(String host,int port) throws Exception{
-        try{
+    /**
+     * 建立连接
+     * @Author: miaozp
+     * @Date: 2020/10/31 6:28 下午
+     * @param host:
+     * @param port:
+     * @return: void
+     **/
+    private void connect(String host, int port) throws Exception {
+        try {
             synchronized (this) {
                 if (!isConnected()) {
-                    log.info("[MonitorMe client] ExpressWayClient is connecting  host:{}-port:{}",host,port);
-                    eventLoopGroup= new NioEventLoopGroup();
+                    log.info("[MonitorMe client] ExpressWayClient is connecting  host:{}-port:{}", host, port);
+                    eventLoopGroup = new NioEventLoopGroup();
                     Bootstrap bootstrap = new Bootstrap();
                     bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class)
                             .handler(this);
@@ -72,54 +93,89 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
                     clientChannel.closeFuture().sync();
                 }
             }
-        }finally {
+        } finally {
             close();
         }
     }
-    public boolean isConnected(){
-        return clientChannel!=null;
+
+    public boolean isConnected() {
+        return clientChannel != null;
     }
-    public boolean checkAndConnect(String host,int port){
-        if(clientChannel!=null){
-            if (clientChannel.isActive()){
+    /**
+     * 检查是否连接上服务端
+     * @Author: miaozp
+     * @Date: 2020/10/31 6:28 下午
+     * @param host:
+     * @param port:
+     * @return: boolean
+     **/
+    public boolean checkAndConnect(String host, int port) {
+        if (clientChannel != null) {
+            if (clientChannel.isActive()) {
                 return true;
-            }else{
+            } else {
                 close();
                 return false;
             }
-        }else{
-            asyConnect(host,port);
+        } else {
+            asyConnect(host, port);
             return false;
         }
     }
-    public void close(){
+    /**
+     * 关闭客户端
+     * @Author: miaozp
+     * @Date: 2020/10/31 6:28 下午
+     * @return: void
+     **/
+    public void close() {
         //关闭客户端套接字
-        if(clientChannel!=null){
+        if (clientChannel != null) {
             clientChannel.close();
-            clientChannel=null;
+            clientChannel = null;
         }
         //关闭客户端线程组
-        if (eventLoopGroup!=null) {
+        if (eventLoopGroup != null) {
             eventLoopGroup.shutdownGracefully();
         }
     }
+    /**
+     * 服务点返回消息
+     * @Author: miaozp
+     * @Date: 2020/10/31 6:29 下午
+     * @param ctx:
+     * @param msg:
+     * @return: void
+     **/
+    public abstract void replay(ChannelHandlerContext ctx, String msg);
 
-    public abstract void replay(ChannelHandlerContext ctx,String msg);
-
-    public  boolean send(String msg){
-        if (clientChannel==null){
+    /**
+     * 客户端发送消息
+     * @Author: miaozp
+     * @Date: 2020/10/31 6:29 下午
+     * @param msg:
+     * @return: boolean
+     **/
+    public boolean send(String msg) {
+        if (clientChannel == null) {
             return false;
         }
         try {
-            String msgStr=TransferSnappyUtil.compressToStr(msg);
+            String msgStr = TransferSnappyUtil.compressToStr(msg);
             clientChannel.writeAndFlush(msgStr);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
-    protected void waitingConnect(){
-        while (clientChannel==null) {
+    /**
+     * 等待连接
+     * @Author: miaozp
+     * @Date: 2020/10/31 6:30 下午
+     * @return: void
+     **/
+    protected void waitingConnect() {
+        while (clientChannel == null) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -127,13 +183,16 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
             }
         }
     }
-    class ExpressWayHandler extends SimpleChannelInboundHandler<String>{
+    /**
+     * 定义简单对象传输处理类
+     * @Author: miaozp
+     * @Date: 2020/10/31 6:30 下午
+     **/
+    class ExpressWayHandler extends SimpleChannelInboundHandler<String> {
 
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-            //System.out.println(ctx.channel().remoteAddress());
-            //System.out.println("client output: "+msg);
-            replay(ctx,msg);
+            replay(ctx, msg);
         }
 
         /**
@@ -143,7 +202,6 @@ public abstract class AbstractExpressWayClient extends ChannelInitializer<Socket
          */
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            //ctx.writeAndFlush("来自与客户端的问题!");
         }
 
         @Override

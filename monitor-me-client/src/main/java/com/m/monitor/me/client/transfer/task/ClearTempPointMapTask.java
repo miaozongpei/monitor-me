@@ -1,4 +1,4 @@
-package com.m.monitor.me.client.transfer.schedule;
+package com.m.monitor.me.client.transfer.task;
 
 import com.m.monitor.me.client.point.collector.MonitorPoint;
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
@@ -8,11 +8,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Map;
-
+/**
+ * 清除监控点临时集合中未完成的监控点
+ * @Author: miaozp
+ * @Date: 2020/10/31 6:44 下午
+ **/
 @Component
 @Slf4j
-public class ClearTempPointMapRunnable implements Runnable {
-    private long clearExpire=30*60*1000;//30分钟
+public class ClearTempPointMapTask implements Runnable {
+    /**
+     *清除过期
+     **/
+    private long clearExpire=5*60*1000;
     @Override
     public void run() {
         try {

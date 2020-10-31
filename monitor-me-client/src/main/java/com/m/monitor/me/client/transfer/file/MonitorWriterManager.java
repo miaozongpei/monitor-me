@@ -1,7 +1,11 @@
 package com.m.monitor.me.client.transfer.file;
 
 import java.io.*;
-
+/**
+ * 监控聚合器信息文件持久化（暂时不支持，后续支持）
+ * @Author: miaozp
+ * @Date: 2020/10/31 6:37 下午
+ **/
 public class MonitorWriterManager {
     private static String monitorBasePath = "~";
     private static BufferedWriter objWriter = null;

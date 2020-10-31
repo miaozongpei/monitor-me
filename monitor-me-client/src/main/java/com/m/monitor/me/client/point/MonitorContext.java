@@ -6,7 +6,11 @@ import lombok.Setter;
 import org.aspectj.lang.JoinPoint;
 
 import java.lang.reflect.Method;
-
+/**
+ * 监控调用上下文
+ * @Author: miaozp
+ * @Date: 2020/10/31 6:23 下午
+ **/
 @Getter
 @Setter
 public class MonitorContext {
@@ -18,12 +22,6 @@ public class MonitorContext {
 
     public MonitorContext(Method method) {
         this.method = method;
-        this.chainStartTime=System.currentTimeMillis();
-    }
-
-    public MonitorContext(Method method,Object[] args) {
-        this.method = method;
-        this.args = args;
         this.chainStartTime=System.currentTimeMillis();
     }
 }

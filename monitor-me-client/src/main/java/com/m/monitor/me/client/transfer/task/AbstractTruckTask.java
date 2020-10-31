@@ -1,4 +1,4 @@
-package com.m.monitor.me.client.transfer.schedule;
+package com.m.monitor.me.client.transfer.task;
 
 import com.alibaba.fastjson.JSON;
 import com.m.monitor.me.client.transfer.client.MonitorExpressWayClient;
@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
 import java.util.List;
-
+/**
+ * 抽象传输任务类
+ * @Author: miaozp
+ * @Date: 2020/10/31 6:42 下午
+ **/
 @Slf4j
-public abstract class AbstractTruckRunnable implements Runnable {
+public abstract class AbstractTruckTask implements Runnable {
     @Value("${monitor.me.admin.host:localhost}")
     private String host="localhost";
 
@@ -40,8 +44,20 @@ public abstract class AbstractTruckRunnable implements Runnable {
         }
         return isSend;
     }
+    /**
+     * 定义传输类型
+     * @Author: miaozp
+     * @Date: 2020/10/31 6:43 下午
+     * @return: com.m.monitro.me.common.enums.MonitorTransferTypeEnum
+     **/
     public abstract MonitorTransferTypeEnum transferType();
 
+    /**
+     * 定义传输对象集合
+     * @Author: miaozp
+     * @Date: 2020/10/31 6:43 下午
+     * @return: java.util.List<java.lang.Object>
+     **/
     public abstract List<Object> transferContents();
 
 }

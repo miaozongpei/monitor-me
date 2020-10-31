@@ -3,7 +3,11 @@ package com.m.monitor.me.client.point.integrator;
 import com.m.monitor.me.client.point.collector.MonitorPoint;
 
 import java.util.concurrent.atomic.AtomicLong;
-
+/**
+ * 性能指标
+ * @Author: miaozp
+ * @Date: 2020/10/31 5:51 下午
+ **/
 public class PerformanceNorm {
     private String name;
     private long minNorm=Long.MAX_VALUE;

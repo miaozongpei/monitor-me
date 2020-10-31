@@ -7,9 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * 监控点
+ * @Author: miaozp
+ * @Date: 2020/10/31 5:39 下午
+ **/
 @Getter
-
 @Slf4j
 public class MonitorPoint extends HashMap<Integer,Long> {
     private String fullMethodName;
@@ -23,18 +26,21 @@ public class MonitorPoint extends HashMap<Integer,Long> {
         this.fullMethodName = fullMethodName;
         this.startTime = startTime;
     }
-
+    /**
+     * 监控点完成
+     * @Author: miaozp
+     * @Date: 2020/10/31 5:40 下午
+     * @return: void
+     **/
     public void finished(){
         this.endTime=System.currentTimeMillis();
-
+        //构建层级关系
         this.methodChains= new MethodChains(new MethodChain(-1,this.fullMethodName), 0,this.getNorm(),this.getNorm());
         this.methodChains.buildChildren(this);
     }
 
-
     public void print(){
-        System.out.println(this);
-
+        log.info(toString());
     }
 
     @Override

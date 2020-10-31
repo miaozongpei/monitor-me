@@ -6,6 +6,11 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 import javax.annotation.Resource;
+/**
+ * 监控点拦截器
+ * @Author: miaozp
+ * @Date: 2020/10/31 6:24 下午
+ **/
 @Slf4j
 public class MonitorInterceptor implements MethodInterceptor {
     @Resource
