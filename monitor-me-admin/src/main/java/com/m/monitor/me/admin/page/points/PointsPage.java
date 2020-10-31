@@ -1,25 +1,20 @@
 package com.m.monitor.me.admin.page.points;
 
 import com.m.beyond.view.Beyond;
-import com.m.beyond.view.data.ajaxs.AjaxData;
 import com.m.beyond.view.page.databoxes.HalvedDataBox;
 import com.m.beyond.view.page.functions.ClearRealtimeInterval;
-import com.m.beyond.view.page.functions.ToHtml;
 import com.m.beyond.view.page.mains.MainBody;
 import com.m.beyond.view.page.mains.MainRow;
 import com.m.monitor.me.admin.page.BasePage;
 import com.m.monitor.me.admin.page.PageHtml;
-import com.m.monitor.me.service.mogodb.norm.MonitorHostService;
-import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
+import com.m.monitor.me.service.mogodb.service.MonitorHostService;
+import com.m.monitor.me.service.mogodb.service.MonitorPointService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @Slf4j

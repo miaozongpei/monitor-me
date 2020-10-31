@@ -1,8 +1,8 @@
 import com.m.monitor.me.admin.MonitorMeAdminApplication;
-import com.m.monitor.me.service.mogodb.norm.NormMinuteService;
+import com.m.monitor.me.service.mogodb.service.norm.NormMinuteService;
 import com.m.monitor.me.service.transfer.norm.MethodNorm;
 import com.m.monitor.me.service.transfer.norm.TimeNorm;
-import com.m.monitor.me.service.transfer.record.IntegratorNormRecord;
+import com.m.monitor.me.service.mogodb.record.IntegratorNormRecord;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import com.m.monitro.me.common.utils.DoubleUtil;
 import com.m.monitro.me.common.utils.MonitorTimeUtil;

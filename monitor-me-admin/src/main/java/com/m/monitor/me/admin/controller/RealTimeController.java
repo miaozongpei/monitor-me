@@ -1,9 +1,12 @@
 package com.m.monitor.me.admin.controller;
 
 import com.m.beyond.view.data.charts.BarchartData;
-import com.m.monitor.me.service.mogodb.norm.*;
+import com.m.monitor.me.service.mogodb.service.*;
+import com.m.monitor.me.service.mogodb.service.norm.NormDayService;
+import com.m.monitor.me.service.mogodb.service.norm.NormHourService;
+import com.m.monitor.me.service.mogodb.service.norm.NormMinuteService;
+import com.m.monitor.me.service.mogodb.service.norm.NormSecondService;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
-import com.m.monitro.me.common.enums.QueryNormTypeEnum;
 import com.m.monitro.me.common.utils.DateUtil;
 import com.m.monitro.me.common.utils.MonitorTimeUtil;
 import org.springframework.stereotype.Controller;

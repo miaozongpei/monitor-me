@@ -16,8 +16,8 @@ import com.m.beyond.view.page.widgets.FormWidget;
 import com.m.beyond.view.page.widgets.Widget;
 import com.m.monitor.me.admin.page.BasePage;
 import com.m.monitor.me.admin.page.PageHtml;
-import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
-import com.m.monitor.me.service.transfer.record.MonitorPointRecord;
+import com.m.monitor.me.service.mogodb.service.MonitorPointService;
+import com.m.monitor.me.service.mogodb.record.MonitorPointRecord;
 import com.m.monitro.me.common.limit.PointLimit;
 import org.springframework.stereotype.Component;
 

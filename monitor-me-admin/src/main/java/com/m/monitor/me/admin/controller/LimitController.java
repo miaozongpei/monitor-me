@@ -1,15 +1,10 @@
 package com.m.monitor.me.admin.controller;
 
 import com.m.beyond.view.data.forms.ResultMsg;
-import com.m.beyond.view.page.loadings.LoadingContainer;
-import com.m.beyond.view.page.mains.MainHeader;
-import com.m.beyond.view.page.menus.SidebarMenu;
-import com.m.beyond.view.page.navbars.NavBar;
-import com.m.monitor.me.service.mogodb.norm.MonitorPointService;
+import com.m.monitor.me.service.mogodb.service.MonitorPointService;
 import com.m.monitro.me.common.limit.PointLimit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
