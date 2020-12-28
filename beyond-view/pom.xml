@@ -5,12 +5,13 @@
     <parent>
         <artifactId>monitor-me</artifactId>
         <groupId>com.github.miaozongpei</groupId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.miaozongpei</groupId>
     <artifactId>beyond-view</artifactId>
+    <version>1.0.1</version>
 
 <dependencies>
     <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity -->
