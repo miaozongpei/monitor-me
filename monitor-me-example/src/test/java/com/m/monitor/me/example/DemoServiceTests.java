@@ -46,13 +46,12 @@ public class DemoServiceTests {
 	public ContiPerfRule contiPerfRule = new ContiPerfRule();
 
 
-	//@PerfTest(threads = 1000, duration = 30000)
-	@PerfTest(threads = 1000, invocations = 1)
-
+	@PerfTest(threads = 10, duration = 10*60*1000)
+	//@PerfTest(threads = 1000, invocations = 1)
 	@Test
 	public void findUserThreadTest() throws ExecutionException, InterruptedException {
 		demoService.findUserByName("miao");
-
+		demoService.updateUser();
 
 	}
 

@@ -7,7 +7,7 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.6.RELEASE</version>
 	</parent>
-	<groupId>com.m.monitor.me</groupId>
+	<groupId>com.github.miaozongpei</groupId>
 	<artifactId>example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>monitor-me-example</name>
@@ -40,9 +40,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>com.m.monitor.me</groupId>
+			<groupId>com.github.miaozongpei</groupId>
 			<artifactId>monitor-me-client</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
