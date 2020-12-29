@@ -4,13 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>monitor-me</artifactId>
-        <groupId>com.m.monitor.me</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>com.github.miaozongpei</groupId>
+        <version>1.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mzp</groupId>
+    <groupId>com.github.miaozongpei</groupId>
     <artifactId>beyond-view</artifactId>
+    <version>1.0.2</version>
 
 <dependencies>
     <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity -->

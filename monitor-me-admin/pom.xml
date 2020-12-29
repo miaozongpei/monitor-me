@@ -4,23 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.m.monitor.me</groupId>
+        <groupId>com.github.miaozongpei</groupId>
         <artifactId>monitor-me</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
 
-    <groupId>com.m.monitor.me</groupId>
+    <groupId>com.github.miaozongpei</groupId>
     <artifactId>monitor-me-admin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <dependencies>
         <dependency>
-            <groupId>com.m.monitor.me</groupId>
+            <groupId>com.github.miaozongpei</groupId>
             <artifactId>monitor-me-service</artifactId>
             <version>${monitor.me.service.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.mzp</groupId>
+            <groupId>com.github.miaozongpei</groupId>
             <artifactId>beyond-view</artifactId>
             <version>${monitor.me.service.version}</version>
         </dependency>
@@ -69,6 +69,17 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <configuration>
+                    <!--deploy 时忽略此model-->
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+
 </project>
