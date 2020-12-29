@@ -6,12 +6,12 @@
     <parent>
         <groupId>com.github.miaozongpei</groupId>
         <artifactId>monitor-me</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
     </parent>
 
     <groupId>com.github.miaozongpei</groupId>
     <artifactId>monitor-me-admin</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <dependencies>
         <dependency>
