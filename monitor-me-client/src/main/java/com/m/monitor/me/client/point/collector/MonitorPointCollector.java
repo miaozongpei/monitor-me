@@ -49,7 +49,19 @@ public class MonitorPointCollector {
             pointMap.put(tranceId, monitorPoint);
         }
         return monitorPoint;
-
+    }
+    /**
+     * 获取或者创建监控点
+     * @Author: miaozp
+     * @Date: 2020/10/31 5:46 下午
+     * @param tranceId:
+     * @param fullMethodName:
+     * @return: com.m.monitor.me.client.point.collector.MonitorPoint
+     **/
+    public static MonitorPoint createOrGetMonitorPointWithArgs(String tranceId, String fullMethodName,Object[] paramArgs) {
+        MonitorPoint monitorPoint=createOrGetMonitorPoint( tranceId,fullMethodName);
+        monitorPoint.setParamArgs(paramArgs);
+        return monitorPoint;
     }
     /**
      * 获取或者创建一个临时监控点击集合

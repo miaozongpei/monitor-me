@@ -15,12 +15,12 @@ import java.lang.reflect.Method;
 @Setter
 public class MonitorContext {
     private Method method;
-    private Object[] args;
+    private Object[] paramArgs;
 
     private MethodChain methodChain;
     private long chainStartTime;
 
-    public MonitorContext(Method method) {
+    public MonitorContext(Method method,Object[] paramArgs) {
         this.method = method;
         this.chainStartTime=System.currentTimeMillis();
     }

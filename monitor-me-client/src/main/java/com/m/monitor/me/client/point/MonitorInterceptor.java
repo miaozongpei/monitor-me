@@ -19,7 +19,7 @@ public class MonitorInterceptor implements MethodInterceptor {
     public Object invoke(MethodInvocation invocation) throws Throwable {
         log.debug("[MonitorMe client] MonitorInterceptor invoke method:{}",invocation.getMethod());
         Object proceed = null;
-        MonitorContext context=new MonitorContext(invocation.getMethod());
+        MonitorContext context=new MonitorContext(invocation.getMethod(),invocation.getArguments());
         monitorHandler.doBeforeLimit(context);
         monitorHandler.doBefore(context);
         proceed = invocation.proceed();

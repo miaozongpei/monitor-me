@@ -37,7 +37,7 @@ public class MonitorHandler extends AbstractAspectHandler{
             seq.set(new AtomicInteger(-1));
             methodChainStack.set(new Stack<MethodChain>());
             //创建监控点（point）
-            MonitorPointCollector.createOrGetMonitorPoint(traceId.get(), fullMethodName);
+            MonitorPointCollector.createOrGetMonitorPointWithArgs(traceId.get(), fullMethodName,context.getParamArgs());
         }else {
             MethodChain methodChain=new MethodChain(seq.get().incrementAndGet(),fullMethodName);
             //入栈

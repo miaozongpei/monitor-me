@@ -1,5 +1,7 @@
 package com.m.monitor.me.client.point.collector;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.m.monitro.me.common.utils.DateUtil;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +22,18 @@ public class MonitorPoint extends HashMap<Integer,Long> {
     private Long endTime=0L;
     private List<MethodChain> chains=new ArrayList<MethodChain>();
     private MethodChains methodChains;
+    private Object[] paramArgs;
 
     public MonitorPoint(String fullMethodName, Long startTime) {
         super();
         this.fullMethodName = fullMethodName;
         this.startTime = startTime;
+    }
+    public MonitorPoint(String fullMethodName, Long startTime,Object[] paramArgs) {
+        super();
+        this.fullMethodName = fullMethodName;
+        this.startTime = startTime;
+        this.paramArgs=paramArgs;
     }
     /**
      * 监控点完成
@@ -48,10 +57,18 @@ public class MonitorPoint extends HashMap<Integer,Long> {
         StringBuffer str=new StringBuffer();
         str.append(this.methodChains).append("|").append(getNorm()).append("ms|").append(DateUtil.format(startTime,DateUtil.FORMAT_YYYYMMDDHHMISSSSS)).append("\n");
         str.append(this.methodChains.childrenToStr(this.methodChains.getChildren()));
+        if (this.paramArgs!=null) {
+            str.append("\n");
+            str.append(JSON.toJSONString(this.paramArgs));
+        }
         return str.toString();
     }
 
     public long getNorm(){
         return endTime-startTime;
+    }
+
+    public void setParamArgs(Object[] paramArgs) {
+        this.paramArgs = paramArgs;
     }
 }
