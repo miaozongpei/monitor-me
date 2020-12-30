@@ -23,5 +23,6 @@ public class MonitorContext {
     public MonitorContext(Method method,Object[] paramArgs) {
         this.method = method;
         this.chainStartTime=System.currentTimeMillis();
+        this.paramArgs=paramArgs;
     }
 }

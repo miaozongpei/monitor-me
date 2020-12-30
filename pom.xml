@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.miaozongpei</groupId>
     <artifactId>monitor-me</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>monitor-me-common</module>
@@ -22,8 +22,8 @@
     </modules>
     <properties>
 
-        <monitor.me.service.version>1.0.2</monitor.me.service.version>
-        <monitor.me.common.version>1.0.2</monitor.me.common.version>
+        <monitor.me.service.version>1.0.3-SNAPSHOT</monitor.me.service.version>
+        <monitor.me.common.version>1.0.3-SNAPSHOT</monitor.me.common.version>
         <com.alibaba.fastjson.version>1.2.72</com.alibaba.fastjson.version>
         <io.netty.netty-all.version>4.1.50.Final</io.netty.netty-all.version>
     </properties>

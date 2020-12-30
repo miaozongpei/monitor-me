@@ -55,12 +55,12 @@ public class MonitorPoint extends HashMap<Integer,Long> {
     @Override
     public String toString() {
         StringBuffer str=new StringBuffer();
+        if (this.paramArgs!=null) {
+            str.append("params=").append(JSON.toJSONString(this.paramArgs)).append("\n");
+            str.append("\n");
+        }
         str.append(this.methodChains).append("|").append(getNorm()).append("ms|").append(DateUtil.format(startTime,DateUtil.FORMAT_YYYYMMDDHHMISSSSS)).append("\n");
         str.append(this.methodChains.childrenToStr(this.methodChains.getChildren()));
-        if (this.paramArgs!=null) {
-            str.append("\n");
-            str.append(JSON.toJSONString(this.paramArgs));
-        }
         return str.toString();
     }
 
