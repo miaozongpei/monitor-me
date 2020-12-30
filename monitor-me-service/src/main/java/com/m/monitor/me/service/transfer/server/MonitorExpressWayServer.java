@@ -1,7 +1,9 @@
 package com.m.monitor.me.service.transfer.server;
 
 import com.alibaba.fastjson.JSON;
+import com.m.monitor.me.service.mogodb.record.MonitorHostRecord;
 import com.m.monitor.me.service.mogodb.record.MonitorPointRecord;
+import com.m.monitor.me.service.mogodb.service.MonitorHostService;
 import com.m.monitor.me.service.mogodb.service.MonitorPointService;
 import com.m.monitor.me.service.transfer.task.IntegratorSaveTask;
 import com.m.monitro.me.common.enums.MonitorTransferTypeEnum;
@@ -32,6 +34,9 @@ public class MonitorExpressWayServer extends AbstractExpressWayServer {
 
     @Resource
     private MonitorPointService monitorPointService;
+
+    @Resource
+    private MonitorHostService monitorHostService;
 
     private MonitorExpressWayServer() {
     }
@@ -90,6 +95,9 @@ public class MonitorExpressWayServer extends AbstractExpressWayServer {
         if (msgArr.length < MonitorConstant.MONITOR_EXPRESSWAY_MSG_ARR_MIN_LEN) {
             return;
         }
+        //存储监控系统
+        monitorHostService.saveOrModify(new MonitorHostRecord(msgArr[1],host));
+
         List<MonitorPointRecord> needingSynPoints = monitorPointService.queryPointLimit(msgArr[1], host);
         if (CollectionUtils.isEmpty(needingSynPoints)) {
             return;
