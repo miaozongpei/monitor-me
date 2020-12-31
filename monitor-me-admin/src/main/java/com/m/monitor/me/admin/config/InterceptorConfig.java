@@ -4,6 +4,7 @@ import com.m.monitor.me.admin.auth.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
@@ -28,7 +29,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
             add("/login");
             add("/doFaceLogin");
 
-
         }
     };
 
@@ -41,5 +41,10 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Bean
     LoginInterceptor localInterceptor() {
         return new LoginInterceptor();
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("forward:/index");
     }
 }
