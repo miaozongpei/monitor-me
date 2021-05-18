@@ -18,6 +18,8 @@ import org.springframework.context.annotation.Configuration;
 public class MonitorClientConfig {
     @Value("${monitor.me.interceptor.package.name:com}")
     private String interceptorPackage="com";
+    @Value("${monitor.me.isEnable:true}")
+    public boolean isEnable=true;
     /**
      * 默认AOP拦截切面
      * @Author: miaozp

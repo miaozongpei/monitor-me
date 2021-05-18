@@ -1,6 +1,7 @@
 package com.m.monitor.me.client.transfer.task;
 
 import com.alibaba.fastjson.JSON;
+import com.m.monitor.me.client.config.MonitorClientConfig;
 import com.m.monitor.me.client.transfer.client.MonitorExpressWayClient;
 import com.m.monitro.me.common.enums.MonitorTransferTypeEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +23,16 @@ public abstract class AbstractTruckTask implements Runnable {
     private int port=8899;
     @Resource
     private MonitorExpressWayClient monitorExpressWayClient;
+
+    @Resource
+    private MonitorClientConfig monitorClientConfig;
+
     @Override
     public void run() {
+        if (!monitorClientConfig.isEnable){
+            return;
+        }
+
         try {
             for (Object msg:this.transferContents()) {
                 synchronized (this) {

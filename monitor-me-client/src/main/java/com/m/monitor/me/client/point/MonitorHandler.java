@@ -1,5 +1,6 @@
 package com.m.monitor.me.client.point;
 
+import com.m.monitor.me.client.config.MonitorClientConfig;
 import com.m.monitor.me.client.point.collector.MethodChain;
 import com.m.monitor.me.client.point.collector.MonitorPoint;
 import com.m.monitor.me.client.point.collector.MonitorPointCollector;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -26,9 +28,13 @@ public class MonitorHandler extends AbstractAspectHandler{
     public static ThreadLocal<String> traceId = new ThreadLocal<>();
     public static ThreadLocal<AtomicInteger> seq = new ThreadLocal<>();
     public static ThreadLocal<Stack<MethodChain>>  methodChainStack= new ThreadLocal<>();
-
+    @Resource
+    private MonitorClientConfig monitorClientConfig;
     @Override
     public void doBefore(MonitorContext context) {
+        if (!monitorClientConfig.isEnable){
+            return;
+        }
         String fullMethodName=getFullMethodName(context);
         if(StringUtils.isEmpty(traceId.get())) {
             //创建traceId
@@ -52,6 +58,10 @@ public class MonitorHandler extends AbstractAspectHandler{
 
     @Override
     public void doAfter(MonitorContext context) {
+        if (!monitorClientConfig.isEnable){
+            return;
+        }
+
         if (StringUtils.isEmpty(traceId.get())) {
             return;
         }
@@ -90,6 +100,10 @@ public class MonitorHandler extends AbstractAspectHandler{
 
     @Override
     public void doBeforeLimit(MonitorContext context) throws MonitorLimitException {
+        if (!monitorClientConfig.isEnable){
+            return;
+        }
+
         String fullMethodName=getFullMethodName(context);
         PointLimit pointLimit =PointLimitConfig.get(fullMethodName);
         if (pointLimit ==null){
@@ -112,6 +126,7 @@ public class MonitorHandler extends AbstractAspectHandler{
     }
 
     private void doFinishLimit(MonitorContext context){
+
         try {
             String fullMethodName = getFullMethodName(context);
             PointLimit pointLimit = PointLimitConfig.get(fullMethodName);
