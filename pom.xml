@@ -105,7 +105,6 @@
     </distributionManagement>
 
     <build>
-        <pluginManagement>
         <plugins>
             <!-- 生成asc 校验文件 -->
             <plugin>
@@ -161,6 +160,5 @@
             </plugin>
 
         </plugins>
-        </pluginManagement>
     </build>
 </project>
