@@ -39,16 +39,16 @@ public class LoginController {
         String loginName=request.getParameter("loginName");
         String loginPwd=request.getParameter("loginPwd");
         String ldapFlag=request.getParameter("ldapFlag");
-
         boolean isAuth= false;
         try {
             isAuth = "1".equals(ldapFlag)?ldapLoginService.loginAuth(loginName,loginPwd):propertiesLoginService.loginAuth(loginName,loginPwd);
+            log.info("loginName:{},isAuth:{}",loginName,isAuth);
         } catch (Exception e) {
             log.error("doLogin error:",e);
             return ResultMsg.fail(e.getMessage());
         }
         if (isAuth){
-            request.getSession().setAttribute(LOGIN_TOKEN,UUID.randomUUID().toString());
+            request.getSession().setAttribute(LOGIN_TOKEN,UUID.randomUUID().toString()+"_"+loginName);
             return ResultMsg.success("Login success!");
         }
         return ResultMsg.fail("Name or Password is incorrect!");

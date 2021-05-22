@@ -4,12 +4,14 @@ import com.m.beyond.view.data.forms.ResultMsg;
 import com.m.monitor.me.service.mogodb.service.MonitorPointService;
 import com.m.monitro.me.common.limit.PointLimit;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/limit")
@@ -21,6 +23,11 @@ public class LimitController {
     @RequestMapping("/setting")
     @ResponseBody
     public ResultMsg setting(HttpServletRequest request, PointLimit pointLimit) {
+        String token=(String)request.getSession().getAttribute(LoginController.LOGIN_TOKEN);
+        String loginName=StringUtils.isNotEmpty(token)?token.split("_")[1]:null;
+        if (StringUtils.isEmpty(loginName)||!"admin".equals(loginName)){
+            return ResultMsg.fail("setting is no auth!");
+        }
         String[] hosts=request.getParameterValues("hosts");
         String name=request.getParameter("sys_name");
         String method=request.getParameter("point_method");

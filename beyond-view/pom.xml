@@ -11,7 +11,7 @@
 
     <groupId>com.github.miaozongpei</groupId>
     <artifactId>beyond-view</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>${monitor.me.beyond-view.version}</version>
 
 <dependencies>
     <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity -->

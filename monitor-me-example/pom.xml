@@ -9,7 +9,6 @@
 	</parent>
 	<groupId>com.github.miaozongpei</groupId>
 	<artifactId>example</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>monitor-me-example</name>
 	<description>example war for monitor-me</description>
 
@@ -42,7 +41,7 @@
 		<dependency>
 			<groupId>com.github.miaozongpei</groupId>
 			<artifactId>monitor-me-client</artifactId>
-			<version>1.0.4-SNAPSHOT</version>
+			<version>1.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

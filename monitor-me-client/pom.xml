@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.github.miaozongpei</groupId>
         <artifactId>monitor-me</artifactId>
+        <groupId>com.github.miaozongpei</groupId>
         <version>1.0.3-SNAPSHOT</version>
     </parent>
     <groupId>com.github.miaozongpei</groupId>
     <artifactId>monitor-me-client</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>${monitor.me.client.version}</version>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

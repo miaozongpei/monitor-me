@@ -11,18 +11,16 @@
 
     <groupId>com.github.miaozongpei</groupId>
     <artifactId>monitor-me-admin</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>${monitor.me.admin.version}</version>
 
     <dependencies>
         <dependency>
             <groupId>com.github.miaozongpei</groupId>
             <artifactId>monitor-me-service</artifactId>
-            <version>${monitor.me.service.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.miaozongpei</groupId>
             <artifactId>beyond-view</artifactId>
-            <version>${monitor.me.service.version}</version>
         </dependency>
 
         <dependency>

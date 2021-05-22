@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.miaozongpei</groupId>
     <artifactId>monitor-me-service</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>${monitor.me.service.version}</version>
     <dependencies>
         <dependency>
             <groupId>com.github.miaozongpei</groupId>

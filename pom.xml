@@ -21,9 +21,16 @@
         <module>beyond-view</module>
     </modules>
     <properties>
+        <monitor.me.version>1.0.3</monitor.me.version>
 
-        <monitor.me.service.version>1.0.3-SNAPSHOT</monitor.me.service.version>
-        <monitor.me.common.version>1.0.3-SNAPSHOT</monitor.me.common.version>
+        <monitor.me.service.version>${monitor.me.version}</monitor.me.service.version>
+        <monitor.me.common.version>${monitor.me.version}</monitor.me.common.version>
+        <monitor.me.beyond-view.version>${monitor.me.version}</monitor.me.beyond-view.version>
+        <monitor.me.client.version>1.0.4</monitor.me.client.version>
+
+
+        <monitor.me.admin.version>1.0.3-SNAPSHOT</monitor.me.admin.version>
+
         <com.alibaba.fastjson.version>1.2.72</com.alibaba.fastjson.version>
         <io.netty.netty-all.version>4.1.50.Final</io.netty.netty-all.version>
     </properties>
@@ -33,6 +40,21 @@
                 <groupId>com.github.miaozongpei</groupId>
                 <artifactId>monitor-me-common</artifactId>
                 <version>${monitor.me.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.miaozongpei</groupId>
+                <artifactId>monitor-me-service</artifactId>
+                <version>${monitor.me.service.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.miaozongpei</groupId>
+                <artifactId>beyond-view</artifactId>
+                <version>${monitor.me.beyond-view.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.miaozongpei</groupId>
+                <artifactId>monitor-me-client</artifactId>
+                <version>${monitor.me.client.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
             <dependency>
@@ -83,6 +105,7 @@
     </distributionManagement>
 
     <build>
+        <pluginManagement>
         <plugins>
             <!-- 生成asc 校验文件 -->
             <plugin>
@@ -100,18 +123,6 @@
                     </execution>
                 </executions>
             </plugin>
-           <!-- <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.3</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>sonatype-nexus-staging</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>-->
-            <!-- 生成javadoc文档包的插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -150,5 +161,6 @@
             </plugin>
 
         </plugins>
+        </pluginManagement>
     </build>
 </project>
