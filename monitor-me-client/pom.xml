@@ -6,7 +6,7 @@
     <parent>
         <artifactId>monitor-me</artifactId>
         <groupId>com.github.miaozongpei</groupId>
-        <version>1.0.3-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
     <groupId>com.github.miaozongpei</groupId>
     <artifactId>monitor-me-client</artifactId>

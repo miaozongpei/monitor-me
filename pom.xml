@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.github.miaozongpei</groupId>
     <artifactId>monitor-me</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
     <modules>
         <module>monitor-me-common</module>
@@ -21,7 +21,7 @@
         <module>beyond-view</module>
     </modules>
     <properties>
-        <monitor.me.version>1.0.3</monitor.me.version>
+        <monitor.me.version>1.0.5</monitor.me.version>
 
         <monitor.me.service.version>${monitor.me.version}</monitor.me.service.version>
         <monitor.me.common.version>${monitor.me.version}</monitor.me.common.version>
