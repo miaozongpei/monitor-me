@@ -9,6 +9,7 @@ import com.m.monitor.me.service.mogodb.service.norm.NormSecondService;
 import com.m.monitro.me.common.enums.MonitorTimeUnitEnum;
 import com.m.monitro.me.common.utils.DateUtil;
 import com.m.monitro.me.common.utils.MonitorTimeUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/real_time")
+@Slf4j
 public class RealTimeController {
     @Resource
     private NormMinuteService normMinuteService;
@@ -49,8 +51,9 @@ public class RealTimeController {
 
 
         String rangesMinTime=request.getParameter("ranges_min_time");
-        long time=System.currentTimeMillis()-(StringUtils.isEmpty(globalDTime)||"NaN".equals(globalDTime)?0L:Long.parseLong(globalDTime));
+        long time=new Date().getTime()-(StringUtils.isEmpty(globalDTime)||"NaN".equals(globalDTime)?0L:Long.parseLong(globalDTime));
         long currentTime = Long.parseLong(DateUtil.formatSecond(time));
+        log.info("[data] currentTime:{}",currentTime);
         if (!StringUtils.isEmpty(rangesMinTime)) {
             String[] rangesTimes=rangesMinTime.split("-");
             long sTime=Long.parseLong(rangesTimes[1]);

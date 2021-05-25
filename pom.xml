@@ -21,7 +21,7 @@
         <module>beyond-view</module>
     </modules>
     <properties>
-        <monitor.me.version>1.0.5</monitor.me.version>
+        <monitor.me.version>1.0.6</monitor.me.version>
 
         <monitor.me.service.version>${monitor.me.version}</monitor.me.service.version>
         <monitor.me.common.version>${monitor.me.version}</monitor.me.common.version>

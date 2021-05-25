@@ -13,13 +13,12 @@ import com.m.beyond.view.page.widgets.Widget;
 import com.m.monitor.me.service.mogodb.service.MonitorHostService;
 import com.m.monitor.me.service.mogodb.service.MonitorPointService;
 import com.m.monitro.me.common.enums.QueryNormTypeEnum;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class RealTimeWidgetFactory {
@@ -73,7 +72,13 @@ public class RealTimeWidgetFactory {
             searchRow.add(methodSelect);
 
             //global_d_time
-            searchRow.add(new DateTimePicker("global_d_time"));
+            DateTimePicker dateTimePicker=new DateTimePicker("global_d_time");
+            Calendar calendar=Calendar.getInstance();
+            calendar.add(Calendar.HOUR, 6);
+            dateTimePicker.setDefaultDate(DateFormatUtils.ISO_DATE_FORMAT.format(calendar));
+            dateTimePicker.setDefaultTime(DateFormatUtils.ISO_TIME_NO_T_FORMAT.format(calendar));
+
+            searchRow.add(dateTimePicker);
 
             searchDiv.addRow(searchRow);
             widget.addRow(new MainRow().add(searchDiv));
