@@ -2,12 +2,14 @@
 <script src="assets/js/beyond.min.js"></script>
 <script src="assets/js/charts/mychart/myflot-init.js"></script>
 <script>
-    var realtime_interval_id=setInterval(function () {
+
+
+    function realTimeLineChart () {
         var joinData={
         #foreach($data in ${ajax.datas.entrySet()})
         '${data.key}':${data.value},
         #end
-        }
+    }
         $.ajax({
             type : "GET",
             url : "${ajax.url}",
@@ -23,5 +25,7 @@
                 console.log("RealTimeLineChart geData异常");
             }
         });
-    },3000);
+    }
+    setTimeout(realTimeLineChart(),100);
+    var realtime_interval_id=setInterval(realTimeLineChart(),2000);
 </script>

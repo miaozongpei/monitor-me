@@ -27,15 +27,11 @@ public class PageController extends BasePageController {
     private LimitPage limitPage;
     @Resource
     private MethodLimitSettingPage methodLimitSettingPage;
-    private Map<String,PageHtml> cashPage=new HashMap<>();
     @RequestMapping("/{type}")
     @ResponseBody
     @Override
     public PageHtml html(HttpServletRequest request, @PathVariable("type") String type) {
-        PageHtml pageHtml=cashPage.get(type);
-        if (pageHtml!=null){
-            return pageHtml;
-        }
+        PageHtml pageHtml=null;
         if (BasePage.POINTS.equals(type)){
             pageHtml=pointsPage.create(request);
         }else if (BasePage.TIME_TAB.equals(type)){
@@ -44,9 +40,6 @@ public class PageController extends BasePageController {
             pageHtml= limitPage.create(request);
         }else if (BasePage.METHOD_LIMIT_SETTING.equals(type)){
             pageHtml= methodLimitSettingPage.create(request);
-        }
-        if (pageHtml!=null) {
-            cashPage.put(type, pageHtml);
         }
         return pageHtml;
     }

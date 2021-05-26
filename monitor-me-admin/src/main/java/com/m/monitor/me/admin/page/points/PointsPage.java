@@ -28,6 +28,7 @@ public class PointsPage extends BasePage {
     private MonitorHostService monitorHostService;
     @Override
     public PageHtml create(HttpServletRequest request) {
+        log.info("PointsPage start");
         String type=request.getParameter("norm_type");
         String host=request.getParameter("sys_name");
         String method=request.getParameter("point_method");
@@ -35,14 +36,20 @@ public class PointsPage extends BasePage {
         //dataBoxRow
         MainRow dataBoxRow=new MainRow();
         List<String> names=monitorHostService.queryNames();
+        log.info("PointsPage 1");
         dataBoxRow.add(new HalvedDataBox("Applications",names.size(), Beyond.BG_COLORS.get(1),Beyond.ICONS.get(0)));
         List<String> hosts=monitorHostService.queryHosts();
         dataBoxRow.add(new HalvedDataBox("Servers",hosts.size(),Beyond.BG_COLORS.get(2),Beyond.ICONS.get(1)));
+        log.info("PointsPage 2");
+
         List<String> methods=monitorPointService.queryMethods();
         dataBoxRow.add(new HalvedDataBox("Method Points",methods.size(),Beyond.BG_COLORS.get(3),Beyond.ICONS.get(2)));
         mainBody.add(dataBoxRow);
         mainBody.add(new MainRow().add(new ClearRealtimeInterval()));//清除之前定时
+        log.info("PointsPage 3");
+
         mainBody.add(new MainRow().add(realTimeWidgetFactory.create("Server Points",type,host,method)));
+        log.info("PointsPage end");
         return new PageHtml(mainBody.toHtml());
     }
 }
