@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/p")
@@ -25,20 +27,27 @@ public class PageController extends BasePageController {
     private LimitPage limitPage;
     @Resource
     private MethodLimitSettingPage methodLimitSettingPage;
-
+    private Map<String,PageHtml> cashPage=new HashMap<>();
     @RequestMapping("/{type}")
     @ResponseBody
     @Override
     public PageHtml html(HttpServletRequest request, @PathVariable("type") String type) {
-        if (BasePage.POINTS.equals(type)){
-            return pointsPage.create(request);
-        }else if (BasePage.TIME_TAB.equals(type)){
-            return timeTabPage.create(request);
-        }else if (BasePage.LIMIT.equals(type)){
-            return limitPage.create(request);
-        }else if (BasePage.METHOD_LIMIT_SETTING.equals(type)){
-            return methodLimitSettingPage.create(request);
+        PageHtml pageHtml=cashPage.get(type);
+        if (pageHtml!=null){
+            return pageHtml;
         }
-        return null;
+        if (BasePage.POINTS.equals(type)){
+            pageHtml=pointsPage.create(request);
+        }else if (BasePage.TIME_TAB.equals(type)){
+            pageHtml=timeTabPage.create(request);
+        }else if (BasePage.LIMIT.equals(type)){
+            pageHtml= limitPage.create(request);
+        }else if (BasePage.METHOD_LIMIT_SETTING.equals(type)){
+            pageHtml= methodLimitSettingPage.create(request);
+        }
+        if (pageHtml!=null) {
+            cashPage.put(type, pageHtml);
+        }
+        return pageHtml;
     }
 }
