@@ -12,6 +12,10 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+
 /**
  * 传输通道客户端
  * @Author: miaozp
@@ -27,6 +31,7 @@ public class MonitorExpressWayClient extends AbstractExpressWayClient {
     public static MonitorExpressWayClient getInstance(){
         return monitorExpressWayClient;
     }
+
     @Override
     public void replay(ChannelHandlerContext ctx, String msg) {
         log.info("[MonitorMe client] replay msg:{}",msg);
