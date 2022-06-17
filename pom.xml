@@ -31,7 +31,7 @@
 
         <monitor.me.admin.version>1.0.3-SNAPSHOT</monitor.me.admin.version>
 
-        <com.alibaba.fastjson.version>1.2.72</com.alibaba.fastjson.version>
+        <com.alibaba.fastjson.version>1.2.83</com.alibaba.fastjson.version>
         <io.netty.netty-all.version>4.1.50.Final</io.netty.netty-all.version>
     </properties>
     <dependencyManagement>
